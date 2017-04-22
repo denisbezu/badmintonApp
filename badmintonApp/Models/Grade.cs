@@ -7,5 +7,5 @@ namespace badmintonDataBase.Models
         public int GradeId { get; set; }
         public string GradeName { get; set; }
         public virtual ICollection<Player> Players { get; set; }
-}
+    }
 }

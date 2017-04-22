@@ -10,5 +10,6 @@ namespace badmintonDataBase.Models
         public virtual ICollection<Club> Clubs { get; set; }
         public virtual ICollection<Coach> Coaches { get; set; }
         public virtual ICollection<Player> Players { get; set; }
+        public virtual ICollection<Tournament> Tournaments { get; set; }
     }
 }

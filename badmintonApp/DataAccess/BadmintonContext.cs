@@ -18,5 +18,9 @@ namespace badmintonDataBase.DataAccess
         public DbSet<Player> Players { get; set; }
         public DbSet<History> Histories { get; set; }
         public DbSet<Stage> Stages { get; set; }
+        public DbSet<Tournament> Tournaments { get; set; }
+        public DbSet<TeamsTournament> TeamsTournaments { get; set; }
+        public DbSet<GamesTournament> GameSingles { get; set; }
+        public DbSet<PlayersTeam> PlayersTeams { get; set; }
     }
 }

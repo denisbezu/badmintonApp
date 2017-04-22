@@ -55,12 +55,16 @@
     <Compile Include="Models\Club.cs" />
     <Compile Include="Models\Coach.cs" />
     <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\GamesTournament.cs" />
     <Compile Include="Models\Grade.cs" />
     <Compile Include="Models\History.cs" />
     <Compile Include="Models\Judge.cs" />
     <Compile Include="Models\Parameter.cs" />
     <Compile Include="Models\Player.cs" />
+    <Compile Include="Models\PlayersTeam.cs" />
     <Compile Include="Models\Stage.cs" />
+    <Compile Include="Models\TeamsTournament.cs" />
+    <Compile Include="Models\Tournament.cs" />
     <Compile Include="Models\Type.cs" />
     <Compile Include="Models\Union.cs" />
     <Compile Include="Program.cs" />
