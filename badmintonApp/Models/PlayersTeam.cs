@@ -9,6 +9,7 @@ namespace badmintonDataBase.Models
         public virtual TeamsTournament TeamsTournament { get; set; }
         public int PlayerId { get; set; }
         public virtual Player Player { get; set; }
-        public virtual ICollection<GamesTournament> GamesTournaments { get; set; }
+        public virtual ICollection<GamesTournament> FirstPlayer { get; set; }
+        public virtual ICollection<GamesTournament> SecondPlayer { get; set; }
     }
 }
