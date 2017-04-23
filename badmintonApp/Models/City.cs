@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using badmintonDataBase.DataAccess;
 
 namespace badmintonDataBase.Models
 {
@@ -13,5 +16,9 @@ namespace badmintonDataBase.Models
         public virtual ICollection<Coach> Coaches { get; set; }
         public virtual ICollection<Player> Players { get; set; }
         public virtual ICollection<Tournament> Tournaments { get; set; }
+        public override string ToString()
+        {
+            return CityName;
+        }
     }
 }

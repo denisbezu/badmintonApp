@@ -11,5 +11,11 @@ namespace BadmintonWPF.Views
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Cities cities = new Cities();
+            cities.ShowDialog();
+        }
     }
 }
