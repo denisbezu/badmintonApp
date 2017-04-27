@@ -9,9 +9,9 @@ namespace badmintonDataBase.Models
         [Required, MaxLength(120)]
         public string CoachName { get; set; }
         public int? YearOfBirth { get; set; }
-        public int CityId { get; set; }
+        public int? CityId { get; set; }
         public virtual City City { get; set; }
-        public int ClubId { get; set; }
+        public int? ClubId { get; set; }
         public virtual Club Club { get; set; }
         public virtual ICollection<Player> Players { get; set; }
     }

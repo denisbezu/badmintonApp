@@ -26,7 +26,6 @@ namespace badmintonDataBase.DataAccess
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             #region GamesTournament
-            
             modelBuilder.Entity<GamesTournament>()
                 .HasRequired(m => m.PlayersTeam1)
                 .WithMany(t => t.FirstPlayer)
@@ -40,30 +39,30 @@ namespace badmintonDataBase.DataAccess
             #endregion
 
             #region Coach 
-            modelBuilder.Entity<Coach>()
-                .HasRequired(m => m.City)
-                .WithMany(t => t.Coaches)
-                .HasForeignKey(m => m.CityId)
-                .WillCascadeOnDelete(false);
-            modelBuilder.Entity<Coach>()
-                .HasRequired(m => m.Club)
-                .WithMany(t => t.Coaches)
-                .HasForeignKey(m => m.ClubId)
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Coach>()
+            //    .HasRequired(m => m.City)
+            //    .WithMany(t => t.Coaches)
+            //    .HasForeignKey(m => m.CityId)
+            //    .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Coach>()
+            //    .HasRequired(m => m.Club)
+            //    .WithMany(t => t.Coaches)
+            //    .HasForeignKey(m => m.ClubId)
+            //    .WillCascadeOnDelete(false);
             #endregion
 
             #region Event
 
-            modelBuilder.Entity<Event>()
-                .HasRequired(m => m.Type)
-                .WithMany(t => t.Events)
-                .HasForeignKey(m => m.TypeId)
-                .WillCascadeOnDelete(false);
-            modelBuilder.Entity<Event>()
-                .HasRequired(m => m.Category)
-                .WithMany(t => t.Events)
-                .HasForeignKey(m => m.CategoryId)
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Event>()
+            //    .HasRequired(m => m.Type)
+            //    .WithMany(t => t.Events)
+            //    .HasForeignKey(m => m.TypeId)
+            //    .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Event>()
+            //    .HasRequired(m => m.Category)
+            //    .WithMany(t => t.Events)
+            //    .HasForeignKey(m => m.CategoryId)
+            //    .WillCascadeOnDelete(false);
             modelBuilder.Entity<Event>()
                 .HasRequired(m => m.Tournament)
                 .WithMany(t => t.Events)
@@ -71,7 +70,7 @@ namespace badmintonDataBase.DataAccess
                 .WillCascadeOnDelete(false);
 
             #endregion
-
+            
             #region History
 
             modelBuilder.Entity<History>()
@@ -88,40 +87,41 @@ namespace badmintonDataBase.DataAccess
             #endregion
 
             #region Judge
-            modelBuilder.Entity<Judge>()
-                .HasRequired(m => m.City)
-                .WithMany(t => t.Judges)
-                .HasForeignKey(m => m.CityId)
-                .WillCascadeOnDelete(false);
+
+            //modelBuilder.Entity<Judge>()
+            //    .HasRequired(m => m.City)
+            //    .WithMany(t => t.Judges)
+            //    .HasForeignKey(m => m.CityId);
+            //    //.WillCascadeOnDelete(false);
             #endregion
 
             #region Player
 
-            modelBuilder.Entity<Player>()
-                .HasRequired(m => m.City)
-                .WithMany(t => t.Players)
-                .HasForeignKey(m => m.CityId)
-                .WillCascadeOnDelete(false);
-            modelBuilder.Entity<Player>()
-                .HasRequired(m => m.Grade)
-                .WithMany(t => t.Players)
-                .HasForeignKey(m => m.GradeId)
-                .WillCascadeOnDelete(false);
-            modelBuilder.Entity<Player>()
-                .HasRequired(m => m.Club)
-                .WithMany(t => t.Players)
-                .HasForeignKey(m => m.ClubId)
-                .WillCascadeOnDelete(false);
-            modelBuilder.Entity<Player>()
-                .HasRequired(m => m.Union)
-                .WithMany(t => t.Players)
-                .HasForeignKey(m => m.UnionId)
-                .WillCascadeOnDelete(false);
-            modelBuilder.Entity<Player>()
-                .HasRequired(m => m.Coach)
-                .WithMany(t => t.Players)
-                .HasForeignKey(m => m.CoachId)
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Player>()
+            //    .HasRequired(m => m.City)
+            //    .WithMany(t => t.Players)
+            //    .HasForeignKey(m => m.CityId)
+            //    .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Player>()
+            //    .HasRequired(m => m.Grade)
+            //    .WithMany(t => t.Players)
+            //    .HasForeignKey(m => m.GradeId)
+            //    .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Player>()
+            //    .HasRequired(m => m.Club)
+            //    .WithMany(t => t.Players)
+            //    .HasForeignKey(m => m.ClubId)
+            //    .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Player>()
+            //    .HasRequired(m => m.Union)
+            //    .WithMany(t => t.Players)
+            //    .HasForeignKey(m => m.UnionId)
+            //    .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Player>()
+            //    .HasRequired(m => m.Coach)
+            //    .WithMany(t => t.Players)
+            //    .HasForeignKey(m => m.CoachId)
+            //    .WillCascadeOnDelete(false);
             #endregion
 
             #region PlayersTeam
@@ -149,17 +149,16 @@ namespace badmintonDataBase.DataAccess
             #endregion
 
             #region Tournament
-
-            modelBuilder.Entity<Tournament>()
-                .HasRequired(m => m.City)
-                .WithMany(t => t.Tournaments)
-                .HasForeignKey(m => m.CityId)
-                .WillCascadeOnDelete(false);
-            modelBuilder.Entity<Tournament>()
-                .HasRequired(m => m.Judge)
-                .WithMany(t => t.Tournaments)
-                .HasForeignKey(m => m.JudgeId)
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Tournament>()
+            //    .HasRequired(m => m.City)
+            //    .WithMany(t => t.Tournaments)
+            //    .HasForeignKey(m => m.CityId)
+            //    .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Tournament>()
+            //    .HasRequired(m => m.Judge)
+            //    .WithMany(t => t.Tournaments)
+            //    .HasForeignKey(m => m.JudgeId)
+            //    .WillCascadeOnDelete(false);
 
             #endregion
         }

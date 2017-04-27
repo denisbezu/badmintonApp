@@ -12,7 +12,7 @@ namespace badmintonDataBase.Models
         public virtual PlayersTeam PlayersTeam2 { get; set; }
         [Required, MaxLength(50)]
         public string Score { get; set; }
-        public int StageId { get; set; }
+        public int? StageId { get; set; }
         public virtual Stage Stage { get; set; }
 
     }

@@ -13,9 +13,9 @@ namespace badmintonDataBase.Models
         public DateTime StartDate { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime FinishDate { get; set; }
-        public int JudgeId { get; set; }
+        public int? JudgeId { get; set; }
         public virtual Judge Judge { get; set; }
-        public int CityId { get; set; }
+        public int? CityId { get; set; }
         public virtual City City { get; set; }
         public virtual ICollection<Event> Events { get; set; }
     }

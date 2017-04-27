@@ -1,0 +1,72 @@
+﻿<Window x:Class="BadmintonWPF.Views.TournamentChooser"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BadmintonWPF"
+        mc:Ignorable="d"
+        Title="Выбор турнира" Height="400" Width="850" Icon="/images/volan.png" FontFamily="Roboto Light" FontSize="14">
+    <Grid Loaded="Grid_Loaded">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="157*"/>
+            <RowDefinition Height="28*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="21*"/>
+            <ColumnDefinition Width="17*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFCAFFC9" Offset="0.016"/>
+                <GradientStop Color="White" Offset="0.997"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Button x:Name="btnAdd" Content="Добавить" HorizontalAlignment="Left" Margin="10,0,0,24.4" VerticalAlignment="Bottom" Width="83" Style="{DynamicResource ButtonStyle}" Grid.Row="1" Grid.Column="0" Height="22" Click="btnAdd_Click" />
+        <Button x:Name="btnDelete" Content="Удалить" HorizontalAlignment="Left" Margin="109,0,0,24.4" Width="83" Style="{DynamicResource ButtonStyle}" Grid.Row="1" Grid.Column="0" Click="btnDelete_Click" Height="22" VerticalAlignment="Bottom" />
+        <Button x:Name="btnOk" Content="Сохранить" Margin="0,0,9.8,24.4" Style="{DynamicResource ButtonStyle}" Grid.Row="1" HorizontalAlignment="Right" Width="83" Height="22" VerticalAlignment="Bottom" Click="btnOk_Click" />
+        <TextBox x:Name="txtName" Text="{Binding SelectedItem.TournamentName, ElementName=tournamentsListView, UpdateSourceTrigger=PropertyChanged}" Height="23" Margin="181.4,24,42.2,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <ComboBox x:Name="cmbBoxJudges" Grid.Column="1" Text="{Binding SelectedItem.Judge, ElementName=tournamentsListView, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem.Judge, ElementName=tournamentsListView, UpdateSourceTrigger=PropertyChanged}" Margin="181.4,64,42.2,0" VerticalAlignment="Top" Style="{DynamicResource ComboBoxStyle}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle}"/>
+        <!--#region Labels -->
+        <Label Content="Название тунира" Grid.Column="1" HorizontalAlignment="Left" Margin="10.2,21,0,0" VerticalAlignment="Top"/>
+        <Label Content="Главный судья" Grid.Column="1" HorizontalAlignment="Left" Margin="10.2,63,0,0" VerticalAlignment="Top"/>
+        <Label Content="Город" Grid.Column="1" HorizontalAlignment="Left" Margin="10.2,104,0,0" VerticalAlignment="Top"/>
+        <Label Content="Дата начала" Grid.Column="1" HorizontalAlignment="Left" Margin="10.2,145,0,0" VerticalAlignment="Top"/>
+        <Label Content="Дата окончания" Grid.Column="1" HorizontalAlignment="Left" Margin="10.4,186,0,0" VerticalAlignment="Top"/>
+        <!--#endregion Labels -->
+        <ListView ItemsSource="{Binding TournamentsList}" x:Name="tournamentsListView" Style="{DynamicResource ListViewStyle2}" Margin="10,10,9.6,10.4" MouseDoubleClick="tournamentsListView_MouseDoubleClick">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Информация" Width="250">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock FontSize="16" Text="{Binding TournamentName}"></TextBlock>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock FontSize="14" Text="{Binding Judge.JudgeLastName}"></TextBlock>
+                                        <TextBlock FontSize="14" Text=" "></TextBlock>
+                                        <TextBlock FontSize="14" Text="{Binding Judge.JudgeName}"></TextBlock>
+                                    </StackPanel>
+                                    <TextBlock FontSize="14" Text="{Binding City.CityName}"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Сроки" Width="180">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontSize="16" Text="{Binding StartDate, StringFormat='dd.MM.yy'}" ></TextBlock>
+                                    <TextBlock Text=" - "></TextBlock>
+                                    <TextBlock FontSize="16" Text="{Binding FinishDate, StringFormat='dd.MM.yy'}"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ComboBox x:Name="cmbBoxCities" Text="{Binding SelectedItem.City.CityName, ElementName=tournamentsListView, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" SelectedItem="{Binding SelectedItem.City, ElementName=tournamentsListView, UpdateSourceTrigger=PropertyChanged}" Margin="181.4,106,42.2,0" VerticalAlignment="Top" Style="{DynamicResource ComboBoxStyle}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle}"/>
+        <DatePicker x:Name="txtStartDate" SelectedDate="{Binding SelectedItem.StartDate, ElementName=tournamentsListView, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="181.4,145,42.2,0" VerticalAlignment="Top"/>
+        <DatePicker x:Name="txtEndDate" SelectedDate="{Binding SelectedItem.FinishDate, ElementName=tournamentsListView, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="181.4,186,42.2,0" VerticalAlignment="Top"/>
+    </Grid>
+</Window>

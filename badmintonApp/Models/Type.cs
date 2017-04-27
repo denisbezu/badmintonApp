@@ -8,7 +8,6 @@ namespace badmintonDataBase.Models
         public int TypeId { get; set; }
         [Required, MaxLength(30)]
         public string TypeName { get; set; }
-        public virtual ICollection<Category> Categories { get; set; }
         public virtual ICollection<Event> Events { get; set; }
     }
 }

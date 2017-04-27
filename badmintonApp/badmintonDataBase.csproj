@@ -50,6 +50,47 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccess\BadmintonContext.cs" />
+    <Compile Include="Migrations\201704241220522_InitialCreate.cs" />
+    <Compile Include="Migrations\201704241220522_InitialCreate.Designer.cs">
+      <DependentUpon>201704241220522_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704251757033_AddPosev.cs" />
+    <Compile Include="Migrations\201704251757033_AddPosev.Designer.cs">
+      <DependentUpon>201704251757033_AddPosev.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704251809204_DeleteYearJudge.cs" />
+    <Compile Include="Migrations\201704251809204_DeleteYearJudge.Designer.cs">
+      <DependentUpon>201704251809204_DeleteYearJudge.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704261458067_ChangedCascadeDelete.cs" />
+    <Compile Include="Migrations\201704261458067_ChangedCascadeDelete.Designer.cs">
+      <DependentUpon>201704261458067_ChangedCascadeDelete.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704261503261_AddNullableCity.cs" />
+    <Compile Include="Migrations\201704261503261_AddNullableCity.Designer.cs">
+      <DependentUpon>201704261503261_AddNullableCity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704261506153_RemoveFluent.cs" />
+    <Compile Include="Migrations\201704261506153_RemoveFluent.Designer.cs">
+      <DependentUpon>201704261506153_RemoveFluent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704261512407_RemoveFluent2.cs" />
+    <Compile Include="Migrations\201704261512407_RemoveFluent2.Designer.cs">
+      <DependentUpon>201704261512407_RemoveFluent2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704261514552_RemoveFluent3.cs" />
+    <Compile Include="Migrations\201704261514552_RemoveFluent3.Designer.cs">
+      <DependentUpon>201704261514552_RemoveFluent3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704261522210_RemoveFluent31.cs" />
+    <Compile Include="Migrations\201704261522210_RemoveFluent31.Designer.cs">
+      <DependentUpon>201704261522210_RemoveFluent31.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704261534207_RemoveAdd1.cs" />
+    <Compile Include="Migrations\201704261534207_RemoveAdd1.Designer.cs">
+      <DependentUpon>201704261534207_RemoveAdd1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Club.cs" />
@@ -74,6 +115,40 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Enums\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201704241220522_InitialCreate.resx">
+      <DependentUpon>201704241220522_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704251757033_AddPosev.resx">
+      <DependentUpon>201704251757033_AddPosev.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704251809204_DeleteYearJudge.resx">
+      <DependentUpon>201704251809204_DeleteYearJudge.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704261458067_ChangedCascadeDelete.resx">
+      <DependentUpon>201704261458067_ChangedCascadeDelete.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704261503261_AddNullableCity.resx">
+      <DependentUpon>201704261503261_AddNullableCity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704261506153_RemoveFluent.resx">
+      <DependentUpon>201704261506153_RemoveFluent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704261512407_RemoveFluent2.resx">
+      <DependentUpon>201704261512407_RemoveFluent2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704261514552_RemoveFluent3.resx">
+      <DependentUpon>201704261514552_RemoveFluent3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704261522210_RemoveFluent31.resx">
+      <DependentUpon>201704261522210_RemoveFluent31.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704261534207_RemoveAdd1.resx">
+      <DependentUpon>201704261534207_RemoveAdd1.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

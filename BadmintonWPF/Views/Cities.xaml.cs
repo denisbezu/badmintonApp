@@ -1,20 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using badmintonDataBase.DataAccess;
 using badmintonDataBase.Models;
 
@@ -23,23 +13,35 @@ namespace BadmintonWPF.Views
     /// <summary>
     /// Interaction logic for Cities.xaml
     /// </summary>
-    public partial class Cities : Window
+    public partial class Cities : Window, INotifyPropertyChanged
     {
         private BadmintonContext context;
-
+        public BindingList<City> CitiesList { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
+        private City selectedCity;
+        public City SelectedCity
+        {
+            get { return selectedCity; }
+            set
+            {
+                selectedCity = value;
+                OnPropertyChanged("SelectedCity");
+            }
+        }
         public Cities()
         {
             InitializeComponent();
             context = new BadmintonContext();
             context.Cities.Load();
-            citiesListBox.ItemsSource = context.Cities.Local.ToBindingList();
+            CitiesList = new BindingList<City>();
+            CitiesList = context.Cities.Local.ToBindingList();
+            citiesListBox.ItemsSource = CitiesList;
         }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -55,34 +57,17 @@ namespace BadmintonWPF.Views
                 MessageBox.Show("Не удалось добавить запись", "Добавление", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-        private void btnEdit_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                City city = context.Cities.Local
-                    .Single(p => p.CityName == citiesListBox.SelectedItem.ToString());
-                city.CityName = txtEdit.Text;
-                citiesListBox.ItemsSource = null;
-                citiesListBox.Items.Clear();
-                context.Cities.Load();
-                citiesListBox.ItemsSource = context.Cities.Local.ToBindingList();
-                if (citiesListBox.Items.Count > 0)
-                    citiesListBox.SelectedIndex = 0;
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show("Не удалось изменить запись", "Изменение", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            
-        }
-
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (citiesListBox.SelectedItem != null)
                 {
+                    context.Coaches.Where(v => v.CityId  == ((City)citiesListBox.SelectedItem).CityId).Load();
+                    context.Clubs.Where(v => v.CityId == ((City)citiesListBox.SelectedItem).CityId).Load();
+                    context.Players.Where(v => v.CityId == ((City)citiesListBox.SelectedItem).CityId).Load();
+                    context.Judges.Where(v => v.CityId == ((City)citiesListBox.SelectedItem).CityId).Load();
+                    context.Tournaments.Where(v => v.CityId == ((City)citiesListBox.SelectedItem).CityId).Load();
                     context.Cities.Local.Remove((City) citiesListBox.SelectedItem);
                 }
             }
@@ -91,26 +76,14 @@ namespace BadmintonWPF.Views
                 MessageBox.Show("Не удалось удалить запись", "Удаление", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
-
         private void btnOk_Click(object sender, RoutedEventArgs e)
         {
             context.SaveChanges();
             Close();
-        }
-
-        private void citiesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (citiesListBox.SelectedItem != null)
-                txtEdit.Text = ((City)citiesListBox.SelectedItem).ToString();
-            else
-            {
-                txtEdit.Text = "";
-            }
         }
     }
 }

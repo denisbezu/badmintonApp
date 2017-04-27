@@ -9,5 +9,9 @@ namespace badmintonDataBase.Models
         [Required, MaxLength(20)]
         public string GradeName { get; set; }
         public virtual ICollection<Player> Players { get; set; }
+        public override string ToString()
+        {
+            return GradeName;
+        }
     }
 }
