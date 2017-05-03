@@ -50,6 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccess\BadmintonContext.cs" />
+    <Compile Include="Enums\DrawDimension.cs" />
+    <Compile Include="Enums\Sex.cs" />
+    <Compile Include="Enums\Sort.cs" />
     <Compile Include="Migrations\201704241220522_InitialCreate.cs" />
     <Compile Include="Migrations\201704241220522_InitialCreate.Designer.cs">
       <DependentUpon>201704241220522_InitialCreate.cs</DependentUpon>
@@ -90,6 +93,10 @@
     <Compile Include="Migrations\201704261534207_RemoveAdd1.Designer.cs">
       <DependentUpon>201704261534207_RemoveAdd1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704271904429_AddSort.cs" />
+    <Compile Include="Migrations\201704271904429_AddSort.Designer.cs">
+      <DependentUpon>201704271904429_AddSort.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\City.cs" />
@@ -115,9 +122,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Enums\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201704241220522_InitialCreate.resx">
       <DependentUpon>201704241220522_InitialCreate.cs</DependentUpon>
@@ -148,6 +153,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704261534207_RemoveAdd1.resx">
       <DependentUpon>201704261534207_RemoveAdd1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704271904429_AddSort.resx">
+      <DependentUpon>201704271904429_AddSort.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

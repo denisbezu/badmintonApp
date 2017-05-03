@@ -62,8 +62,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helpers\EventListHelper.cs" />
+    <Compile Include="Helpers\WorkWithMainPage.cs" />
+    <Compile Include="Views\CoachAdd.xaml.cs">
+      <DependentUpon>CoachAdd.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CoachesList.xaml.cs">
+      <DependentUpon>CoachesList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EventAdd.xaml.cs">
+      <DependentUpon>EventAdd.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EventList.xaml.cs">
+      <DependentUpon>EventList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlayerAdd.xaml.cs">
+      <DependentUpon>PlayerAdd.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TournamentAdd.xaml.cs">
       <DependentUpon>TournamentAdd.xaml</DependentUpon>
@@ -87,7 +104,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\CoachAdd.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CoachesList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EventAdd.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EventList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PlayerAdd.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -175,9 +212,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\badmintonApp\badmintonDataBase.csproj">
       <Project>{e4995f25-3d45-43ce-a0a7-576bbb881fb5}</Project>

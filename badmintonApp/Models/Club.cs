@@ -12,5 +12,9 @@ namespace badmintonDataBase.Models
         public virtual City City { get; set; }
         public virtual ICollection<Coach> Coaches { get; set; }
         public virtual ICollection<Player> Players { get; set; }
+        public override string ToString()
+        {
+            return ClubName;
+        }
     }
 }

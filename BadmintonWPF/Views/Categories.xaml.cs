@@ -13,15 +13,15 @@ namespace BadmintonWPF.Views
     /// </summary>
     public partial class Categories : Window, INotifyPropertyChanged
     {
-        private BadmintonContext context;
+        public BadmintonContext Context { get; set; }
         public BindingList<Category> CategoriesList { get; set; }
-        public Categories()
+        public Categories(BadmintonContext context)
         {
             InitializeComponent();
-            context = new BadmintonContext();
-            context.Categories.Load();
+            Context = context;
+            Context.Categories.Load();
             CategoriesList = new BindingList<Category>();
-            CategoriesList = context.Categories.Local.ToBindingList();
+            CategoriesList = Context.Categories.Local.ToBindingList();
             categoriesListBox.ItemsSource = CategoriesList;
         }
 
@@ -47,7 +47,7 @@ namespace BadmintonWPF.Views
             {
                 if (txtAdd.Text != "")
                 {
-                    context.Categories.Local.Add(new Category() { CategoryName = txtAdd.Text });
+                    Context.Categories.Local.Add(new Category() { CategoryName = txtAdd.Text });
                     txtAdd.Text = "";
                 }
             }
@@ -62,8 +62,8 @@ namespace BadmintonWPF.Views
             {
                 if (categoriesListBox.SelectedItem != null)
                 {
-                    context.Events.Where(v => v.CategoryId == ((Category)categoriesListBox.SelectedItem).CategoryId).Load();
-                    context.Categories.Local.Remove((Category)categoriesListBox.SelectedItem);
+                    Context.Events.Where(v => v.CategoryId == ((Category)categoriesListBox.SelectedItem).CategoryId).Load();
+                    Context.Categories.Local.Remove((Category)categoriesListBox.SelectedItem);
                 }
             }
             catch
@@ -77,7 +77,7 @@ namespace BadmintonWPF.Views
         }
         private void btnOk_Click(object sender, RoutedEventArgs e)
         {
-            context.SaveChanges();
+            Context.SaveChanges();
             Close();
         }
     }

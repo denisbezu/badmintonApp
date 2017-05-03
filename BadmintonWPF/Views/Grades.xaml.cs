@@ -24,7 +24,7 @@ namespace BadmintonWPF.Views
     /// </summary>
     public partial class Grades : Window, INotifyPropertyChanged
     {
-        private BadmintonContext context;
+        public BadmintonContext Context { get; set; }
         public BindingList<Grade> GradesList { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
@@ -42,13 +42,13 @@ namespace BadmintonWPF.Views
                 OnPropertyChanged("SelectedGrade");
             }
         }
-        public Grades()
+        public Grades(BadmintonContext context)
         {
             InitializeComponent();
-            context = new BadmintonContext();
-            context.Grades.Load();
+            Context = context;
+            Context.Grades.Load();
             GradesList = new BindingList<Grade>();
-            GradesList = context.Grades.Local.ToBindingList();
+            GradesList = Context.Grades.Local.ToBindingList();
             gradesListBox.ItemsSource = GradesList;
         }
         private void btnAdd_Click(object sender, RoutedEventArgs e)
@@ -57,7 +57,7 @@ namespace BadmintonWPF.Views
             {
                 if (txtAdd.Text != "")
                 {
-                    context.Grades.Local.Add(new Grade() { GradeName = txtAdd.Text });
+                    Context.Grades.Local.Add(new Grade() { GradeName = txtAdd.Text });
                     txtAdd.Text = "";
                 }
             }
@@ -72,8 +72,8 @@ namespace BadmintonWPF.Views
             {
                 if (gradesListBox.SelectedItem != null)
                 {
-                    context.Players.Where(v => v.GradeId == ((Grade)gradesListBox.SelectedItem).GradeId).Load();
-                    context.Grades.Local.Remove((Grade)gradesListBox.SelectedItem);
+                    Context.Players.Where(v => v.GradeId == ((Grade)gradesListBox.SelectedItem).GradeId).Load();
+                    Context.Grades.Local.Remove((Grade)gradesListBox.SelectedItem);
                 }
             }
             catch
@@ -89,7 +89,7 @@ namespace BadmintonWPF.Views
 
         private void btnOk_Click(object sender, RoutedEventArgs e)
         {
-            context.SaveChanges();
+            Context.SaveChanges();
             Close();
         }
     }

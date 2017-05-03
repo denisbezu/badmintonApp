@@ -9,5 +9,9 @@ namespace badmintonDataBase.Models
         [Required, MaxLength(30)]
         public string TypeName { get; set; }
         public virtual ICollection<Event> Events { get; set; }
+        public override string ToString()
+        {
+            return TypeName;
+        }
     }
 }

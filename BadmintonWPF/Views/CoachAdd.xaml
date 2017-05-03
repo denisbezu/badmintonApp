@@ -1,0 +1,37 @@
+﻿<Window x:Class="BadmintonWPF.Views.CoachAdd"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Добавление события"  Height="300" Width="300" Icon="/images/volan.png" FontFamily="Roboto Light" FontSize="14" ResizeMode="CanMinimize" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="80*"/>
+        </Grid.RowDefinitions>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFCAFFC9" Offset="0.016"/>
+                <GradientStop Color="White" Offset="0.997"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Button x:Name="btnCancel" Content="ОТМЕНА" Margin="0,0,23.6,22.4" Style="{DynamicResource ButtonStyle}" Grid.Row="6" HorizontalAlignment="Right" Width="83" Height="23" VerticalAlignment="Bottom" Click="BtnCancel_OnClick" TabIndex="5"/>
+        <Button x:Name="btnOk" Content="ПРИНЯТЬ" Margin="0,0,124.6,22.4" Style="{DynamicResource ButtonStyle}" Grid.Row="6" HorizontalAlignment="Right" Width="83" Height="23" VerticalAlignment="Bottom" Click="btnOk_Click" TabIndex="4"/>
+        <Label Content="Школа" HorizontalAlignment="Left" Margin="8,5.4,0,0" VerticalAlignment="Top" Grid.Row="4"/>
+        <Label Content="ФИО тренера" HorizontalAlignment="Left" Margin="8,9.2,0,0" VerticalAlignment="Top" Grid.Row="1"/>
+        <Label Content="Год рождения" HorizontalAlignment="Left" Margin="8,8.6,0,0" VerticalAlignment="Top" Grid.Row="2"/>
+        <Label Content="Город" HorizontalAlignment="Left" Margin="8,8,0,0" VerticalAlignment="Top" Grid.Row="3"/>
+        <ComboBox x:Name="cmbBoxClub" Margin="124,10.4,15.6,0" VerticalAlignment="Top" Style="{DynamicResource ComboBoxStyle}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle}" Grid.Row="4"/>
+        <ComboBox x:Name="cmbBoxCity" Margin="124,10,15.6,0" VerticalAlignment="Top" Style="{DynamicResource ComboBoxStyle}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle}" Grid.Row="3"/>
+        <TextBox x:Name="txtCoachName" Height="23" Margin="124,13.2,15.6,0" VerticalAlignment="Top" Grid.Row="1"/>
+        <TextBox x:Name="txtYearOfBirth" Height="23" Margin="124,12.6,15.6,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="2"/>
+        <!--#region Labels -->
+        <!--#endregion -->
+
+    </Grid>
+</Window>

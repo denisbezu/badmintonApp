@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using badmintonDataBase.DataAccess;
 using badmintonDataBase.Models;
+using BadmintonWPF.Helpers;
 
 namespace BadmintonWPF.Views
 {
@@ -79,6 +80,7 @@ namespace BadmintonWPF.Views
         private void tournamentsListView_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             MainPage mainPage = new MainPage();
+            mainPage.CurrentTournament = tournamentsListView.SelectedItem as Tournament;
             mainPage.Show();
             mainPage.Title +="\"" +  (tournamentsListView.SelectedItem as Tournament).TournamentName + "\"";
             this.Close();

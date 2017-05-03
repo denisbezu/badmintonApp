@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using badmintonDataBase.Enums;
 
 namespace badmintonDataBase.Models
 {
@@ -9,6 +10,8 @@ namespace badmintonDataBase.Models
         [Required, MaxLength(30)]
         public string DrawType { get; set; }
         public int? TypeId { get; set; }
+        [MaxLength(20)]
+        public string Sort { get; set; }
         public virtual Type Type { get; set; }
         public int? CategoryId { get; set; }
         public virtual Category Category { get; set; }

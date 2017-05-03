@@ -15,7 +15,7 @@ namespace BadmintonWPF.Views
     /// </summary>
     public partial class Cities : Window, INotifyPropertyChanged
     {
-        private BadmintonContext context;
+        public BadmintonContext Context { get; set; }
         public BindingList<City> CitiesList { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
@@ -33,13 +33,13 @@ namespace BadmintonWPF.Views
                 OnPropertyChanged("SelectedCity");
             }
         }
-        public Cities()
+        public Cities(BadmintonContext context)
         {
             InitializeComponent();
-            context = new BadmintonContext();
-            context.Cities.Load();
+            Context = context;
+            Context.Cities.Load();
             CitiesList = new BindingList<City>();
-            CitiesList = context.Cities.Local.ToBindingList();
+            CitiesList = Context.Cities.Local.ToBindingList();
             citiesListBox.ItemsSource = CitiesList;
         }
         private void btnAdd_Click(object sender, RoutedEventArgs e)
@@ -48,7 +48,7 @@ namespace BadmintonWPF.Views
             {
                 if (txtAdd.Text != "")
                 {
-                    context.Cities.Local.Add(new City() {CityName = txtAdd.Text});
+                    Context.Cities.Local.Add(new City() {CityName = txtAdd.Text});
                     txtAdd.Text = "";
                 }
             }
@@ -63,12 +63,12 @@ namespace BadmintonWPF.Views
             {
                 if (citiesListBox.SelectedItem != null)
                 {
-                    context.Coaches.Where(v => v.CityId  == ((City)citiesListBox.SelectedItem).CityId).Load();
-                    context.Clubs.Where(v => v.CityId == ((City)citiesListBox.SelectedItem).CityId).Load();
-                    context.Players.Where(v => v.CityId == ((City)citiesListBox.SelectedItem).CityId).Load();
-                    context.Judges.Where(v => v.CityId == ((City)citiesListBox.SelectedItem).CityId).Load();
-                    context.Tournaments.Where(v => v.CityId == ((City)citiesListBox.SelectedItem).CityId).Load();
-                    context.Cities.Local.Remove((City) citiesListBox.SelectedItem);
+                    Context.Coaches.Where(v => v.CityId  == ((City)citiesListBox.SelectedItem).CityId).Load();
+                    Context.Clubs.Where(v => v.CityId == ((City)citiesListBox.SelectedItem).CityId).Load();
+                    Context.Players.Where(v => v.CityId == ((City)citiesListBox.SelectedItem).CityId).Load();
+                    Context.Judges.Where(v => v.CityId == ((City)citiesListBox.SelectedItem).CityId).Load();
+                    Context.Tournaments.Where(v => v.CityId == ((City)citiesListBox.SelectedItem).CityId).Load();
+                    Context.Cities.Local.Remove((City) citiesListBox.SelectedItem);
                 }
             }
             catch
@@ -82,7 +82,7 @@ namespace BadmintonWPF.Views
         }
         private void btnOk_Click(object sender, RoutedEventArgs e)
         {
-            context.SaveChanges();
+            Context.SaveChanges();
             Close();
         }
     }

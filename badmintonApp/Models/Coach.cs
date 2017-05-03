@@ -14,5 +14,9 @@ namespace badmintonDataBase.Models
         public int? ClubId { get; set; }
         public virtual Club Club { get; set; }
         public virtual ICollection<Player> Players { get; set; }
+        public override string ToString()
+        {
+            return CoachName;
+        }
     }
 }
