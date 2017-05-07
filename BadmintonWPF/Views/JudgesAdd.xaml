@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BadmintonWPF.Views"
         mc:Ignorable="d"
-        Title="Добавление судьи"  Height="300" Width="300" Icon="/images/volan.png" FontFamily="Roboto Light" FontSize="14" ResizeMode="CanMinimize" >
+        Title="Добавление судьи"  Height="300" Width="330" Icon="/images/volan.png" FontFamily="Roboto Light" FontSize="14" ResizeMode="CanMinimize" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20*"/>
@@ -33,6 +33,7 @@
         <Label Content="Фамилия" HorizontalAlignment="Left" Margin="10,8.6,0,0" Grid.Row="2" VerticalAlignment="Top" Height="33"/>
         <Label Content="Отчество" HorizontalAlignment="Left" Margin="9,6,0,5.6" Grid.Row="3"/>
         <Label Content="Город" HorizontalAlignment="Left" Margin="10,5.4,0,0" Grid.Row="4" VerticalAlignment="Top" Height="33" Width="55"/>
+        <Button x:Name="btnAddCity" Content="+" HorizontalAlignment="Left" Margin="289,9.4,0,0" Grid.Row="4" VerticalAlignment="Top" Width="24" Height="24" Style="{DynamicResource ButtonStyle}" Click="BtnAddCity_OnClick"/>
 
     </Grid>
 </Window>

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BadmintonWPF.Views"
         mc:Ignorable="d"
-        Title="Добавление турнира" Height="350" Width="330" Icon="/images/volan.png" FontFamily="Roboto Light" FontSize="14" ResizeMode="CanMinimize" >
+        Title="Добавление турнира" Height="350" Width="360" Icon="/images/volan.png" FontFamily="Roboto Light" FontSize="14" ResizeMode="CanMinimize" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20*"/>
@@ -34,6 +34,8 @@
         <ComboBox x:Name="cmbBoxCities" HorizontalAlignment="Left" Margin="146,9.8,0,0" VerticalAlignment="Top" Width="154" Style="{DynamicResource ComboBoxStyle}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle}" Grid.Row="3" TabIndex="2"/>
         <DatePicker x:Name="txtStartDate" HorizontalAlignment="Left" Margin="146,10.4,0,0" VerticalAlignment="Top" Width="154" Grid.Row="4" TabIndex="3"/>
         <DatePicker x:Name="txtEndDate" HorizontalAlignment="Left" Margin="146,10.2,0,0" VerticalAlignment="Top" Width="154" Grid.Row="5" TabIndex="4"/>
+        <Button x:Name="btnAddJudge" Content="+" HorizontalAlignment="Left" Margin="315,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="24" Height="24" Style="{DynamicResource ButtonStyle}" Click="btnAddJudge_Click"/>
+        <Button x:Name="btnAddCity" Content="+" HorizontalAlignment="Left" Margin="315,9.8,0,0" Grid.Row="3" VerticalAlignment="Top" Width="24" Height="24" Style="{DynamicResource ButtonStyle}" Click="BtnAddCity_OnClick"/>
 
     </Grid>
 </Window>

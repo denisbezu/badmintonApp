@@ -47,7 +47,7 @@ namespace BadmintonWPF.Views
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            JudgesAdd judgesAdd = new JudgesAdd();
+            JudgesAdd judgesAdd = new JudgesAdd(context);
             judgesAdd.ShowDialog();
             if (judgesAdd.NewJudge != null)
                 context.Judges.Local.Add(judgesAdd.NewJudge);

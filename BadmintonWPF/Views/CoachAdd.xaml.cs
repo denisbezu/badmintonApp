@@ -1,21 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using badmintonDataBase.DataAccess;
 using badmintonDataBase.Models;
-using Type = badmintonDataBase.Models.Type;
 
 namespace BadmintonWPF.Views
 {
@@ -57,6 +45,24 @@ namespace BadmintonWPF.Views
         {
             NewCoach = null;
             Close();
+        }
+
+        private void BtnAddCity_OnClick(object sender, RoutedEventArgs e)
+        {
+            Cities cities = new Cities(context);
+            cities.ShowDialog();
+           
+            context.SaveChanges();
+            cmbBoxCity.ItemsSource = context.Cities.Local.OrderBy(p => p.CityName).ToList();
+        }
+
+        private void BtnAddClub_OnClick(object sender, RoutedEventArgs e)
+        {
+            Clubs clubs = new Clubs();
+            clubs.ShowDialog();
+        
+            context.SaveChanges();
+            cmbBoxClub.ItemsSource = context.Clubs.Local.OrderBy(p => p.ClubName).ToList();
         }
     }
 }

@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BadmintonWPF.Views"
         mc:Ignorable="d"
         Title="Планирование турнира " Height="600" Width="1000" WindowState="Maximized" Icon="/images/volan.png" FontFamily="Roboto Light" FontSize="14" Loaded="Window_Loaded">
     <Grid>
@@ -26,8 +25,8 @@
             </LinearGradientBrush>
         </Grid.Background>
         <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="2" Margin="0,0,3.8,0.2" >
-            <Button x:Name="spiski" Content="СПИСКИ" Margin="30,10" VerticalAlignment="Top" Padding="10" Style="{DynamicResource ButtonStyle}"/>
-            <Button x:Name="setki" Content="СЕТКИ" Margin="30,10" VerticalAlignment="Top" Padding="10" Style="{DynamicResource ButtonStyle}"/>
+            <Button x:Name="spiski" Content="СПИСКИ" Margin="30,10" VerticalAlignment="Top" Padding="10" Style="{DynamicResource ButtonStyle}" Click="spiski_Click"/>
+            <Button x:Name="setki" Content="СЕТКИ" Margin="30,10" VerticalAlignment="Top" Padding="10" Style="{DynamicResource ButtonStyle}" Click="Setki_OnClick"/>
             <Button x:Name="settings" Content="НАСТРОЙКИ" Margin="30,10" VerticalAlignment="Top" Padding="10" Style="{DynamicResource ButtonStyle}"/>
         </StackPanel>
         <Menu FontFamily="Roboto Light" FontSize="14" Grid.ColumnSpan="3" Margin="0,0,-0.4,0" >
@@ -55,96 +54,7 @@
             <MenuItem Header="Справка">
             </MenuItem>
         </Menu>
-        <!--#region Списки -->
-        <Grid Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="4.2,0,-0.4,0.4" Background="#00000000">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="326*"/>
-                <ColumnDefinition Width="5"/>
-                <ColumnDefinition Width="311*"/>
-            </Grid.ColumnDefinitions>
-            <ListView x:Name="playersListView" Grid.Column="0" Style="{DynamicResource ListViewStyle2}">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Имя">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <TextBlock Text="{Binding PlayerSurName}" ></TextBlock>
-                                        <TextBlock Text="{Binding PlayerName}" ></TextBlock>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="Д.р.">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding YearOfBirth}" ></TextBlock>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="Пол">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Sex}" ></TextBlock>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="Разряд">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Grade.GradeName}" ></TextBlock>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="Город">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding City.CityName}" ></TextBlock>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="Школа">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Club.ClubName}" ></TextBlock>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="Союз">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Union.UnionName}" ></TextBlock>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="Тренер">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Coach.CoachName}" ></TextBlock>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                    </GridView>
-                </ListView.View>
-                <ListView.ContextMenu>
-                    <ContextMenu x:Name="context_menu">
-                        <MenuItem x:Name="menu_add" Header="Добавить игрока" Click="Menu_add_OnClick"></MenuItem>
-                    </ContextMenu>
-                </ListView.ContextMenu>
-            </ListView>
-            <GridSplitter Grid.Column="1" Width="5"
-                          VerticalAlignment="Stretch" HorizontalAlignment="Center" Background="Transparent"/>
-            <ListView Grid.Column="2" Style="{DynamicResource ListViewStyle2}" Margin="0,0,1,0">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </Grid>
-        <TextBox x:Name="txtSearch" Grid.Column="1" Height="23" Margin="0,10,2.8,0" Grid.Row="1" TextWrapping="NoWrap" VerticalAlignment="Top" HorizontalAlignment="Right" Width="211" TextChanged="TextBox_TextChanged"/>
-        <Label Content="Поиск" HorizontalAlignment="Right" Margin="0,7,233.8,0" Grid.Row="1" VerticalAlignment="Top" Height="29" Width="50" Grid.Column="1"/>
-        <!--#endregion -->
+        
         <StatusBar Grid.Row="4"  Grid.Column="0" Grid.ColumnSpan="3"/>
         <ListBox x:Name="eventsListBox" ItemsSource="{Binding EventsList}" Grid.Row="3" Grid.Column="0" ItemContainerStyle="{DynamicResource _ListBoxItemStyle}" Margin="10,9.8,9.8,37.4" Background="#00000000" BorderBrush="#FFCBD0C5" SelectionChanged="eventsListBox_SelectionChanged">
             <ListBox.ItemTemplate>
@@ -159,10 +69,12 @@
                             <TextBlock FontSize="16" Text="]"></TextBlock>
                         </StackPanel>
                         <TextBlock FontSize="16" Text="{Binding Path=Category.CategoryName}" />
+                        
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
         <Button x:Name="newEvent_Copy" Content="Редактировать события" Margin="28,0,30,5.4" Style="{DynamicResource ButtonStyle}" Grid.Row="3" Height="27" VerticalAlignment="Bottom" Click="newEvent_Copy_Click"/>
+        <Frame x:Name="changerFrame" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="3" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

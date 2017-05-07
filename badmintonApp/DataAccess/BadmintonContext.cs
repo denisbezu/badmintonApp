@@ -27,14 +27,15 @@ namespace badmintonDataBase.DataAccess
         {
             #region GamesTournament
             modelBuilder.Entity<GamesTournament>()
-                .HasRequired(m => m.PlayersTeam1)
+                .HasRequired(m => m.TeamsTournament1)
                 .WithMany(t => t.FirstPlayer)
-                .HasForeignKey(m => m.PlayersTeam1Id)
+                .HasForeignKey(m => m.TeamsTournament1Id)
                 .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<GamesTournament>()
-                .HasRequired(m => m.PlayersTeam2)
+                .HasRequired(m => m.TeamsTournament2)
                 .WithMany(t => t.SecondPlayer)
-                .HasForeignKey(m => m.PlayersTeam2Id)
+                .HasForeignKey(m => m.TeamsTournament2Id)
                 .WillCascadeOnDelete(false);
             #endregion
 
@@ -130,12 +131,12 @@ namespace badmintonDataBase.DataAccess
                 .HasRequired(m => m.TeamsTournament)
                 .WithMany(t => t.PlayersTeams)
                 .HasForeignKey(m => m.TeamsTournamentId)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(true);
             modelBuilder.Entity<PlayersTeam>()
                 .HasRequired(m => m.Player)
                 .WithMany(t => t.PlayersTeams)
                 .HasForeignKey(m => m.PlayerId)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(true);
             #endregion
 
             #region TeamsTournament

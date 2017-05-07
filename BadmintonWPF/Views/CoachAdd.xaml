@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Добавление события"  Height="300" Width="300" Icon="/images/volan.png" FontFamily="Roboto Light" FontSize="14" ResizeMode="CanMinimize" >
+        Title="Добавление события"  Height="300" Width="330" Icon="/images/volan.png" FontFamily="Roboto Light" FontSize="14" ResizeMode="CanMinimize" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20*"/>
@@ -26,10 +26,12 @@
         <Label Content="ФИО тренера" HorizontalAlignment="Left" Margin="8,9.2,0,0" VerticalAlignment="Top" Grid.Row="1"/>
         <Label Content="Год рождения" HorizontalAlignment="Left" Margin="8,8.6,0,0" VerticalAlignment="Top" Grid.Row="2"/>
         <Label Content="Город" HorizontalAlignment="Left" Margin="8,8,0,0" VerticalAlignment="Top" Grid.Row="3"/>
-        <ComboBox x:Name="cmbBoxClub" Margin="124,10.4,15.6,0" VerticalAlignment="Top" Style="{DynamicResource ComboBoxStyle}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle}" Grid.Row="4"/>
-        <ComboBox x:Name="cmbBoxCity" Margin="124,10,15.6,0" VerticalAlignment="Top" Style="{DynamicResource ComboBoxStyle}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle}" Grid.Row="3"/>
-        <TextBox x:Name="txtCoachName" Height="23" Margin="124,13.2,15.6,0" VerticalAlignment="Top" Grid.Row="1"/>
-        <TextBox x:Name="txtYearOfBirth" Height="23" Margin="124,12.6,15.6,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="2"/>
+        <ComboBox x:Name="cmbBoxClub" Margin="124,10.4,0,0" VerticalAlignment="Top" Style="{DynamicResource ComboBoxStyle}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle}" Grid.Row="4" HorizontalAlignment="Left" Width="154"/>
+        <ComboBox x:Name="cmbBoxCity" Margin="124,10,0,0" VerticalAlignment="Top" Style="{DynamicResource ComboBoxStyle}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle}" Grid.Row="3" HorizontalAlignment="Left" Width="154"/>
+        <TextBox x:Name="txtCoachName" Height="23" Margin="124,13.2,0,0" VerticalAlignment="Top" Grid.Row="1" HorizontalAlignment="Left" Width="154"/>
+        <TextBox x:Name="txtYearOfBirth" Height="23" Margin="124,12.6,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="2" HorizontalAlignment="Left" Width="154"/>
+        <Button x:Name="btnAddCity" Content="+" HorizontalAlignment="Left" Margin="287,10,0,0" Grid.Row="3" VerticalAlignment="Top" Width="24" Height="24" Style="{DynamicResource ButtonStyle}" Click="BtnAddCity_OnClick"/>
+        <Button x:Name="btnAddClub" Content="+" HorizontalAlignment="Left" Margin="287,10.4,0,0" Grid.Row="4" VerticalAlignment="Top" Width="24" Height="24" Style="{DynamicResource ButtonStyle}" Click="BtnAddClub_OnClick"/>
         <!--#region Labels -->
         <!--#endregion -->
 

@@ -1,0 +1,131 @@
+﻿<Page x:Class="BadmintonWPF.Views.ListPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BadmintonWPF.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="500" d:DesignWidth="760"  FontFamily="Roboto Light" FontSize="14"
+      Title="ListPage">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="489*"/>
+            <ColumnDefinition Width="271*"/>
+        </Grid.ColumnDefinitions>
+        <!--#region Списки -->
+        <Grid Background="#00000000" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="451*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="486*"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="269*"/>
+            </Grid.ColumnDefinitions>
+            <ListView x:Name="playersListView" Grid.Column="0" Style="{DynamicResource ListViewStyle2}" PreviewMouseDoubleClick="PlayersListView_OnPreviewMouseDoubleClick" PreviewMouseLeftButtonDown="PlayersListView_OnPreviewMouseLeftButtonDown" Grid.Row="1" Margin="0,0,0.4,0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Имя">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding PlayerSurName}" />
+                                        <TextBlock Text="{Binding PlayerName}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Д.р.">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding YearOfBirth}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Пол">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Sex}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Разряд">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Grade.GradeName}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Город">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding City.CityName}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Школа">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Club.ClubName}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Союз">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Union.UnionName}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Тренер">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Coach.CoachName}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+                <ListView.ContextMenu>
+                    <ContextMenu x:Name="context_menu">
+                        <MenuItem x:Name="menu_add" Header="Добавить игрока" Click="Menu_add_OnClick"/>
+                        <MenuItem x:Name="menu_delete" Header="Удалить игрока" Click="Menu_delete_OnClick"/>
+                        <MenuItem x:Name="menu_edit" Header="Изменить игрока" Click="Menu_edit_OnClick"/>
+                    </ContextMenu>
+                </ListView.ContextMenu>
+            </ListView>
+            <GridSplitter Width="5" VerticalAlignment="Stretch" HorizontalAlignment="Center" Background="Transparent" Grid.Column="1" Grid.Row="1"/>
+            <ListView x:Name="tournamentPlayersListView" AllowDrop="True" Grid.Column="1" Style="{DynamicResource ListViewStyle2}" Margin="4.6,0,1,0" Drop="TournamentPlayersListView_OnDrop" Grid.ColumnSpan="2" Grid.Row="1">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Посев">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding SeedingNumber}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Игрок(и)" Width="200">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding TeamName}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+                <ListView.ContextMenu>
+                    <ContextMenu x:Name="context_menu_right">
+                        <MenuItem x:Name="menu_delete_right" Header="Удалить игрока" Click="Menu_delete_right_OnClick"/>
+                    </ContextMenu>
+                </ListView.ContextMenu>
+            </ListView>
+            <Button Content="Посев" Grid.Column="2" HorizontalAlignment="Left" Margin="18.8,11,0,0" VerticalAlignment="Top" Width="75" Style="{DynamicResource ButtonStyle}"/>
+        </Grid>
+        <TextBox x:Name="txtSearch" Height="23" Margin="0,10,17.8,0" TextWrapping="NoWrap" VerticalAlignment="Top" HorizontalAlignment="Right" Width="211" TextChanged="TxtSearch_OnTextChanged" Grid.Row="0"/>
+        <Label Content="Поиск" HorizontalAlignment="Right" Margin="0,10,244.8,0" VerticalAlignment="Top" Height="30" Width="50" Grid.Row="0"/>
+
+    </Grid>
+</Page>

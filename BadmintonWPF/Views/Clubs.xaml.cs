@@ -87,6 +87,15 @@ namespace BadmintonWPF.Views
             context.SaveChanges();
             Close();
         }
-        
+        private void BtnAddCity_OnClick(object sender, RoutedEventArgs e)
+        {
+            Cities cities = new Cities(context);
+            cities.ShowDialog();
+
+            context.SaveChanges();
+            cmbBoxSelectedCity.ItemsSource = context.Cities.Local.OrderBy(p => p.CityName).ToList();
+            cmbBoxAddCity.ItemsSource = context.Cities.Local.OrderBy(p => p.CityName).ToList();
+
+        }
     }
 }

@@ -97,6 +97,18 @@
     <Compile Include="Migrations\201704271904429_AddSort.Designer.cs">
       <DependentUpon>201704271904429_AddSort.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705032020041_TeamsChangedLinks.cs" />
+    <Compile Include="Migrations\201705032020041_TeamsChangedLinks.Designer.cs">
+      <DependentUpon>201705032020041_TeamsChangedLinks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705041258007_PlayerDelete.cs" />
+    <Compile Include="Migrations\201705041258007_PlayerDelete.Designer.cs">
+      <DependentUpon>201705041258007_PlayerDelete.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705041302025_TeamsTournamentCascadeOnDelete.cs" />
+    <Compile Include="Migrations\201705041302025_TeamsTournamentCascadeOnDelete.Designer.cs">
+      <DependentUpon>201705041302025_TeamsTournamentCascadeOnDelete.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\City.cs" />
@@ -156,6 +168,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704271904429_AddSort.resx">
       <DependentUpon>201704271904429_AddSort.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705032020041_TeamsChangedLinks.resx">
+      <DependentUpon>201705032020041_TeamsChangedLinks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705041258007_PlayerDelete.resx">
+      <DependentUpon>201705041258007_PlayerDelete.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705041302025_TeamsTournamentCascadeOnDelete.resx">
+      <DependentUpon>201705041302025_TeamsTournamentCascadeOnDelete.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

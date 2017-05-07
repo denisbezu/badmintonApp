@@ -59,5 +59,22 @@ namespace BadmintonWPF.Views
                 MessageBox.Show("Неверные данные", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void btnAddJudge_Click(object sender, RoutedEventArgs e)
+        {
+            JudgesAdd judgesAdd = new JudgesAdd(context);
+            judgesAdd.ShowDialog();
+            if (judgesAdd.NewJudge != null)
+                context.Judges.Local.Add(judgesAdd.NewJudge);
+            context.SaveChanges();
+            cmbBoxJudges.ItemsSource = context.Judges.Local.OrderBy(p => p.JudgeLastName).ToList();
+        }
+
+        private void BtnAddCity_OnClick(object sender, RoutedEventArgs e)
+        {
+            Cities cities = new Cities(context);
+            cities.ShowDialog();
+            cmbBoxCities.ItemsSource = context.Cities.Local.OrderBy(p => p.CityName).ToList();
+        }
     }
 }

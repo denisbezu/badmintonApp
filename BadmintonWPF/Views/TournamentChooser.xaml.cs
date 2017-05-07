@@ -1,6 +1,8 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using badmintonDataBase.DataAccess;
@@ -14,6 +16,7 @@ namespace BadmintonWPF.Views
     /// </summary>
     public partial class TournamentChooser : Window, INotifyPropertyChanged
     {
+        private WaitWindow waitWindow;
         private BadmintonContext context;
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
@@ -34,17 +37,50 @@ namespace BadmintonWPF.Views
         public BindingList<Tournament> TournamentsList { get; set; }
         public TournamentChooser()
         {
+            waitWindow = new WaitWindow();
+            waitWindow.Show();
             InitializeComponent();
-            context = new BadmintonContext();
-            context.Tournaments.Load();
-            TournamentsList = new BindingList<Tournament>();
-            TournamentsList = context.Tournaments.Local.ToBindingList();
-            tournamentsListView.ItemsSource = TournamentsList;
-            context.Cities.Load();
-            context.Judges.Load();
-            cmbBoxCities.ItemsSource = context.Cities.Local.OrderBy(p => p.CityName).ToList();
-            cmbBoxJudges.ItemsSource = context.Judges.Local.OrderBy(p => p.JudgeLastName).ToList();
+            LoadWindow();
         }
+        private void LoadWindow()
+        {
+            try
+            {
+                context = new BadmintonContext();
+                if (!TestConnection())
+                    throw new Exception();
+                context.Tournaments.Load();
+                TournamentsList = new BindingList<Tournament>();
+                TournamentsList = context.Tournaments.Local.ToBindingList();
+                tournamentsListView.ItemsSource = TournamentsList;
+                context.Cities.Load();
+                context.Judges.Load();
+                cmbBoxCities.ItemsSource = context.Cities.Local.OrderBy(p => p.CityName).ToList();
+                cmbBoxJudges.ItemsSource = context.Judges.Local.OrderBy(p => p.JudgeLastName).ToList();
+
+            }
+            catch (Exception)
+            {
+                waitWindow.Close();
+                waitWindow = null;
+                MessageBox.Show("Не удалось подключитсья к базе данных. Проверьте интернет соединение", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                Close();
+            }
+            if (waitWindow != null)
+                waitWindow.Close();
+        }
+        private bool TestConnection()
+        {
+            IPStatus status = IPStatus.Unknown;
+            try
+            {
+                status = new Ping().Send("google.com").Status;
+            }
+            catch { }
+
+            return status == IPStatus.Success;
+        }
+
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -79,8 +115,8 @@ namespace BadmintonWPF.Views
 
         private void tournamentsListView_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            MainPage mainPage = new MainPage();
-            mainPage.CurrentTournament = tournamentsListView.SelectedItem as Tournament;
+            MainPage mainPage = new MainPage(tournamentsListView.SelectedItem as Tournament);
+            
             mainPage.Show();
             mainPage.Title +="\"" +  (tournamentsListView.SelectedItem as Tournament).TournamentName + "\"";
             this.Close();

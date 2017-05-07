@@ -46,6 +46,44 @@ namespace BadmintonWPF.Views
             Close();
         }
 
+        #region AddButtons
+
+        private void BtnAddCity_OnClick(object sender, RoutedEventArgs e)
+        {
+            Cities cities = new Cities(context);
+            cities.ShowDialog();
+            context.SaveChanges();
+            cmbBoxCity.ItemsSource = context.Cities.Local.OrderBy(p => p.CityName).ToList();
+        }
+
+        private void BtnAddClub_OnClick(object sender, RoutedEventArgs e)
+        {
+            Clubs clubs = new Clubs();
+            clubs.ShowDialog();
+            context.SaveChanges();
+            cmbBoxClub.ItemsSource = context.Clubs.Local.OrderBy(p => p.ClubName).ToList();
+        }
+
+        private void BtnAddUnion_OnClick(object sender, RoutedEventArgs e)
+        {
+            Unions unions = new Unions();
+            unions.ShowDialog();
+
+            context.SaveChanges();
+            cmbBoxUnion.ItemsSource = context.Unions.Local.OrderBy(p => p.UnionName).ToList();
+        }
+
+        private void BtnAddCoach_OnClick(object sender, RoutedEventArgs e)
+        {
+            CoachAdd coachAdd = new CoachAdd();
+            coachAdd.ShowDialog();
+            if (coachAdd.NewCoach != null)
+                context.Coaches.Local.Add(coachAdd.NewCoach);
+            context.SaveChanges();
+            cmbBoxCoach.ItemsSource = context.Coaches.Local.OrderBy(p => p.CoachName).ToList();
+        }
+
+        #endregion
         private void BtnOk_OnClick(object sender, RoutedEventArgs e)
         {
             try
@@ -69,5 +107,7 @@ namespace BadmintonWPF.Views
                 MessageBox.Show("Неверные данные", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+      
     }
 }

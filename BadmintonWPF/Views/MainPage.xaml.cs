@@ -1,7 +1,12 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections;
+using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 using badmintonDataBase.DataAccess;
 using badmintonDataBase.Enums;
 using badmintonDataBase.Models;
@@ -14,27 +19,58 @@ namespace BadmintonWPF.Views
     /// </summary>
     public partial class MainPage : Window
     {
-        private WorkWithMainPage workMain;
-        private BadmintonContext context;
+        private ListPage _listPage;
+        private DrawsPage _drawsPage;
+        public TornamentPlayersHelper TornamentPlayersHelper { get; set; }
+        public PlayersHelper PlayersHelper { get; set; }
+        public BadmintonContext Context { get; }
+        public EventsHelper EventsHelper { get; set; }
         public Tournament CurrentTournament { get; set; }
-        public MainPage()
+        public MainPage(Tournament tournament)
         {
+            WaitWindow waitWindow = new WaitWindow();
+            waitWindow.Show();
             InitializeComponent();
+            CurrentTournament = tournament;
+            Context = new BadmintonContext();
+            _listPage = new ListPage(this);
+            _drawsPage = new DrawsPage();
+            changerFrame.Navigate(_listPage);
+            #region LoadContext
+            Context.Cities.Load();
+            Context.Grades.Load();
+            Context.Clubs.Load();
+            Context.Coaches.Load();
+            Context.Unions.Load();
+            Context.TeamsTournaments.Load();
+            Context.PlayersTeams.Load();
+            #endregion
+            TornamentPlayersHelper = new TornamentPlayersHelper(Context, CurrentTournament);
+            EventsHelper = new EventsHelper(Context, CurrentTournament);
+            PlayersHelper = new PlayersHelper(Context);
+            Context.Configuration.AutoDetectChangesEnabled = true;
+            EventsHelper.EventsLoad();
+            PlayersHelper.PlayersLoad();
+            TornamentPlayersHelper.TeamTournamentsLoad();
+            eventsListBox.ItemsSource = EventsHelper.EventsList;
+            if (eventsListBox.Items.Count > 0)
+                eventsListBox.SelectedIndex = 0;
+            waitWindow.Close();
         }
         #region MenuEdit
         private void City_OnClick(object sender, RoutedEventArgs e)
         {
-            Cities cities = new Cities(context);
+            Cities cities = new Cities(Context);
             cities.ShowDialog();
         }
         private void Category_OnClick(object sender, RoutedEventArgs e)
         {
-            Categories categories = new Categories(context);
+            Categories categories = new Categories(Context);
             categories.ShowDialog();
         }
         private void Grade_OnClick(object sender, RoutedEventArgs e)
         {
-            Grades grades = new Grades(context);
+            Grades grades = new Grades(Context);
             grades.ShowDialog();
         }
         private void Union_OnClick(object sender, RoutedEventArgs e)
@@ -52,36 +88,14 @@ namespace BadmintonWPF.Views
             JudgesList judgesList = new JudgesList();
             judgesList.ShowDialog();
         }
-        #endregion
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            context = new BadmintonContext();
-            #region LoadContext
-            context.Cities.Load();
-            context.Grades.Load();
-            context.Clubs.Load();
-            context.Coaches.Load();
-            context.Unions.Load();
-            #endregion
-            workMain = new WorkWithMainPage(context, CurrentTournament);
-            context.Configuration.AutoDetectChangesEnabled = true;
-            workMain.EventsLoad();
-            workMain.PlayersLoad();
-            eventsListBox.ItemsSource = workMain.EventsList;
-            if (eventsListBox.Items.Count > 0)
-                eventsListBox.SelectedIndex = 0;
-        }
-        private void newEvent_Copy_Click(object sender, RoutedEventArgs e)
-        {
-            EventList eventList = new EventList(context, workMain.EventsList);
-            eventList.CurrentTournament = workMain.CurrentTournament;
-            eventList.ShowDialog();
-        }
         private void Coach_OnClick(object sender, RoutedEventArgs e)
         {
-            CoachesList coachesList = new CoachesList(context);
+            CoachesList coachesList = new CoachesList(Context);
             coachesList.ShowDialog();
         }
+        #endregion
+        #region MenuFile
+
         private void Open_OnClick(object sender, RoutedEventArgs e)
         {
             TournamentChooser tournamentChooser = new TournamentChooser();
@@ -89,28 +103,33 @@ namespace BadmintonWPF.Views
             Close();
         }
 
+        #endregion
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            
+        }
+        private void newEvent_Copy_Click(object sender, RoutedEventArgs e)
+        {
+            EventList eventList = new EventList(Context, EventsHelper.EventsList);
+            eventList.CurrentTournament = TornamentPlayersHelper.CurrentTournament;
+            eventList.ShowDialog();
+        }
+        //
         private void eventsListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            playersListView.ItemsSource = workMain.EventSelectionChanged(eventsListBox.SelectedItem as Event);
+            _listPage.playersListView.ItemsSource = PlayersHelper.EventSelectionChangedPlayers(eventsListBox.SelectedItem as Event);
+            _listPage.tournamentPlayersListView.ItemsSource =
+                TornamentPlayersHelper.EventSelectionChangedTournament(eventsListBox.SelectedItem as Event);
         }
 
-        private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        private void spiski_Click(object sender, RoutedEventArgs e)
         {
-            playersListView.ItemsSource = workMain.Search(eventsListBox.SelectedItem as Event, txtSearch.Text);
+            changerFrame.Navigate(_listPage);
         }
 
-        private void Menu_add_OnClick(object sender, RoutedEventArgs e)
+        private void Setki_OnClick(object sender, RoutedEventArgs e)
         {
-            PlayerAdd playerAdd = new PlayerAdd();
-            playerAdd.ShowDialog();
-            if (playerAdd.NewPlayer != null)
-            {
-                context.Players.Local.Add(playerAdd.NewPlayer);
-                context.SaveChanges();
-            }
-            playersListView.ItemsSource = null;
-            workMain.RefreshPlayers();
-            playersListView.ItemsSource = workMain.EventSelectionChanged(eventsListBox.SelectedItem as Event);
+            changerFrame.Navigate(_drawsPage);
         }
     }
 }

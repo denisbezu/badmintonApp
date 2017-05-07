@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BadmintonWPF.Views"
         xmlns:System="clr-namespace:System;assembly=mscorlib" xmlns:Enums="clr-namespace:badmintonDataBase.Enums;assembly=badmintonApp" x:Class="BadmintonWPF.Views.EventAdd"
         mc:Ignorable="d"
-        Title="Добавление события"  Height="300" Width="300" Icon="/images/volan.png" FontFamily="Roboto Light" FontSize="14" ResizeMode="CanMinimize" >
+        Title="Добавление события"  Height="300" Width="320" Icon="/images/volan.png" FontFamily="Roboto Light" FontSize="14" ResizeMode="CanMinimize" >
     <Window.Resources>
         <ObjectDataProvider x:Key="valuesSort" MethodName="GetValues"
             ObjectType="{x:Type System:Enum}">
@@ -30,18 +30,18 @@
                 <GradientStop Color="White" Offset="0.997"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <Button x:Name="btnCancel" Content="ОТМЕНА" Margin="0,0,23.6,22.4" Style="{DynamicResource ButtonStyle}" Grid.Row="6" HorizontalAlignment="Right" Width="83" Height="23" VerticalAlignment="Bottom" Click="BtnCancel_OnClick" TabIndex="5"/>
-        <Button x:Name="btnOk" Content="ПРИНЯТЬ" Margin="0,0,124.6,22.4" Style="{DynamicResource ButtonStyle}" Grid.Row="6" HorizontalAlignment="Right" Width="83" Height="23" VerticalAlignment="Bottom" Click="btnOk_Click" TabIndex="4"/>
-        <ComboBox x:Name="cmbBoxType" Margin="125,11.2,14.6,0" VerticalAlignment="Top" Style="{DynamicResource ComboBoxStyle}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle}" Grid.Row="1"/>
+        <Button x:Name="btnCancel" Content="ОТМЕНА" Margin="0,0,25.2,22.4" Style="{DynamicResource ButtonStyle}" Grid.Row="5" HorizontalAlignment="Right" Width="83" Height="23" VerticalAlignment="Bottom" Click="BtnCancel_OnClick" TabIndex="5"/>
+        <Button x:Name="btnOk" Content="ПРИНЯТЬ" Margin="0,0,144.2,22.4" Style="{DynamicResource ButtonStyle}" Grid.Row="5" HorizontalAlignment="Right" Width="83" Height="23" VerticalAlignment="Bottom" Click="btnOk_Click" TabIndex="4"/>
+        <ComboBox x:Name="cmbBoxType" Margin="125,11.2,0,0" VerticalAlignment="Top" Style="{DynamicResource ComboBoxStyle}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle}" Grid.Row="1" HorizontalAlignment="Left" Width="154"/>
         <!--#region Labels -->
         <Label Content="Размер сетки" HorizontalAlignment="Left" Margin="16,5.4,0,0" VerticalAlignment="Top" Grid.Row="4"/>
         <Label Content="Тип сетки" HorizontalAlignment="Left" Margin="16,9.2,0,0" VerticalAlignment="Top" Grid.Row="1"/>
         <Label Content="Категория" HorizontalAlignment="Left" Margin="16,8.6,0,0" VerticalAlignment="Top" Grid.Row="2"/>
         <Label Content="Вид" HorizontalAlignment="Left" Margin="16,8,0,0" VerticalAlignment="Top" Grid.Row="3"/>
         <!--#endregion -->
-        <ComboBox x:Name="cmbBoxCategory" Margin="125,11.6,14.6,0" VerticalAlignment="Top" Style="{DynamicResource ComboBoxStyle}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle}" Grid.Row="2"/>
-        <ComboBox x:Name="cmbBoxCountDraw" ItemsSource="{Binding DrawsType}" Margin="125,11.4,14.6,0" VerticalAlignment="Top" Style="{DynamicResource ComboBoxStyle}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle}" Grid.Row="4"/>
-        <ComboBox x:Name="cmbBoxSort" ItemsSource="{Binding Source={StaticResource valuesSort}}" Margin="125,11,14.6,0" VerticalAlignment="Top" Style="{DynamicResource ComboBoxStyle}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle}" Grid.Row="3"/>
+        <ComboBox x:Name="cmbBoxCategory" Margin="125,11.6,0,0" VerticalAlignment="Top" Style="{DynamicResource ComboBoxStyle}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle}" Grid.Row="2" HorizontalAlignment="Left" Width="154"/>
+        <ComboBox x:Name="cmbBoxCountDraw" ItemsSource="{Binding DrawsType}" Margin="125,11.4,0,0" VerticalAlignment="Top" Style="{DynamicResource ComboBoxStyle}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle}" Grid.Row="4" HorizontalAlignment="Left" Width="154"/>
+        <ComboBox x:Name="cmbBoxSort" ItemsSource="{Binding Source={StaticResource valuesSort}}" Margin="125,11,0,0" VerticalAlignment="Top" Style="{DynamicResource ComboBoxStyle}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle}" Grid.Row="3" HorizontalAlignment="Left" Width="154"/>
 
     </Grid>
 </Window>

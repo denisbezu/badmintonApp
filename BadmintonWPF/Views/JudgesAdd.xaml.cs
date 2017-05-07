@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Linq;
 using System.Windows;
 using badmintonDataBase.DataAccess;
 using badmintonDataBase.Models;
@@ -12,13 +13,14 @@ namespace BadmintonWPF.Views
     public partial class JudgesAdd : Window
     {
         public Judge NewJudge { get; set; }
-        private BadmintonContext context;
-        public JudgesAdd()
+        public BadmintonContext Context { get; set; }
+
+        public JudgesAdd(BadmintonContext context)
         {
             InitializeComponent();
-            context = new BadmintonContext();
-            context.Cities.Load();
-            cmBoxCity.ItemsSource = context.Cities.Local.ToBindingList();
+            Context = context;
+            Context.Cities.Load();
+            cmBoxCity.ItemsSource = Context.Cities.Local.ToBindingList();
         }
 
         private void btnOk_Click(object sender, RoutedEventArgs e)
@@ -44,6 +46,15 @@ namespace BadmintonWPF.Views
         {
             NewJudge = null;
             Close();
+        }
+
+        private void BtnAddCity_OnClick(object sender, RoutedEventArgs e)
+        {
+            Cities cities = new Cities(Context);
+            cities.ShowDialog();
+           
+            Context.SaveChanges();
+            cmBoxCity.ItemsSource = Context.Cities.Local.OrderBy(p => p.CityName).ToList();
         }
     }
 }
