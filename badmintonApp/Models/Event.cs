@@ -17,6 +17,7 @@ namespace badmintonDataBase.Models
         public virtual Category Category { get; set; }
         public int TournamentId { get; set; }
         public virtual Tournament Tournament { get; set; }
+        public bool IsDrawFormed { get; set; }
         public ICollection<TeamsTournament> TeamsTournaments { get; set; }
     }
 }

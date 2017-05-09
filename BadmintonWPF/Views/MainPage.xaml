@@ -73,6 +73,11 @@
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
+            <ListBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Удалить сетку" Click="MenuItem_OnClick"></MenuItem>
+                </ContextMenu>
+            </ListBox.ContextMenu>
         </ListBox>
         <Button x:Name="newEvent_Copy" Content="Редактировать события" Margin="28,0,30,5.4" Style="{DynamicResource ButtonStyle}" Grid.Row="3" Height="27" VerticalAlignment="Bottom" Click="newEvent_Copy_Click"/>
         <Frame x:Name="changerFrame" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="3" NavigationUIVisibility="Hidden"/>

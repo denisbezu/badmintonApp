@@ -1,0 +1,49 @@
+﻿<Window x:Class="BadmintonWPF.Views.Seed"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BadmintonWPF.Views"
+        mc:Ignorable="d"
+        Title="Посев"  Height="400" Width="400" Icon="/images/volan.png" FontFamily="Roboto Light" FontSize="14">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFCAFFC9" Offset="0.016"/>
+                <GradientStop Color="White" Offset="0.997"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Button x:Name="btnOk" Content="ЗАКРЫТЬ" Margin="0,0,21.6,16.4" Style="{DynamicResource ButtonStyle}" Grid.Row="2" HorizontalAlignment="Right" Width="83" Height="23" VerticalAlignment="Bottom" Click="BtnOk_OnClick" TabIndex="4"/>
+        <DataGrid x:Name="gridPlayers" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False" VerticalGridLinesBrush="Transparent">
+            <DataGrid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFCAFFC9" Offset="0.016"/>
+                    <GradientStop Color="White" Offset="0.997"/>
+                </LinearGradientBrush>
+            </DataGrid.Background>
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                        </Trigger>
+                        
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.CellStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Номер посева" Binding="{Binding SeedingNumber}"></DataGridTextColumn>
+                <DataGridTextColumn IsReadOnly="True" Header="Игрок(-и)" Binding="{Binding TeamName}" Width="100*"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Автоматический посев" HorizontalAlignment="Left" Margin="208,10,0,0" VerticalAlignment="Top" Width="164" Style="{DynamicResource ButtonStyle}" Click="Button_Click"/>
+
+    </Grid>
+</Window>

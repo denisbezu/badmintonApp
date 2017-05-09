@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using badmintonDataBase.Models;
+using BadmintonWPF.Helpers;
 
 namespace BadmintonWPF.Views
 {
@@ -20,9 +22,20 @@ namespace BadmintonWPF.Views
     /// </summary>
     public partial class DrawsPage : Page
     {
-        public DrawsPage()
+        public DrawsFormer DrawsFormer { get; set; }
+        public MainPage MainPage { get; set; }
+        public DrawsPage(MainPage mainPage)
         {
             InitializeComponent();
+            MainPage = mainPage;
+            DrawsFormer = new DrawsFormer(mainPage.Context);
+            
+        }
+        public void EventChangedDrawing()
+        {
+            DrawsFormer.SelectedEvent = MainPage.eventsListBox.SelectedItem as Event;
+            DrawsFormer.SelectedCanvas = MainPage.DrawsPage.osn_canvas;
+            DrawsFormer.EventChanged(MainPage.eventsListBox.SelectedItem as Event, osn_canvas);
         }
     }
 }

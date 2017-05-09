@@ -19,8 +19,9 @@ namespace BadmintonWPF.Views
     /// </summary>
     public partial class MainPage : Window
     {
-        private ListPage _listPage;
-        private DrawsPage _drawsPage;
+        public ListPage ListPage { get; set; }
+        public Nums Nums { get; set; }
+        public DrawsPage DrawsPage { get; set; }
         public TornamentPlayersHelper TornamentPlayersHelper { get; set; }
         public PlayersHelper PlayersHelper { get; set; }
         public BadmintonContext Context { get; }
@@ -32,10 +33,11 @@ namespace BadmintonWPF.Views
             waitWindow.Show();
             InitializeComponent();
             CurrentTournament = tournament;
+            Nums = new Nums();
             Context = new BadmintonContext();
-            _listPage = new ListPage(this);
-            _drawsPage = new DrawsPage();
-            changerFrame.Navigate(_listPage);
+            ListPage = new ListPage(this);
+            DrawsPage = new DrawsPage(this);
+            changerFrame.Navigate(ListPage);
             #region LoadContext
             Context.Cities.Load();
             Context.Grades.Load();
@@ -114,22 +116,37 @@ namespace BadmintonWPF.Views
             eventList.CurrentTournament = TornamentPlayersHelper.CurrentTournament;
             eventList.ShowDialog();
         }
-        //
         private void eventsListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            _listPage.playersListView.ItemsSource = PlayersHelper.EventSelectionChangedPlayers(eventsListBox.SelectedItem as Event);
-            _listPage.tournamentPlayersListView.ItemsSource =
+            ListPage.playersListView.ItemsSource = PlayersHelper.EventSelectionChangedPlayers(eventsListBox.SelectedItem as Event);
+            ListPage.tournamentPlayersListView.ItemsSource =
                 TornamentPlayersHelper.EventSelectionChangedTournament(eventsListBox.SelectedItem as Event);
+            DrawsPage.EventChangedDrawing();
         }
-
         private void spiski_Click(object sender, RoutedEventArgs e)
         {
-            changerFrame.Navigate(_listPage);
+            changerFrame.Navigate(ListPage);
         }
-
         private void Setki_OnClick(object sender, RoutedEventArgs e)
         {
-            changerFrame.Navigate(_drawsPage);
+            changerFrame.Navigate(DrawsPage);
+            DrawsPage.EventChangedDrawing();
+        }
+
+        private void MenuItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            if ((eventsListBox.SelectedItem as Event).IsDrawFormed == true)
+            {
+                var eventId = (eventsListBox.SelectedItem as Event).EventId;
+                Context.GamesTournaments.Where(p => p.EventId == eventId).Load();
+                foreach (var gamesTournament in Context.GamesTournaments.Where(p => p.EventId == eventId).ToList())
+                {
+                    Context.GamesTournaments.Local.Remove(gamesTournament);
+                }
+                (eventsListBox.SelectedItem as Event).IsDrawFormed = false;
+                DrawsPage.EventChangedDrawing();
+            }
+            Context.SaveChanges();
         }
     }
 }

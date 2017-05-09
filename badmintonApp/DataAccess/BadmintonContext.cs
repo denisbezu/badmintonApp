@@ -20,20 +20,20 @@ namespace badmintonDataBase.DataAccess
         public DbSet<Stage> Stages { get; set; }
         public DbSet<Tournament> Tournaments { get; set; }
         public DbSet<TeamsTournament> TeamsTournaments { get; set; }
-        public DbSet<GamesTournament> GameSingles { get; set; }
+        public DbSet<GamesTournament> GamesTournaments { get; set; }
         public DbSet<PlayersTeam> PlayersTeams { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             #region GamesTournament
             modelBuilder.Entity<GamesTournament>()
-                .HasRequired(m => m.TeamsTournament1)
+                .HasOptional(m => m.TeamsTournament1)
                 .WithMany(t => t.FirstPlayer)
                 .HasForeignKey(m => m.TeamsTournament1Id)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<GamesTournament>()
-                .HasRequired(m => m.TeamsTournament2)
+                .HasOptional(m => m.TeamsTournament2)
                 .WithMany(t => t.SecondPlayer)
                 .HasForeignKey(m => m.TeamsTournament2Id)
                 .WillCascadeOnDelete(false);

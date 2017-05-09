@@ -62,8 +62,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helpers\DrawsFormer.cs" />
     <Compile Include="Helpers\EventListHelper.cs" />
     <Compile Include="Helpers\EventsHelper.cs" />
+    <Compile Include="Helpers\Nums.cs" />
     <Compile Include="Helpers\PlayersHelper.cs" />
     <Compile Include="Helpers\TornamentPlayersHelper.cs" />
     <Compile Include="Views\CoachAdd.xaml.cs">
@@ -90,11 +92,17 @@
     <Compile Include="Views\DrawsPage.xaml.cs">
       <DependentUpon>DrawsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MatchInfo.xaml.cs">
+      <DependentUpon>MatchInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PlayerAdd.xaml.cs">
       <DependentUpon>PlayerAdd.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PlayerEdit.xaml.cs">
       <DependentUpon>PlayerEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Seed.xaml.cs">
+      <DependentUpon>Seed.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TournamentAdd.xaml.cs">
       <DependentUpon>TournamentAdd.xaml</DependentUpon>
@@ -153,11 +161,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\MatchInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PlayerAdd.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PlayerEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Seed.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

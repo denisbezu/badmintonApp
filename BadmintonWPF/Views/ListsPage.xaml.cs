@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -46,14 +48,12 @@ namespace BadmintonWPF.Views
             tournamentPlayersListView.ItemsSource = null;
             MainPage.TornamentPlayersHelper.RefreshTournamentPlayers();
             tournamentPlayersListView.ItemsSource = MainPage.TornamentPlayersHelper.EventSelectionChangedTournament(MainPage.eventsListBox.SelectedItem as Event);
-
         }
 
         private void TxtSearch_OnTextChanged(object sender, TextChangedEventArgs e)
         {
                 playersListView.ItemsSource = MainPage.PlayersHelper.Search(MainPage.eventsListBox.SelectedItem as Event, txtSearch.Text);   
         }
-
         #region LeftList
         private void Menu_add_OnClick(object sender, RoutedEventArgs e)
         {
@@ -105,5 +105,34 @@ namespace BadmintonWPF.Views
         }
 
         #endregion
+        private void BtnSeed_OnClick(object sender, RoutedEventArgs e)
+        {
+            Seed seed = new Seed(MainPage.Context, MainPage.eventsListBox.SelectedItem as Event);
+            seed.ShowDialog();
+            tournamentPlayersListView.ItemsSource = null;
+            MainPage.TornamentPlayersHelper.RefreshTournamentPlayers();
+            tournamentPlayersListView.ItemsSource = MainPage.TornamentPlayersHelper.EventSelectionChangedTournament(MainPage.eventsListBox.SelectedItem as Event);
+        }
+        private List<int> SelectedNum(Event eEvent)
+        {
+            switch (int.Parse(eEvent.DrawType))
+            {
+                case 64: return MainPage.Nums.Nums64;
+                case 32: return MainPage.Nums.Nums32;
+                case 16: return MainPage.Nums.Nums16;
+                case 8: return MainPage.Nums.Nums8;
+                default: return new List<int>();
+            }
+        }
+
+        private void BtnSeed_Copy_OnClick(object sender, RoutedEventArgs e)
+        {
+            var selectedEvent = MainPage.Context.Events.Local
+                .Where(p => p.EventId == (MainPage.eventsListBox.SelectedItem as Event).EventId).FirstOrDefault();
+            if (selectedEvent.IsDrawFormed == false)
+                MainPage.DrawsPage.DrawsFormer.FirstRoundGamesFormer(MainPage.eventsListBox.SelectedItem as Event, SelectedNum(MainPage.eventsListBox.SelectedItem as Event));
+            selectedEvent.IsDrawFormed = true;
+            MainPage.Context.SaveChanges();
+        }
     }
 }

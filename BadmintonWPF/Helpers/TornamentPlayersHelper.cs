@@ -26,9 +26,8 @@ namespace BadmintonWPF.Helpers
         }
         public void TeamTournamentsLoad()
         {
-            TeamsTournamentList = new BindingList<TeamsTournament>();
             Context.TeamsTournaments.Where(p => p.Event.TournamentId == CurrentTournament.TournamentId).Load();
-            TeamsTournamentList = Context.TeamsTournaments.Local.ToBindingList();
+            TeamsTournamentList = new BindingList<TeamsTournament>(Context.TeamsTournaments.Local.OrderBy(p => p.SeedingNumber).ToList());            
         }
         public BindingList<TeamsTournament> EventSelectionChangedTournament(Event selectedEvent)
         {

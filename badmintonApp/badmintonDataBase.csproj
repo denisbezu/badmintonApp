@@ -109,6 +109,30 @@
     <Compile Include="Migrations\201705041302025_TeamsTournamentCascadeOnDelete.Designer.cs">
       <DependentUpon>201705041302025_TeamsTournamentCascadeOnDelete.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705080833553_ForPlaceAdd.cs" />
+    <Compile Include="Migrations\201705080833553_ForPlaceAdd.Designer.cs">
+      <DependentUpon>201705080833553_ForPlaceAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705080843138_IsDrawFormedAdd.cs" />
+    <Compile Include="Migrations\201705080843138_IsDrawFormedAdd.Designer.cs">
+      <DependentUpon>201705080843138_IsDrawFormedAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705080929506_PlaceInDrawAdd.cs" />
+    <Compile Include="Migrations\201705080929506_PlaceInDrawAdd.Designer.cs">
+      <DependentUpon>201705080929506_PlaceInDrawAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705081129412_fdsf.cs" />
+    <Compile Include="Migrations\201705081129412_fdsf.Designer.cs">
+      <DependentUpon>201705081129412_fdsf.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705081131303_fdsfafs.cs" />
+    <Compile Include="Migrations\201705081131303_fdsfafs.Designer.cs">
+      <DependentUpon>201705081131303_fdsfafs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705081306044_eveveve.cs" />
+    <Compile Include="Migrations\201705081306044_eveveve.Designer.cs">
+      <DependentUpon>201705081306044_eveveve.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\City.cs" />
@@ -177,6 +201,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705041302025_TeamsTournamentCascadeOnDelete.resx">
       <DependentUpon>201705041302025_TeamsTournamentCascadeOnDelete.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705080833553_ForPlaceAdd.resx">
+      <DependentUpon>201705080833553_ForPlaceAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705080843138_IsDrawFormedAdd.resx">
+      <DependentUpon>201705080843138_IsDrawFormedAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705080929506_PlaceInDrawAdd.resx">
+      <DependentUpon>201705080929506_PlaceInDrawAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705081129412_fdsf.resx">
+      <DependentUpon>201705081129412_fdsf.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705081131303_fdsfafs.resx">
+      <DependentUpon>201705081131303_fdsfafs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705081306044_eveveve.resx">
+      <DependentUpon>201705081306044_eveveve.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

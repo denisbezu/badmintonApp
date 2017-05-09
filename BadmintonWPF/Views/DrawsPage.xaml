@@ -5,11 +5,26 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BadmintonWPF.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      d:DesignHeight="300" d:DesignWidth="300"  FontFamily="Roboto Light" FontSize="14" 
       Title="DrawsPage">
 
     <Grid>
-        <ComboBox x:Name="Box" HorizontalAlignment="Left" Margin="79,155,0,0" VerticalAlignment="Top" Width="120"/>
+        <TabControl x:Name="tab_setki">
+            <TabItem Header="Основная сетка">
+                <Grid Background="#FFE5E5E5">
+                    <ScrollViewer HorizontalScrollBarVisibility="Visible">
+                        <Canvas x:Name="osn_canvas" Width="2000" Height="2000" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                            <Canvas.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFCDFDCC" Offset="0.016"/>
+                                    <GradientStop Color="#FFE9F9E0" Offset="0.997"/>
+                                </LinearGradientBrush>
+                            </Canvas.Background>
+                        </Canvas>                          
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+        </TabControl>
 
     </Grid>
 </Page>

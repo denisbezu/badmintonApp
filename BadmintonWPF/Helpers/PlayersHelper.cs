@@ -24,9 +24,9 @@ namespace BadmintonWPF.Helpers
         }
         public void PlayersLoad()
         {
-            PlayersList = new BindingList<Player>();
             Context.Players.Load();
-            PlayersList = Context.Players.Local.ToBindingList();
+            PlayersList = new BindingList<Player>(Context.Players.Local.OrderBy(p => p.YearOfBirth).ThenBy(p => p.PlayerSurName).ToList());
+            
         }
         public BindingList<Player> EventSelectionChangedPlayers(Event selectedEvent)
         {
