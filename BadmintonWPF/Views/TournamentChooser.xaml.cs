@@ -47,8 +47,8 @@ namespace BadmintonWPF.Views
             try
             {
                 context = new BadmintonContext();
-                if (!TestConnection())
-                    throw new Exception();
+                //if (!TestConnection())
+                //    throw new Exception();
                 context.Tournaments.Load();
                 TournamentsList = new BindingList<Tournament>();
                 TournamentsList = context.Tournaments.Local.ToBindingList();
@@ -69,17 +69,17 @@ namespace BadmintonWPF.Views
             if (waitWindow != null)
                 waitWindow.Close();
         }
-        private bool TestConnection()
-        {
-            IPStatus status = IPStatus.Unknown;
-            try
-            {
-                status = new Ping().Send("google.com").Status;
-            }
-            catch { }
+        //private bool TestConnection()
+        //{
+        //    IPStatus status = IPStatus.Unknown;
+        //    try
+        //    {
+        //        status = new Ping().Send("google.com").Status;
+        //    }
+        //    catch { }
 
-            return status == IPStatus.Success;
-        }
+        //    return status == IPStatus.Success;
+        //}
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {

@@ -29,7 +29,15 @@ namespace BadmintonWPF.Views
             InitializeComponent();
             MainPage = mainPage;
             DrawsFormer = new DrawsFormer(mainPage.Context);
-            
+            DrawsFormer.TabControl = tab_setki;
+            // при добавление в событие нужно еще добавлять сюда
+
+            foreach (var eevent in MainPage.eventsListBox.Items)
+            {
+                if ((eevent as Event).Type.TypeName.Equals("Одиночка"))
+                    DrawsFormer.CanvasDictionary.Add(eevent as Event, new Dictionary<string, Canvas>());
+            }
+
         }
         public void EventChangedDrawing()
         {

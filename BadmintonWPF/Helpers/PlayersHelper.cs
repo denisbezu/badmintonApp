@@ -26,11 +26,12 @@ namespace BadmintonWPF.Helpers
         {
             Context.Players.Load();
             PlayersList = new BindingList<Player>(Context.Players.Local.OrderBy(p => p.YearOfBirth).ThenBy(p => p.PlayerSurName).ToList());
-            
+
         }
         public BindingList<Player> EventSelectionChangedPlayers(Event selectedEvent)
         {
             BindingList<Player> itemSource;
+
             if (selectedEvent.Type.TypeName.Equals("Микст"))
             {
                 itemSource = new BindingList<Player>(PlayersList);
@@ -43,6 +44,8 @@ namespace BadmintonWPF.Helpers
             {
                 itemSource = new BindingList<Player>(PlayersList.Where(p => p.Sex.Equals("Мужской")).ToList());
             }
+
+
             return itemSource;
         }
         public BindingList<Player> Search(Event selectedEvent, string text)

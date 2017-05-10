@@ -27,12 +27,13 @@ namespace BadmintonWPF.Helpers
         public void TeamTournamentsLoad()
         {
             Context.TeamsTournaments.Where(p => p.Event.TournamentId == CurrentTournament.TournamentId).Load();
-            TeamsTournamentList = new BindingList<TeamsTournament>(Context.TeamsTournaments.Local.OrderBy(p => p.SeedingNumber).ToList());            
+            TeamsTournamentList = new BindingList<TeamsTournament>(Context.TeamsTournaments.Local.OrderBy(p => p.SeedingNumber).ToList());
         }
         public BindingList<TeamsTournament> EventSelectionChangedTournament(Event selectedEvent)
         {
-            BindingList<TeamsTournament> itemSource;
+            BindingList<TeamsTournament> itemSource = null;
             itemSource = new BindingList<TeamsTournament>(TeamsTournamentList.Where(p => p.EventId == selectedEvent.EventId).ToList());
+
             return itemSource;
         }
         public void RefreshTournamentPlayers()
@@ -131,7 +132,7 @@ namespace BadmintonWPF.Helpers
         {
             if (eEvent.Type.TypeName.Equals("Одиночка"))
                 TournamentSoloPlayerAdd(player, eEvent);
-            else 
+            else
                 TournamentDoublesPlayerAdd(player, eEvent);
         }
         public void DeleteRightPlayer(TeamsTournament player)

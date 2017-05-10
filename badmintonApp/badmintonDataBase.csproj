@@ -133,6 +133,14 @@
     <Compile Include="Migrations\201705081306044_eveveve.Designer.cs">
       <DependentUpon>201705081306044_eveveve.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705091725247_FalseAdd.cs" />
+    <Compile Include="Migrations\201705091725247_FalseAdd.Designer.cs">
+      <DependentUpon>201705091725247_FalseAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705091732521_ADdGames.cs" />
+    <Compile Include="Migrations\201705091732521_ADdGames.Designer.cs">
+      <DependentUpon>201705091732521_ADdGames.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\City.cs" />
@@ -219,6 +227,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705081306044_eveveve.resx">
       <DependentUpon>201705081306044_eveveve.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705091725247_FalseAdd.resx">
+      <DependentUpon>201705091725247_FalseAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705091732521_ADdGames.resx">
+      <DependentUpon>201705091732521_ADdGames.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

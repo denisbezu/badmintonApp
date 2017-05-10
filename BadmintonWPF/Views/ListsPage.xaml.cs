@@ -52,7 +52,7 @@ namespace BadmintonWPF.Views
 
         private void TxtSearch_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-                playersListView.ItemsSource = MainPage.PlayersHelper.Search(MainPage.eventsListBox.SelectedItem as Event, txtSearch.Text);   
+            playersListView.ItemsSource = MainPage.PlayersHelper.Search(MainPage.eventsListBox.SelectedItem as Event, txtSearch.Text);
         }
         #region LeftList
         private void Menu_add_OnClick(object sender, RoutedEventArgs e)
@@ -130,7 +130,20 @@ namespace BadmintonWPF.Views
             var selectedEvent = MainPage.Context.Events.Local
                 .Where(p => p.EventId == (MainPage.eventsListBox.SelectedItem as Event).EventId).FirstOrDefault();
             if (selectedEvent.IsDrawFormed == false)
+            {
                 MainPage.DrawsPage.DrawsFormer.FirstRoundGamesFormer(MainPage.eventsListBox.SelectedItem as Event, SelectedNum(MainPage.eventsListBox.SelectedItem as Event));
+                if (selectedEvent.Type.TypeName.Equals("Одиночка"))
+                {
+                    int n = int.Parse(selectedEvent.DrawType) / 2, i = 0;
+                    while (n > 2)
+                    {
+                        MainPage.DrawsPage.DrawsFormer.GamesForLoosersFormer(selectedEvent, n, MainPage.DrawsPage.DrawsFormer.ForPlaceCalculate(MainPage.DrawsPage.DrawsFormer.CanvasDictionary[selectedEvent].ElementAt(i).Key));
+                        n /= 2;
+                        i++;
+                    }
+                }
+            }
+
             selectedEvent.IsDrawFormed = true;
             MainPage.Context.SaveChanges();
         }

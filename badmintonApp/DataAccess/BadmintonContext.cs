@@ -145,7 +145,12 @@ namespace badmintonDataBase.DataAccess
                 .HasRequired(m => m.Event)
                 .WithMany(t => t.TeamsTournaments)
                 .HasForeignKey(m => m.EventId)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(true);
+            modelBuilder.Entity<GamesTournament>()
+                .HasRequired(m => m.Event)
+                .WithMany(t => t.GamesTournaments)
+                .HasForeignKey(m => m.EventId)
+                .WillCascadeOnDelete(true);
 
             #endregion
 

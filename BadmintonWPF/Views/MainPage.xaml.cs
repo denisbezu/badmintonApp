@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace BadmintonWPF.Views
             Nums = new Nums();
             Context = new BadmintonContext();
             ListPage = new ListPage(this);
-            DrawsPage = new DrawsPage(this);
+            
             changerFrame.Navigate(ListPage);
             #region LoadContext
             Context.Cities.Load();
@@ -55,8 +56,10 @@ namespace BadmintonWPF.Views
             PlayersHelper.PlayersLoad();
             TornamentPlayersHelper.TeamTournamentsLoad();
             eventsListBox.ItemsSource = EventsHelper.EventsList;
+            DrawsPage = new DrawsPage(this);
             if (eventsListBox.Items.Count > 0)
                 eventsListBox.SelectedIndex = 0;
+            
             waitWindow.Close();
         }
         #region MenuEdit
@@ -115,6 +118,13 @@ namespace BadmintonWPF.Views
             EventList eventList = new EventList(Context, EventsHelper.EventsList);
             eventList.CurrentTournament = TornamentPlayersHelper.CurrentTournament;
             eventList.ShowDialog();
+            if (eventList.AddedEvents.Count > 0)
+            {
+                foreach (var eventListAddedEvent in eventList.AddedEvents)
+                {
+                    DrawsPage.DrawsFormer.CanvasDictionary.Add(eventListAddedEvent, new Dictionary<string, Canvas>());
+                }
+            }
         }
         private void eventsListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
@@ -122,6 +132,7 @@ namespace BadmintonWPF.Views
             ListPage.tournamentPlayersListView.ItemsSource =
                 TornamentPlayersHelper.EventSelectionChangedTournament(eventsListBox.SelectedItem as Event);
             DrawsPage.EventChangedDrawing();
+            
         }
         private void spiski_Click(object sender, RoutedEventArgs e)
         {

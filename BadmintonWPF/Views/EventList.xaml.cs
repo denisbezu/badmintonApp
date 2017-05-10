@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -33,9 +34,11 @@ namespace BadmintonWPF.Views
             }
         }
         public BindingList<Event> EventsList { get; set; }
+        public List<Event> AddedEvents { get; set; }
         public EventList(BadmintonContext context, BindingList<Event> bindingListEvents)
         {
             InitializeComponent();
+            AddedEvents = new List<Event>();
             EventsList = bindingListEvents;
             Context = context;
         }
@@ -80,6 +83,7 @@ namespace BadmintonWPF.Views
             {
                 eventAdd.NewEvent.TournamentId = CurrentTournament.TournamentId;
                 Context.Events.Local.Add(eventAdd.NewEvent);
+                AddedEvents.Add(eventAdd.NewEvent);
                 Context.Entry(eventAdd.NewEvent).State = EntityState.Added;
                 Context.SaveChanges();
             }
