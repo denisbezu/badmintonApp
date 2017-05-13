@@ -122,7 +122,7 @@ namespace BadmintonWPF.Views
             {
                 foreach (var eventListAddedEvent in eventList.AddedEvents)
                 {
-                    DrawsPage.DrawsFormer.CanvasDictionary.Add(eventListAddedEvent, new Dictionary<string, Canvas>());
+                    DrawsPage.DrawsFormer.TabsWorker.CanvasDictionary.Add(eventListAddedEvent, new Dictionary<string, Canvas>());
                 }
             }
         }

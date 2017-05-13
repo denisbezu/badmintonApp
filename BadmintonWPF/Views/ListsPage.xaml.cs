@@ -137,7 +137,7 @@ namespace BadmintonWPF.Views
                     int n = int.Parse(selectedEvent.DrawType) / 2, i = 0;
                     while (n > 2)
                     {
-                        MainPage.DrawsPage.DrawsFormer.GamesForLoosersFormer(selectedEvent, n, MainPage.DrawsPage.DrawsFormer.ForPlaceCalculate(MainPage.DrawsPage.DrawsFormer.CanvasDictionary[selectedEvent].ElementAt(i).Key));
+                        MainPage.DrawsPage.DrawsFormer.GamesForLoosersFormer(selectedEvent, n, MainPage.DrawsPage.DrawsFormer.ForPlaceCalculate(MainPage.DrawsPage.DrawsFormer.TabsWorker.CanvasDictionary[selectedEvent].ElementAt(i).Key));
                         n /= 2;
                         i++;
                     }
