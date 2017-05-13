@@ -64,6 +64,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helpers\DrawsFormer.cs" />
+    <Compile Include="Helpers\DrawsHelpers\CalcsForDraws.cs" />
     <Compile Include="Helpers\DrawsHelpers\TabsWorker.cs" />
     <Compile Include="Helpers\EventListHelper.cs" />
     <Compile Include="Helpers\EventsHelper.cs" />

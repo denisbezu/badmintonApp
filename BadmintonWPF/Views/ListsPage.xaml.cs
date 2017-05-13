@@ -131,7 +131,7 @@ namespace BadmintonWPF.Views
                 .Where(p => p.EventId == (MainPage.eventsListBox.SelectedItem as Event).EventId).FirstOrDefault();
             if (selectedEvent.IsDrawFormed == false)
             {
-                MainPage.DrawsPage.DrawsFormer.FirstRoundGamesFormer(MainPage.eventsListBox.SelectedItem as Event, SelectedNum(MainPage.eventsListBox.SelectedItem as Event));
+                MainPage.DrawsPage.DrawsFormer.FirstRoundGamesFormer(SelectedNum(MainPage.eventsListBox.SelectedItem as Event));
                 if (selectedEvent.Type.TypeName.Equals("Одиночка"))
                 {
                     int n = int.Parse(selectedEvent.DrawType) / 2, i = 0;
