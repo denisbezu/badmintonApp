@@ -23,7 +23,7 @@
                 <GradientStop Color="White" Offset="0.997"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <ListBox x:Name="citiesListBox"  SelectedItem="{Binding SelectedCity}" ItemContainerStyle="{DynamicResource _ListBoxItemStyle}" Margin="10,1.2,20,10.4" BorderBrush="#FFDCFFCA" Grid.RowSpan="3" SelectedIndex="0" Grid.Row="1">
+        <ListBox x:Name="citiesListBox" SelectedItem="{Binding SelectedCity}" ItemContainerStyle="{DynamicResource _ListBoxItemStyle}" Margin="10,1.2,20,10.4" BorderBrush="#FFDCFFCA" Grid.RowSpan="3" SelectedIndex="0" Grid.Row="1">
             <ListBox.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFEAFFD9" Offset="0"/>

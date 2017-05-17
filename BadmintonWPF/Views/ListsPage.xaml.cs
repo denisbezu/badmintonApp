@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,12 +17,21 @@ namespace BadmintonWPF.Views
     public partial class ListPage : Page
     {
         public MainPage MainPage { get; set; }
+        public List<Category> CategoryBoxItems { get; set; }
         public ListPage(MainPage mainPage)
         {
             InitializeComponent();
+            CategoryBoxItems = new List<Category>();
             MainPage = mainPage;
-        }
+            MainPage.Context.Categories.Load();
+            var allCategories = MainPage.Context.Categories.Local.OrderBy(p => p.CategoryName).ToList();
+            foreach (var category in allCategories)
+            {
+                CategoryBoxItems.Add(category);
+            }
+            cmbBoxCategory.ItemsSource = CategoryBoxItems;
 
+        }
         private void PlayersListView_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             ListView parent = (ListView)sender;
@@ -33,7 +43,6 @@ namespace BadmintonWPF.Views
                 DragDrop.DoDragDrop(parent, data, DragDropEffects.Move);
             }
         }
-
         private void PlayersListView_OnPreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             MainPage.TornamentPlayersHelper.TournamentPlayerAdd(playersListView.SelectedItem as Player, MainPage.eventsListBox.SelectedItem as Event);
@@ -41,7 +50,6 @@ namespace BadmintonWPF.Views
             MainPage.TornamentPlayersHelper.RefreshTournamentPlayers();
             tournamentPlayersListView.ItemsSource = MainPage.TornamentPlayersHelper.EventSelectionChangedTournament(MainPage.eventsListBox.SelectedItem as Event);
         }
-
         private void TournamentPlayersListView_OnDrop(object sender, DragEventArgs e)
         {
             MainPage.TornamentPlayersHelper.TournamentPlayerAdd(playersListView.SelectedItem as Player, MainPage.eventsListBox.SelectedItem as Event);
@@ -49,7 +57,6 @@ namespace BadmintonWPF.Views
             MainPage.TornamentPlayersHelper.RefreshTournamentPlayers();
             tournamentPlayersListView.ItemsSource = MainPage.TornamentPlayersHelper.EventSelectionChangedTournament(MainPage.eventsListBox.SelectedItem as Event);
         }
-
         private void TxtSearch_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             playersListView.ItemsSource = MainPage.PlayersHelper.Search(MainPage.eventsListBox.SelectedItem as Event, txtSearch.Text);
@@ -124,8 +131,7 @@ namespace BadmintonWPF.Views
                 default: return new List<int>();
             }
         }
-
-        private void BtnSeed_Copy_OnClick(object sender, RoutedEventArgs e)
+        private void DrawsForm_OnClick(object sender, RoutedEventArgs e)
         {
             var selectedEvent = MainPage.Context.Events.Local
                 .Where(p => p.EventId == (MainPage.eventsListBox.SelectedItem as Event).EventId).FirstOrDefault();
@@ -143,9 +149,28 @@ namespace BadmintonWPF.Views
                     }
                 }
             }
-
-            selectedEvent.IsDrawFormed = true;
+            if (!selectedEvent.IsDrawFormed)
+            {
+                MessageBox.Show(
+                    "Сетка для события " + selectedEvent.Sort + " " + selectedEvent.Category.CategoryName + "[" +
+                    selectedEvent.DrawType + "] (" + selectedEvent.Type.TypeName + ") сформирована", "Создание сетки",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                selectedEvent.IsDrawFormed = true;
+            }
+            else
+            {
+                MessageBox.Show("Сетка уже была сформирована раньше!", "Создание сетки", MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+            }
+            
+            
             MainPage.Context.SaveChanges();
+        }
+
+        private void cmbBoxCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            playersListView.ItemsSource = MainPage.PlayersHelper.ComboBoxChangedValue(MainPage.eventsListBox.SelectedItem as Event,
+                cmbBoxCategory.SelectedValue as Category);
         }
     }
 }

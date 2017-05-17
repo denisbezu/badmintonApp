@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using badmintonDataBase.DataAccess;
-using badmintonDataBase.Enums;
 using badmintonDataBase.Models;
 using BadmintonWPF.Helpers;
+using Gat.Controls;
 
 namespace BadmintonWPF.Views
 {
@@ -20,6 +16,9 @@ namespace BadmintonWPF.Views
     /// </summary>
     public partial class MainPage : Window
     {
+        #region Properties&Variables
+        AboutControlView about;
+        AboutControlViewModel vm;
         public ListPage ListPage { get; set; }
         public Nums Nums { get; set; }
         public DrawsPage DrawsPage { get; set; }
@@ -28,6 +27,8 @@ namespace BadmintonWPF.Views
         public BadmintonContext Context { get; }
         public EventsHelper EventsHelper { get; set; }
         public Tournament CurrentTournament { get; set; }
+        #endregion
+
         public MainPage(Tournament tournament)
         {
             WaitWindow waitWindow = new WaitWindow();
@@ -100,14 +101,23 @@ namespace BadmintonWPF.Views
         }
         #endregion
         #region MenuFile
-
         private void Open_OnClick(object sender, RoutedEventArgs e)
         {
             TournamentChooser tournamentChooser = new TournamentChooser();
             tournamentChooser.Show();
             Close();
         }
-
+        private void Exit_OnClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+        private void NewTournament_OnClick(object sender, RoutedEventArgs e)
+        {
+            TournamentChooser tournamentChooser = new TournamentChooser();
+            tournamentChooser.Show();
+            Close();
+            tournamentChooser.btnAdd_Click(sender, e);
+        }
         #endregion
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -132,7 +142,7 @@ namespace BadmintonWPF.Views
             ListPage.tournamentPlayersListView.ItemsSource =
                 TornamentPlayersHelper.EventSelectionChangedTournament(eventsListBox.SelectedItem as Event);
             DrawsPage.EventChangedDrawing();
-            
+            ListPage.cmbBoxCategory.SelectedIndex = ListPage.cmbBoxCategory.Items.Count - 1;
         }
         private void spiski_Click(object sender, RoutedEventArgs e)
         {
@@ -143,8 +153,7 @@ namespace BadmintonWPF.Views
             changerFrame.Navigate(DrawsPage);
             DrawsPage.EventChangedDrawing();
         }
-
-        private void MenuItem_OnClick(object sender, RoutedEventArgs e)
+        private void DeleteDraw_OnClick(object sender, RoutedEventArgs e)
         {
             if ((eventsListBox.SelectedItem as Event).IsDrawFormed == true)
             {
@@ -158,6 +167,24 @@ namespace BadmintonWPF.Views
                 DrawsPage.EventChangedDrawing();
             }
             Context.SaveChanges();
+        }
+        private void aboutProgram_Click(object sender, RoutedEventArgs e)
+        {
+            about = new AboutControlView();
+            vm = (AboutControlViewModel)about.FindResource("ViewModel");
+            vm.ApplicationLogo = new BitmapImage(new System.Uri("pack://application:,,,/images/volan.png"));
+            vm.Description = "Эта программа позволяет поностью спланировать турнир по бадминтону";
+                             
+            vm.AdditionalNotes = "Чтобы закрыть это окно - просто переключитесь на другое окно\nАвтор: Безуглый Денис, denys.bezu@gmail.com";
+            vm.Title = "Планирование турниров по бадминтону";
+            vm.Window.Content = about;
+            vm.Window.Show();
+        }
+
+        private void Report_OnClick(object sender, RoutedEventArgs e)
+        {
+            ReportChooser chooser = new ReportChooser(Context, CurrentTournament, EventsHelper);
+            chooser.ShowDialog();
         }
     }
 }

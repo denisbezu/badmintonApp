@@ -10,9 +10,9 @@ using System.Windows;
 [assembly: AssemblyTitle("BadmintonWPF")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("UralSOFT")]
+[assembly: AssemblyCompany("Denys BEZUHLYI")]
 [assembly: AssemblyProduct("BadmintonWPF")]
-[assembly: AssemblyCopyright("Copyright © UralSOFT 2017")]
+[assembly: AssemblyCopyright("Copyright © 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

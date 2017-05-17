@@ -110,10 +110,17 @@ namespace BadmintonWPF.Helpers
         }
         public bool IsNoAdded(Player player, Event eEvent)
         {
-            if (Context.PlayersTeams.Count(p => p.PlayerId == player.PlayerId &&
-                                                p.TeamsTournament.EventId == eEvent.EventId) <= 0) return true;
-            MessageBox.Show("Игрок \"" + player.PlayerName + " " + player.PlayerSurName + "\" уже добавлен!",
-                "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            try
+            {
+                if (Context.PlayersTeams.Count(p => p.PlayerId == player.PlayerId &&
+                                                    p.TeamsTournament.EventId == eEvent.EventId) <= 0) return true;
+                MessageBox.Show("Игрок \"" + player.PlayerName + " " + player.PlayerSurName + "\" уже добавлен!",
+                    "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception e)
+            {
+            }
+            
             return false;
         }
         public bool IsMaxPlayersInList(Event eEvent)

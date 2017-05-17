@@ -14,8 +14,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="175"/>
-            <RowDefinition Height="307*"/>
+            <RowDefinition Height="124"/>
+            <RowDefinition/>
             <RowDefinition Height="28"/>
         </Grid.RowDefinitions>
         <Grid.Background>
@@ -24,19 +24,16 @@
                 <GradientStop Color="White" Offset="0.997"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="2" Margin="0,0,3.8,0.2" >
+        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="2" Margin="0,0,4,336.4" Grid.RowSpan="2" >
             <Button x:Name="spiski" Content="СПИСКИ" Margin="30,10" VerticalAlignment="Top" Padding="10" Style="{DynamicResource ButtonStyle}" Click="spiski_Click"/>
             <Button x:Name="setki" Content="СЕТКИ" Margin="30,10" VerticalAlignment="Top" Padding="10" Style="{DynamicResource ButtonStyle}" Click="Setki_OnClick"/>
-            <Button x:Name="settings" Content="НАСТРОЙКИ" Margin="30,10" VerticalAlignment="Top" Padding="10" Style="{DynamicResource ButtonStyle}"/>
         </StackPanel>
         <Menu FontFamily="Roboto Light" FontSize="14" Grid.ColumnSpan="3" Margin="0,0,-0.4,0" >
             <MenuItem Header="Турнир">
-                <MenuItem Header="Новый"></MenuItem>
-                <MenuItem x:Name="Open" Header="Открыть" Click="Open_OnClick"></MenuItem>
-                <MenuItem Header="Сохранить"></MenuItem>
-                <MenuItem Header="Сохранить как..."></MenuItem>
+                <MenuItem x:Name="NewTournament" Header="Новый турнир" Click="NewTournament_OnClick"></MenuItem>
+                <MenuItem x:Name="Open" Header="Открыть турнир" Click="Open_OnClick"></MenuItem>
                 <Separator></Separator>
-                <MenuItem Header="Выйти"></MenuItem>
+                <MenuItem x:Name="exit" Header="Выйти" Click="Exit_OnClick"></MenuItem>
             </MenuItem>
             <MenuItem Header="Редактирование">
                 <MenuItem x:Name="city" Header="Города" Click="City_OnClick"/>
@@ -47,16 +44,19 @@
                 <MenuItem x:Name="judge" Header="Судьи" Click="Judge_OnClick"/>
                 <MenuItem x:Name="coach" Header="Тренера" Click="Coach_OnClick"></MenuItem>
             </MenuItem>
-            <MenuItem Header="Сетки">
+            <MenuItem Header="Отчет">
+                <MenuItem x:Name="report" Header="Сформировать отчет" Click="Report_OnClick"></MenuItem>
             </MenuItem>
             <MenuItem Header="Печать">
             </MenuItem>
             <MenuItem Header="Справка">
+                <MenuItem x:Name="aboutAuthor" Header="Об авторе"></MenuItem>
+                <MenuItem x:Name="aboutProgram" Header="О программе" Click="aboutProgram_Click"></MenuItem>
             </MenuItem>
         </Menu>
-        
+
         <StatusBar Grid.Row="4"  Grid.Column="0" Grid.ColumnSpan="3"/>
-        <ListBox x:Name="eventsListBox" ItemsSource="{Binding EventsList}" Grid.Row="3" Grid.Column="0" ItemContainerStyle="{DynamicResource _ListBoxItemStyle}" Margin="10,9.8,9.8,37.4" Background="#00000000" BorderBrush="#FFCBD0C5" SelectionChanged="eventsListBox_SelectionChanged">
+        <ListBox x:Name="eventsListBox" ItemsSource="{Binding EventsList}" Grid.Row="3" Grid.Column="0" ItemContainerStyle="{DynamicResource _ListBoxItemStyle}" Margin="10,11,10,37.4" Background="#00000000" BorderBrush="#FFCBD0C5" SelectionChanged="eventsListBox_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="5">
@@ -69,17 +69,17 @@
                             <TextBlock FontSize="16" Text="]"></TextBlock>
                         </StackPanel>
                         <TextBlock FontSize="16" Text="{Binding Path=Category.CategoryName}" />
-                        
+
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
             <ListBox.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Удалить сетку" Click="MenuItem_OnClick"></MenuItem>
+                    <MenuItem Header="Удалить сетку" Click="DeleteDraw_OnClick"></MenuItem>
                 </ContextMenu>
             </ListBox.ContextMenu>
         </ListBox>
         <Button x:Name="newEvent_Copy" Content="Редактировать события" Margin="28,0,30,5.4" Style="{DynamicResource ButtonStyle}" Grid.Row="3" Height="27" VerticalAlignment="Bottom" Click="newEvent_Copy_Click"/>
-        <Frame x:Name="changerFrame" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="3" NavigationUIVisibility="Hidden"/>
+        <Frame x:Name="changerFrame" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="3" NavigationUIVisibility="Hidden" Margin="0,0,-0.4,0.4"/>
     </Grid>
 </Window>

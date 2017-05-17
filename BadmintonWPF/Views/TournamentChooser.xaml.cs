@@ -100,7 +100,7 @@ namespace BadmintonWPF.Views
         {
             tournamentsListView.SelectedIndex = 0;
         }
-        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        public void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             TournamentAdd tournamentAdd = new TournamentAdd();
             tournamentAdd.ShowDialog();

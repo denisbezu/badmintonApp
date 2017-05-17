@@ -158,6 +158,7 @@ namespace BadmintonWPF.Helpers
         private void LinesDrawing(int numberPers, Canvas canvas)
         {
             int x1, x2, y1, y2, yMnozh = 1;
+            int startNumberPers = numberPers;
             int x1Nach = 20, x2Nach = 140, y1Nach = 50, y2Nach = 50;
             int xHorNach = 140, y1HorNach = 50, y2HorNach = 80, xHor, y1Hor, y2Hor;
             while (numberPers > 0)
@@ -169,7 +170,7 @@ namespace BadmintonWPF.Helpers
                 xHor = xHorNach;
                 y1Hor = y1HorNach;
                 y2Hor = y2HorNach;
-                for (int i = 0; i < numberPers; i++)
+                for (int i = 0; i < numberPers; i++) // длля горизонтальных линий
                 {
                     Line l1 = new Line();
                     l1.Stroke = Brushes.Black;
@@ -194,7 +195,7 @@ namespace BadmintonWPF.Helpers
                     canvas.Children.Add(l1);
                     y1Hor += 60 * yMnozh;
                     y2Hor += 60 * yMnozh;
-                }
+                } // для вертикальных линий
                 x1Nach += 120;
                 x2Nach += 120;
                 y1Nach += 15 * yMnozh;
@@ -205,6 +206,45 @@ namespace BadmintonWPF.Helpers
                 yMnozh *= 2;
                 numberPers /= 2;
             }
+            if (startNumberPers == int.Parse(SelectedEvent.DrawType))
+                ThirdPlaceDrawing(x1Nach, x2Nach, y1Nach, y2Nach, canvas);
+        }
+        private void ThirdPlaceDrawing(int x1, int x2, int y1, int y2, Canvas canvas)
+        {
+            x1 -= 120;
+            x2 -= 120;
+            for (int i = 0; i < 2; i++)
+            {
+                Line l1 = new Line();
+                l1.Stroke = Brushes.Black;
+                l1.StrokeThickness = 1;
+                l1.X1 = x1;
+                l1.X2 = x2;
+                l1.Y1 = y1;
+                l1.Y2 = y2;
+                canvas.Children.Add(l1);
+                y1 += 30;
+                y2 += 30;
+            }
+
+            Line l2 = new Line();
+            l2.Stroke = Brushes.Black;
+            l2.StrokeThickness = 1;
+            l2.X1 = x2;
+            l2.X2 = x2;
+            l2.Y1 = y1 - 60;
+            l2.Y2 = y2 - 30;//+ 30;
+            canvas.Children.Add(l2);
+            x1 += 120;
+            x2 += 120;
+            Line l3 = new Line();
+            l3.Stroke = Brushes.Black;
+            l3.StrokeThickness = 1;
+            l3.X1 = x1;
+            l3.X2 = x2;
+            l3.Y1 = y1 - 45;
+            l3.Y2 = y2 - 45;
+            canvas.Children.Add(l3);
         }
         private void RectanglesDrawing(Event eEvent, Canvas canvas)
         {
@@ -239,6 +279,23 @@ namespace BadmintonWPF.Helpers
                 mnozhTop *= 2;
                 numberPers /= 2;
             }
+            ThirdPlaceRectangleDrawing(eEvent, topNach + 15, left, canvas);
+        }
+        private void ThirdPlaceRectangleDrawing(Event eEvent, int top, int left, Canvas canvas)
+        {
+            DictRectangles[eEvent].Add(new Rectangle());
+            DictRectangles[eEvent].Last().Height = 30;
+            DictRectangles[eEvent].Last().Width = 120;
+            DictRectangles[eEvent].Last().Fill = Brushes.Transparent;
+            Canvas.SetTop(DictRectangles[eEvent].Last(), top);
+            Canvas.SetLeft(DictRectangles[eEvent].Last(), left);
+            canvas.Children.Add(DictRectangles[eEvent].Last());
+            DictRectangles[eEvent].Last().MouseEnter += (sender, args) => (sender as Rectangle).Fill =
+                new SolidColorBrush(Color.FromArgb(45, 15, 255, 5));
+            DictRectangles[eEvent].Last().MouseLeave +=
+                (sender, args) => (sender as Rectangle).Fill = Brushes.Transparent;
+            DictRectangles[eEvent].Last().PreviewMouseDown += OnPreviewMouseDown;
+            //top += 60 * mnozhTop;
         }
         private void Rectangles_drawing_tabs(Event eEvent, Canvas canvas, string header, int numberOfPerson)
         {
@@ -368,6 +425,10 @@ namespace BadmintonWPF.Helpers
                 OneLabelDrawing(TabsWorker.CanvasDictionary[eEvent][header], topNach, winner.TeamsTournament1.TeamName, left);
         }
 
+        private void ThirdPlaceResults()
+        {
+            MessageBox.Show("Нажата");
+        }
         #endregion
 
         #region EventsHandler and EventChanger
@@ -386,10 +447,9 @@ namespace BadmintonWPF.Helpers
             {
                 if ((sender as Rectangle) == DictRectangles[SelectedEvent][i])
                 {
-                    
                     int placeInDraw = CalcsForDraws.CalculatePlaceInDraw(i, numberOfPeople);
                     int round = CalcsForDraws.CalculateRoundForRectangle(i, numberOfPeople);
-                    
+
                     var whichPlayer = i % 2 == 0 ? 1 : 2;
                     int precedentNumber = CalcsForDraws.CalculatePrecedentGame(i, placeInDraw);
                     try
@@ -433,9 +493,11 @@ namespace BadmintonWPF.Helpers
                             ForPlaceCalculate((TabsWorker.TabControl.Items[1] as TabItem).Header.ToString()),
                             round));
                     }
-                    
+
                 }
             }
+            if ((sender as Rectangle) == DictRectangles[SelectedEvent][numberOfPeople - 1])
+                ThirdPlaceResults();
             EventChanged(SelectedCanvas);
         }
 
@@ -500,7 +562,7 @@ namespace BadmintonWPF.Helpers
             TabsWorker.TabControl.SelectedIndex = tabsCount;
         }
         #endregion
-        
+
         #region FirstStageWorkers
         /// <summary>
         /// Формирование в БД полной основной сетки, включая все круги
@@ -526,27 +588,31 @@ namespace BadmintonWPF.Helpers
                 Context.GamesTournaments.Local.Add(gamesTournament);
             }
             int numberPlace = CalcsForDraws.CalculateFirstStageId(SelectedEvent) + 1, draw = numsForDraw.Count / 2; //формирование 2 и дальше кргов до победителя
-            while (numberPlace <= 7) 
+            while (numberPlace <= 7)
             {
                 for (int i = 1; i <= draw; i += 2)
                 {
-                    GamesTournament gamesTournament = new GamesTournament();
-                    gamesTournament.ForPlace = 1;
-                    gamesTournament.PlaceInDraw = (i / 2) + 1;
-                    gamesTournament.StageId = numberPlace;
-                    gamesTournament.EventId = SelectedEvent.EventId;
+                    GamesTournament gamesTournament = GamesTournamentFormer(1, (i / 2) + 1, numberPlace);
                     Context.GamesTournaments.Local.Add(gamesTournament);
                 }
                 numberPlace++;
                 draw /= 2;
             }
-            GamesTournament gamesTournamentLast = new GamesTournament(); // победитель
-            gamesTournamentLast.ForPlace = 1;
-            gamesTournamentLast.PlaceInDraw = 1;
-            gamesTournamentLast.StageId = 8;
-            gamesTournamentLast.EventId = SelectedEvent.EventId;
+            GamesTournament gamesTournamentLast = GamesTournamentFormer(1, 1, 8); // победитель
+            Context.GamesTournaments.Local.Add(GamesTournamentFormer(3, 1, 7));
+            Context.GamesTournaments.Local.Add(GamesTournamentFormer(3, 1, 8));
             Context.GamesTournaments.Local.Add(gamesTournamentLast);
             Context.SaveChanges();
+        }
+
+        public GamesTournament GamesTournamentFormer(int forPlace, int placeInDraw, int stageId)
+        {
+            GamesTournament gamesTournament = new GamesTournament();
+            gamesTournament.ForPlace = forPlace;
+            gamesTournament.PlaceInDraw = placeInDraw;
+            gamesTournament.StageId = stageId;
+            gamesTournament.EventId = SelectedEvent.EventId;
+            return gamesTournament;
         }
         /// <summary>
         /// Рисование первого круга сетки, занос в базу победителей Х и рисуем победителей
@@ -711,32 +777,24 @@ namespace BadmintonWPF.Helpers
             matchInfo.ShowDialog();
             return matchInfo;
         }
-       
+
         #endregion
 
         #region LoosersDraws
         public void GamesForLoosersFormer(Event eEvent, int numberOfPeople, int forPlace)
         {
-            int numberPlace = CalcsForDraws.CalculateFirstStageId(numberOfPeople) /*+ 1*/, draw = numberOfPeople;
+            int numberPlace = CalcsForDraws.CalculateFirstStageId(numberOfPeople), draw = numberOfPeople;
             while (numberPlace <= 7)
             {
                 for (int i = 1; i <= draw; i += 2)
                 {
-                    GamesTournament gamesTournament = new GamesTournament();
-                    gamesTournament.ForPlace = forPlace;
-                    gamesTournament.PlaceInDraw = (i / 2) + 1;
-                    gamesTournament.StageId = numberPlace;
-                    gamesTournament.EventId = eEvent.EventId;
+                    GamesTournament gamesTournament = GamesTournamentFormer(forPlace, (i / 2) + 1, numberPlace);
                     Context.GamesTournaments.Local.Add(gamesTournament);
                 }
                 numberPlace++;
                 draw /= 2;
             }
-            GamesTournament gamesTournamentLast = new GamesTournament();
-            gamesTournamentLast.ForPlace = forPlace;
-            gamesTournamentLast.PlaceInDraw = 1;
-            gamesTournamentLast.StageId = 8;
-            gamesTournamentLast.EventId = eEvent.EventId;
+            GamesTournament gamesTournamentLast = GamesTournamentFormer(forPlace, 1, 8);
             Context.GamesTournaments.Local.Add(gamesTournamentLast);
             Context.SaveChanges();
         }
@@ -749,7 +807,6 @@ namespace BadmintonWPF.Helpers
             string[] splitter = header.Split(' ');// делим на слова
             return int.Parse(splitter[1]); // ю=ьерем только место
         }
-        
         private void LooserWritingToDataBase(string header, int round, int placeInDraw, TeamsTournament teamToAdd, int whichPlayerWon)
         {
             if (teamToAdd == null)

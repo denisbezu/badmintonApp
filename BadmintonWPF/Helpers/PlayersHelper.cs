@@ -111,5 +111,38 @@ namespace BadmintonWPF.Helpers
             return null;
         }
 
+        public BindingList<Player> ComboBoxChangedValue(Event eEvent, Category category)
+        {
+            BindingList<Player> itemSource = null;
+
+            if (category.CategoryName.Equals("Взрослые") && eEvent.Type.TypeName.Equals("Микст"))
+            {
+                itemSource = new BindingList<Player>(PlayersList);
+            }
+            else if(eEvent.Type.TypeName.Equals("Микст") && !category.CategoryName.Equals("Взрослые"))
+            {
+                itemSource = new BindingList<Player>(PlayersList.Where(p => p.YearOfBirth == int.Parse(category.CategoryName)).ToList());
+            }
+            else if (!eEvent.Type.TypeName.Equals("Микст") && !category.CategoryName.Equals("Взрослые") && eEvent.Sort.Equals("Юноши"))
+            {
+                itemSource = new BindingList<Player>(PlayersList.Where(p => p.YearOfBirth == int.Parse(category.CategoryName) && p.Sex.Equals("Мужской")).ToList());
+            }
+            else if (!eEvent.Type.TypeName.Equals("Микст") && category.CategoryName.Equals("Взрослые") && eEvent.Sort.Equals("Юноши"))
+            {
+                itemSource = new BindingList<Player>(PlayersList.Where(p => p.Sex.Equals("Мужской")).ToList());
+            }
+            else if (!eEvent.Type.TypeName.Equals("Микст") && !category.CategoryName.Equals("Взрослые") && eEvent.Sort.Equals("Женщины"))
+            {
+                itemSource = new BindingList<Player>(PlayersList.Where(p => p.YearOfBirth == int.Parse(category.CategoryName) && p.Sex.Equals("Женский")).ToList());
+            }
+            else if (!eEvent.Type.TypeName.Equals("Микст") && category.CategoryName.Equals("Взрослые") && eEvent.Sort.Equals("Женщины"))
+            {
+                itemSource = new BindingList<Player>(PlayersList.Where(p => p.Sex.Equals("Женский")).ToList());
+            }
+
+
+
+            return itemSource;
+        }
     }
 }

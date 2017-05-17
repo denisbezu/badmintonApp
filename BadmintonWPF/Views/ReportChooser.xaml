@@ -1,0 +1,31 @@
+﻿<Window x:Class="BadmintonWPF.Views.ReportChooser"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BadmintonWPF.Views"
+        mc:Ignorable="d"
+        Title="Выбор отчета" Height="300" Width="330" Icon="/images/volan.png" FontFamily="Roboto Light" FontSize="14" ResizeMode="CanMinimize" >
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFCAFFC9" Offset="0.016"/>
+                <GradientStop Color="White" Offset="0.997"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <ListBox x:Name="lstBoxReports" ItemContainerStyle="{DynamicResource _ListBoxItemStyle}" MouseDoubleClick="LstBoxReports_OnMouseDoubleClick">
+            <ListBox.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFEAFFD9" Offset="0"/>
+                <GradientStop Color="White" Offset="1"/>
+            </LinearGradientBrush>
+            </ListBox.Background>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Padding="5" FontSize="16" Text="{Binding Path=CategoryName}"></TextBlock>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+    </Grid>
+</Window>
