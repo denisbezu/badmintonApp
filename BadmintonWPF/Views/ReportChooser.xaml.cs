@@ -16,6 +16,8 @@ using System.Windows.Shapes;
 using badmintonDataBase.DataAccess;
 using badmintonDataBase.Models;
 using BadmintonWPF.Helpers;
+using Syncfusion.RDL.DOM;
+using Syncfusion.Windows.Reports.Viewer;
 
 namespace BadmintonWPF.Views
 {
@@ -24,6 +26,8 @@ namespace BadmintonWPF.Views
     /// </summary>
     public partial class ReportChooser : Window
     {
+        private List<string> sheetsList = new List<string>() { "MS", "WS", "MD", "WD", "XD" };
+        private List<string> categoriesList = new List<string>() { "ЧОЛОВІЧА ОДИНОЧНА", "ЖІНОЧА ОДИНОЧНА", "ЧОЛОВІЧА ПАРНА", "ЖІНОЧА ПАРНА", "ЗМІШАНА ПАРНА" };
         private BadmintonContext Context { get; set; }
         private Tournament Tournament { get; set; }
         private Category Category { get; set; }
@@ -52,8 +56,14 @@ namespace BadmintonWPF.Views
                 reportFormer.WriteHeaderPlayersList();
                 reportFormer.WriteHeaderWS1(reportFormer.Worksheet, "A4", "H4");
                 int lastMan = reportFormer.PlayerListFormer("A6", "H6", "Юноши");
-                lastMan +=8 + reportFormer.PlayerListFormer("A" + (8 + lastMan), "H" + (8 + lastMan), "Женщины");
+                lastMan += 8 + reportFormer.PlayerListFormer("A" + (8 + lastMan), "H" + (8 + lastMan), "Женщины");
                 reportFormer.JudgeWriter("E" + (lastMan + 2), "G" + (lastMan + 2));
+                for (int i = 2; i < 7; i++)
+                {
+                    reportFormer.WriteHeaderResults(reportFormer.Sheets[i], sheetsList[i - 2]);
+                    reportFormer.WriteHeaderNameResults(reportFormer.Sheets[i], categoriesList[i - 2]);
+                    reportFormer.WriteHeaderForTableResults(reportFormer.Sheets[i], "A4", "I4");
+                }
             }
         }
     }

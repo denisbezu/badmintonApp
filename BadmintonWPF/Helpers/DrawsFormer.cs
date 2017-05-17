@@ -8,11 +8,14 @@ using System.Windows.Controls;
 using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Shapes;
 using badmintonDataBase.DataAccess;
+using badmintonDataBase.Migrations;
 using badmintonDataBase.Models;
 using BadmintonWPF.Helpers.DrawsHelpers;
 using BadmintonWPF.Views;
+using Syncfusion.RDL.DOM;
+using Line = System.Windows.Shapes.Line;
+using Rectangle = System.Windows.Shapes.Rectangle;
 
 namespace BadmintonWPF.Helpers
 {
@@ -207,9 +210,9 @@ namespace BadmintonWPF.Helpers
                 numberPers /= 2;
             }
             if (startNumberPers == int.Parse(SelectedEvent.DrawType))
-                ThirdPlaceDrawing(x1Nach, x2Nach, y1Nach, y2Nach, canvas);
+                ThirdPlaceDrawingLines(x1Nach, x2Nach, y1Nach, y2Nach, canvas);
         }
-        private void ThirdPlaceDrawing(int x1, int x2, int y1, int y2, Canvas canvas)
+        private void ThirdPlaceDrawingLines(int x1, int x2, int y1, int y2, Canvas canvas)
         {
             x1 -= 120;
             x2 -= 120;
@@ -373,6 +376,7 @@ namespace BadmintonWPF.Helpers
                                      p.ForPlace == 1);
             if (winner.TeamsTournament1Id != null)
                 OneLabelDrawing(canvas, topNach, winner.TeamsTournament1.TeamName, left);
+            ThirdPlaceDrawingLabels(left, topNach * 2 - 15, canvas);
 
         }
         private void OneLabelDrawing(Canvas canvas, int y, string content, int x)
@@ -424,10 +428,71 @@ namespace BadmintonWPF.Helpers
             if (winner.TeamsTournament1Id != null)
                 OneLabelDrawing(TabsWorker.CanvasDictionary[eEvent][header], topNach, winner.TeamsTournament1.TeamName, left);
         }
+        private void ThirdPlaceDrawingLabels(int left, int topNach, Canvas canvas)
+        {
+            var selectedGame = Context.GamesTournaments.Local
+                .FirstOrDefault(p => p.StageId == 7 && p.PlaceInDraw == 1 &&
+                                     p.EventId == SelectedEvent.EventId && p.ForPlace == 3);
+            if (selectedGame.TeamsTournament1Id != null)
+            {
+                OneLabelDrawing(canvas, topNach, selectedGame.TeamsTournament1.TeamName, left); // добавдение в сетку 1 команды
+                OneLabelDrawing(canvas, topNach + 30, CalcsForDraws.ScoreConverter(selectedGame.Score), left + 170);
+            }
+            topNach += 30;
+            if (selectedGame.TeamsTournament2Id != null)
+                OneLabelDrawing(canvas, topNach, selectedGame.TeamsTournament2.TeamName, left); // добавление на сетку 2 команды
 
+
+
+
+            var winner = Context.GamesTournaments.Local
+                .FirstOrDefault(p => p.StageId == 8 && p.PlaceInDraw == 1 && p.EventId == SelectedEvent.EventId &&
+                                     p.ForPlace == 3);
+            if (winner.TeamsTournament1Id != null)
+                OneLabelDrawing(canvas, topNach - 15, winner.TeamsTournament1.TeamName, left + 120);
+        }
         private void ThirdPlaceResults()
         {
-            MessageBox.Show("Нажата");
+            try
+            {
+                var team1 = Context.GamesTournaments.Local
+                    .FirstOrDefault(p => p.ForPlace == 3 && p.PlaceInDraw == 1 &&
+                                         p.StageId == 7 && p.EventId == SelectedEvent.EventId).TeamsTournament1;//первая команда;
+                var team2 = Context.GamesTournaments.Local
+                    .FirstOrDefault(p => p.ForPlace == 3 && p.PlaceInDraw == 1 &&
+                                         p.StageId == 7 && p.EventId == SelectedEvent.EventId).TeamsTournament2;//вторая команда
+                if (team1 != null && team2 != null)
+                {
+                    MatchInfo matchInfo = MatchDialogInfoCreator(team1, team2);
+                    if (matchInfo.WinnerChanged)//если мы определили победителя
+                    {
+                        var selectedGame = Context.GamesTournaments.Local
+                            .FirstOrDefault(p => p.ForPlace == 3 && p.PlaceInDraw == 1 &&
+                                                 p.StageId == 8 && p.EventId == SelectedEvent.EventId);//следующая игра
+                        int winnerButton;
+                        if (matchInfo.radioButton1.IsChecked == true)//если выиграл первый игрок
+                        {
+                            winnerButton = 1;
+                            selectedGame.TeamsTournament1Id = team1.TeamsTournamentId;//если на место первого нужно рисовать по расчетам выше
+                        }
+                        else//если победил второй
+                        {
+                            winnerButton = 2;
+                            selectedGame.TeamsTournament1Id = team2.TeamsTournamentId;//если на место первого нужно рисовать по расчетам выше
+                        }
+                        Context.GamesTournaments.Local.FirstOrDefault(
+                            p => p.TeamsTournament1Id == team1.TeamsTournamentId &&
+                                 p.TeamsTournament2Id == team2.TeamsTournamentId && p.EventId == SelectedEvent.EventId).Score = CalcsForDraws.WinnerHelperSplitter(winnerButton, matchInfo.Winner);//заносим счет в бд
+                        matchInfo.WinnerChanged = false;
+                    }
+                }
+                else
+                    throw new Exception();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Невозможно добавить результат", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
         }
         #endregion
 
@@ -605,7 +670,7 @@ namespace BadmintonWPF.Helpers
             Context.SaveChanges();
         }
 
-        public GamesTournament GamesTournamentFormer(int forPlace, int placeInDraw, int stageId)
+        private GamesTournament GamesTournamentFormer(int forPlace, int placeInDraw, int stageId)
         {
             GamesTournament gamesTournament = new GamesTournament();
             gamesTournament.ForPlace = forPlace;
@@ -805,7 +870,7 @@ namespace BadmintonWPF.Helpers
                 return -1; // не считает полуфинал и финал
             }
             string[] splitter = header.Split(' ');// делим на слова
-            return int.Parse(splitter[1]); // ю=ьерем только место
+            return int.Parse(splitter[1]); // берем только место
         }
         private void LooserWritingToDataBase(string header, int round, int placeInDraw, TeamsTournament teamToAdd, int whichPlayerWon)
         {
@@ -813,8 +878,12 @@ namespace BadmintonWPF.Helpers
                 return;
             int forPlace = ForPlaceCalculate(header);
             if (forPlace == -1)
-                return;
-
+            {
+                if (round == 7)
+                    forPlace = 3;
+                else
+                    return;
+            }
             if (whichPlayerWon == 1)
                 Context.GamesTournaments.Local
                         .FirstOrDefault(p => p.EventId == SelectedEvent.EventId && p.StageId == round &&
