@@ -824,7 +824,30 @@ namespace BadmintonWPF.Helpers
             }
             if (SelectedEvent.Type.TypeName.Equals("Одиночка") && selectedGame.ForPlace == 1)//для 
                 LooserWritingToDataBase(header, (int)selectedGame.StageId, selectedGame.PlaceInDraw, selectedTeam, whichPlayer);
+            else if ((SelectedEvent.Type.TypeName.Equals("Пара") || SelectedEvent.Type.TypeName.Equals("Микст")) && selectedGame.ForPlace == 1)
+                DoublesMixtesDatabaseWriter(header, (int)selectedGame.StageId, selectedGame.PlaceInDraw, selectedTeam, whichPlayer);
             return winnerButton;
+        }
+
+        private void DoublesMixtesDatabaseWriter(string header, int round, int placeInDraw, TeamsTournament teamToAdd, int whichPlayerWon)
+        {
+            int forPlace;
+            if (round == 7)
+                forPlace = 3;
+            else
+                return;
+            if (whichPlayerWon == 1)
+                Context.GamesTournaments.Local
+                    .FirstOrDefault(p => p.EventId == SelectedEvent.EventId && p.StageId == round &&
+                                         p.PlaceInDraw == placeInDraw && p.ForPlace == forPlace)
+                    .TeamsTournament1Id = teamToAdd.TeamsTournamentId;
+            else
+            {
+                Context.GamesTournaments.Local
+                    .FirstOrDefault(p => p.EventId == SelectedEvent.EventId && p.StageId == round &&
+                                         p.PlaceInDraw == placeInDraw && p.ForPlace == forPlace)
+                    .TeamsTournament2Id = teamToAdd.TeamsTournamentId;
+            }
         }
         /// <summary>
         /// Диалог для ввода счета

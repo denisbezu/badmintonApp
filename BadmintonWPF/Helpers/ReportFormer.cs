@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -31,6 +32,7 @@ namespace BadmintonWPF.Helpers
 
             Context.TeamsTournaments.Where(p => p.Event.TournamentId == id).Load();
             Context.PlayersTeams.Where(p => p.TeamsTournament.Event.TournamentId == id).Load();
+            Context.Players.Load();
         }
 
         public bool OpenWorkbook()
@@ -80,7 +82,7 @@ namespace BadmintonWPF.Helpers
             (Worksheet.get_Range("B1", "B1")).EntireColumn.ColumnWidth = 20;
             (Worksheet.get_Range("C1", "C1")).EntireColumn.ColumnWidth = 7;
             (Worksheet.get_Range("D1", "D1")).EntireColumn.ColumnWidth = 10;
-            (Worksheet.get_Range("E1", "E1")).EntireColumn.ColumnWidth = 12;
+            (Worksheet.get_Range("E1", "E1")).EntireColumn.ColumnWidth = 18;
             (Worksheet.get_Range("F1", "F1")).EntireColumn.ColumnWidth = 20;
             (Worksheet.get_Range("G1", "G1")).EntireColumn.ColumnWidth = 10;
             (Worksheet.get_Range("A1", "Z1000")).Font.Size = 12;
@@ -163,17 +165,17 @@ namespace BadmintonWPF.Helpers
 
             return playersTeams.Count();
         }
-        public void JudgeWriter(string rangeFirst, string rangeSecond)
+        public void JudgeWriter(Excel.Worksheet worksheet, string rangeFirst, string rangeSecond)
         {
             Excel.Range excelRange;
-            excelRange = Worksheet.get_Range(rangeFirst, rangeSecond);
+            excelRange = worksheet.get_Range(rangeFirst, rangeSecond);
             int first = int.Parse(rangeFirst.Substring(1));
             int second = int.Parse(rangeSecond.Substring(1));
-            Excel.Range excelRangeToMerge = Worksheet.get_Range("E" + first, "F" + second);
+            Excel.Range excelRangeToMerge = worksheet.get_Range("E" + first, "F" + second);
             excelRangeToMerge.Merge(Type.Missing);
             excelRangeToMerge.Value2 = "Головний суддя";
             excelRange.Cells[Type.Missing, 3] = Tournament.Judge.ToString();
-            excelRangeToMerge = Worksheet.get_Range("E" + (first + 2), "F" + (second + 2));
+            excelRangeToMerge = worksheet.get_Range("E" + (first + 2), "F" + (second + 2));
             excelRangeToMerge.Merge(Type.Missing);
             excelRangeToMerge.Value2 = "Головний секретар";
         }
@@ -189,7 +191,7 @@ namespace BadmintonWPF.Helpers
             (worksheet.get_Range("C1", "C1")).EntireColumn.ColumnWidth = 10;
             (worksheet.get_Range("D1", "D1")).EntireColumn.ColumnWidth = 7;
             (worksheet.get_Range("E1", "E1")).EntireColumn.ColumnWidth = 10;
-            (worksheet.get_Range("F1", "F1")).EntireColumn.ColumnWidth = 12;
+            (worksheet.get_Range("F1", "F1")).EntireColumn.ColumnWidth = 18;
             (worksheet.get_Range("G1", "G1")).EntireColumn.ColumnWidth = 20;
             (worksheet.get_Range("I1", "I1")).EntireColumn.ColumnWidth = 25;
             (worksheet.get_Range("A1", "Z1000")).Font.Size = 12;
@@ -214,7 +216,6 @@ namespace BadmintonWPF.Helpers
             //excelRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
             //excelRange.Value2 = "ЧОЛОВІКИ";
         }
-
         public void WriteHeaderNameResults(Excel.Worksheet worksheet, string categoryName)
         {
             Excel.Range excelRange;
@@ -224,7 +225,6 @@ namespace BadmintonWPF.Helpers
             excelRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
             excelRange.Value2 = categoryName + " КАТЕГОРІЯ";
         }
-
         public void WriteHeaderForTableResults(Excel.Worksheet worksheet, string rangeFirst, string rangeSecond)
         {
             Excel.Range excelRange;
@@ -242,6 +242,208 @@ namespace BadmintonWPF.Helpers
             excelRange.Cells[Type.Missing, 7].Value2 = "Школа, клуб, тощо";
             excelRange.Cells[Type.Missing, 8].Value2 = "Спілка";
             excelRange.Cells[Type.Missing, 9].Value2 = "Тренер";
+        }
+        public int ResultsPlayersWithPlaces(Excel.Worksheet worksheet, int sheetID)
+        {
+            Dictionary<Player, int> allPlaces = CalculatePlace(EventBySheetId(sheetID));
+            Excel.Range excelRange;
+            excelRange = worksheet.get_Range("A6", "I6");
+            int row = 1;
+            foreach (var pair in allPlaces)
+            {
+                excelRange.Cells[row, 1].Value2 = row;
+                excelRange.Cells[row, 2].Value2 = pair.Key.PlayerSurName + " " + pair.Key.PlayerName;
+                excelRange.Cells[row, 3].Value2 = pair.Value;
+                excelRange.Cells[row, 4].Value2 = pair.Key.YearOfBirth;
+                excelRange.Cells[row, 5].Value2 = pair.Key.Grade.GradeName;
+                excelRange.Cells[row, 6].Value2 = pair.Key.City.CityName;
+                excelRange.Cells[row, 7].Value2 = pair.Key.Club.ClubName;
+                excelRange.Cells[row, 8].Value2 = pair.Key.Union.UnionName;
+                excelRange.Cells[row, 9].Value2 = pair.Key.Coach.CoachName;
+                row++;
+            }
+            string range2 = "I" + (row + 6);
+            excelRange = worksheet.get_Range("A6", range2);
+            excelRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+            excelRange = worksheet.get_Range("B" + 6, "B" + (6 + row));
+            excelRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft;
+            return allPlaces.Count;
+        }
+        private Dictionary<Player, int> CalculatePlace(Event eEvent)
+        {
+            if (eEvent.EventId == 0) return new Dictionary<Player, int>();
+            Dictionary<Player, int> placesPlayers = new Dictionary<Player, int>();
+            Context.GamesTournaments.Load();
+            var winnerChecker = Context.GamesTournaments.Local.FirstOrDefault(p =>
+                p.EventId == eEvent.EventId && p.ForPlace == 1 && p.StageId == 8);
+            if (winnerChecker != null)
+            {
+                var winner = winnerChecker
+                    .TeamsTournament1Id;
+                if (winner != null)
+                    DictionaryAdd(ref placesPlayers, 1, GetPlayersFromGamesTournament((int)winner));
+
+                var seconChecker = Context.GamesTournaments.Local.FirstOrDefault(p =>
+                    p.EventId == eEvent.EventId && p.ForPlace == 1 && p.StageId == 7);
+                var secondPlace = seconChecker?.TeamsTournament1Id;
+                if (secondPlace == winner)
+                {
+                    secondPlace = seconChecker
+                        .TeamsTournament2Id;
+                    if (secondPlace != null)
+                        DictionaryAdd(ref placesPlayers, 2, GetPlayersFromGamesTournament((int)secondPlace));
+                }
+                var thirdChecker = Context.GamesTournaments.Local.FirstOrDefault(p =>
+                    p.EventId == eEvent.EventId && p.ForPlace == 3 && p.StageId == 8);
+                if (thirdChecker != null)
+                {
+                    var thirdPlace = thirdChecker
+                        .TeamsTournament1Id;
+                    if (thirdPlace != null)
+                        DictionaryAdd(ref placesPlayers, 3, GetPlayersFromGamesTournament((int)thirdPlace));
+                    var fourthCheker = Context.GamesTournaments.Local.FirstOrDefault(p =>
+                        p.EventId == eEvent.EventId && p.ForPlace == 3 && p.StageId == 7);
+                    if (fourthCheker != null)
+                    {
+                        var fourthPlace = fourthCheker
+                            .TeamsTournament1Id;
+                        if (fourthPlace == thirdPlace)
+                        {
+                            fourthPlace = fourthCheker.TeamsTournament2Id;
+                            if (winner != null && fourthPlace != null)
+                                DictionaryAdd(ref placesPlayers, 4, GetPlayersFromGamesTournament((int)fourthPlace));
+                        }
+                    }
+                }
+            }
+            var fifthPlaces = Context.GamesTournaments.Local.Where(p =>
+                p.EventId == eEvent.EventId && p.ForPlace == 5).ToList();
+            foreach (var playerFifthPlace in fifthPlaces)
+            {
+                if (playerFifthPlace.TeamsTournament1Id != null)
+                    DictionaryAdd(ref placesPlayers, 5, GetPlayersFromGamesTournament((int) playerFifthPlace.TeamsTournament1Id));
+                if (playerFifthPlace.TeamsTournament2Id != null)
+                    DictionaryAdd(ref placesPlayers, 5, GetPlayersFromGamesTournament((int) playerFifthPlace.TeamsTournament2Id));
+            }
+            if (int.Parse(eEvent.DrawType) >= 16)
+            {
+                var ninethPlaces = Context.GamesTournaments.Local.Where(p =>
+                    p.EventId == eEvent.EventId && p.ForPlace == 9).ToList();
+                foreach (var ninethPlayer in ninethPlaces)
+                {
+                    if (ninethPlayer.TeamsTournament1Id != null)
+                        DictionaryAdd(ref placesPlayers, 9, GetPlayersFromGamesTournament((int)ninethPlayer.TeamsTournament1Id));
+                    if (ninethPlayer.TeamsTournament2Id != null)
+                        DictionaryAdd(ref placesPlayers, 9, GetPlayersFromGamesTournament((int)ninethPlayer.TeamsTournament2Id));
+                }
+            }
+            if (int.Parse(eEvent.DrawType) >= 32)
+            {
+                var seventeenthPlaeyrs = Context.GamesTournaments.Local.Where(p =>
+                    p.EventId == eEvent.EventId && p.ForPlace == 17).ToList();
+                foreach (var seventeenthPlaeyr in seventeenthPlaeyrs)
+                {
+                    if (seventeenthPlaeyr.TeamsTournament1Id != null)
+                        DictionaryAdd(ref placesPlayers, 17, GetPlayersFromGamesTournament((int)seventeenthPlaeyr.TeamsTournament1Id));
+                    if (seventeenthPlaeyr.TeamsTournament2Id != null)
+                        DictionaryAdd(ref placesPlayers, 17, GetPlayersFromGamesTournament((int)seventeenthPlaeyr.TeamsTournament2Id));
+                }
+            }
+            if (int.Parse(eEvent.DrawType) >= 64)
+            {
+                var thirtythirdpPlayers = Context.GamesTournaments.Local.Where(p =>
+                    p.EventId == eEvent.EventId && p.ForPlace == 17).ToList();
+                foreach (var thirtyThirdPlayer in thirtythirdpPlayers)
+                {
+                    if (thirtyThirdPlayer.TeamsTournament1Id != null)
+                        DictionaryAdd(ref placesPlayers, 33, GetPlayersFromGamesTournament((int)thirtyThirdPlayer.TeamsTournament1Id));
+                    if (thirtyThirdPlayer.TeamsTournament2Id != null)
+                        DictionaryAdd(ref placesPlayers, 33, GetPlayersFromGamesTournament((int)thirtyThirdPlayer.TeamsTournament2Id));
+                }
+            }
+            return placesPlayers;
+        }
+        private List<Player> GetPlayersFromGamesTournament(int teamsTournamentId)
+        {
+            List<Player> players = new List<Player>();
+            var allPlayers = Context.PlayersTeams.Local.Where(p => p.TeamsTournamentId == teamsTournamentId)
+                .Select(p => p.Player).ToList();
+            players = allPlayers;
+            return players;
+        }
+        private void DictionaryAdd(ref Dictionary<Player, int> placesPlayers, int place, List<Player> players)
+        {
+            foreach (var player in players)
+            {
+                if(!placesPlayers.ContainsKey(player))
+                    placesPlayers.Add(player, place);
+            }
+        }
+
+        public Event EventBySheetId(int sheetId)
+        {
+            Context.Events.Load();
+            int eEventId;
+            Event eEvent = new Event();
+
+            switch (sheetId)
+            {
+                case 2:
+                    var singleManEvent = Context.Events.Local.FirstOrDefault(p => p.TournamentId == Tournament.TournamentId
+                                                                                  && p.CategoryId == Category.CategoryId &&
+                                                                                  p.Type.TypeName.Equals("Одиночка") &&
+                                                                                  p.Sort.Equals("Юноши"));
+                    if (singleManEvent != null)
+                    {
+                        eEventId = singleManEvent.EventId;
+                        eEvent = Context.Events.Local.FirstOrDefault(p => p.EventId == eEventId);
+                    }
+                    break;
+                case 3:
+                    var singleGirlsEvent = Context.Events.Local.FirstOrDefault(p => p.TournamentId == Tournament.TournamentId
+                                                                                  && p.CategoryId == Category.CategoryId &&
+                                                                                  p.Type.TypeName.Equals("Одиночка") &&
+                                                                                  p.Sort.Equals("Женщины"));
+                    if (singleGirlsEvent != null)
+                    {
+                        eEventId = singleGirlsEvent.EventId;
+                        eEvent = Context.Events.Local.FirstOrDefault(p => p.EventId == eEventId);
+                    }
+                    break;
+                case 4:
+                    var mansDoublesEvent = Context.Events.Local.FirstOrDefault(p => p.TournamentId == Tournament.TournamentId
+                                                                                    && p.CategoryId == Category.CategoryId &&
+                                                                                    p.Type.TypeName.Equals("Пара") &&
+                                                                                    p.Sort.Equals("Юноши"));
+                    if (mansDoublesEvent != null)
+                    {
+                        eEventId = mansDoublesEvent.EventId;
+                        eEvent = Context.Events.Local.FirstOrDefault(p => p.EventId == eEventId);
+                    }
+                    break;
+                case 5:
+                    var girlsDoublesEvent = Context.Events.Local.FirstOrDefault(p => p.TournamentId == Tournament.TournamentId
+                                                                                          && p.CategoryId == Category.CategoryId &&
+                                                                                          p.Type.TypeName.Equals("Пара") &&
+                                                                                          p.Sort.Equals("Женщины"));
+                    if (girlsDoublesEvent != null)
+                    {
+                        eEventId = girlsDoublesEvent.EventId;
+                        eEvent = Context.Events.Local.FirstOrDefault(p => p.EventId == eEventId);
+                    }
+                    break;
+                case 6:
+                    var mixtesEvent = Context.Events.Local.FirstOrDefault(p => p.TournamentId == Tournament.TournamentId
+                                                                                           && p.CategoryId == Category.CategoryId &&
+                                                                                           p.Type.TypeName.Equals("Микст"));
+                    if (mixtesEvent != null)
+                    {
+                        eEventId = mixtesEvent.EventId;
+                        eEvent = Context.Events.Local.FirstOrDefault(p => p.EventId == eEventId);
+                    }
+                    break;
+            }
+            return eEvent;
         }
     }
 }

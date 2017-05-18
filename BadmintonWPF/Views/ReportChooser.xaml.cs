@@ -50,20 +50,22 @@ namespace BadmintonWPF.Views
             ReportFormer reportFormer = new ReportFormer(Tournament);
             Category = lstBoxReports.SelectedItem as Category;
             reportFormer.Category = Category;
-            //reportFormer.Tournament = Tournament;
             if (reportFormer.OpenWorkbook())
             {
                 reportFormer.WriteHeaderPlayersList();
                 reportFormer.WriteHeaderWS1(reportFormer.Worksheet, "A4", "H4");
                 int lastMan = reportFormer.PlayerListFormer("A6", "H6", "Юноши");
                 lastMan += 8 + reportFormer.PlayerListFormer("A" + (8 + lastMan), "H" + (8 + lastMan), "Женщины");
-                reportFormer.JudgeWriter("E" + (lastMan + 2), "G" + (lastMan + 2));
+                reportFormer.JudgeWriter(reportFormer.Sheets[1], "E" + (lastMan + 2), "G" + (lastMan + 2));
                 for (int i = 2; i < 7; i++)
                 {
                     reportFormer.WriteHeaderResults(reportFormer.Sheets[i], sheetsList[i - 2]);
                     reportFormer.WriteHeaderNameResults(reportFormer.Sheets[i], categoriesList[i - 2]);
                     reportFormer.WriteHeaderForTableResults(reportFormer.Sheets[i], "A4", "I4");
+                    lastMan = reportFormer.ResultsPlayersWithPlaces(reportFormer.Sheets[i], i);
+                    reportFormer.JudgeWriter(reportFormer.Sheets[i], "E" + (lastMan + 8), "G" + (lastMan + 8));
                 }
+                
             }
         }
     }
