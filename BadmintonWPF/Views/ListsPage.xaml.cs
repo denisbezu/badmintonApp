@@ -138,8 +138,8 @@ namespace BadmintonWPF.Views
             if (selectedEvent.IsDrawFormed == false)
             {
                 MainPage.DrawsPage.DrawsFormer.FirstRoundGamesFormer(SelectedNum(MainPage.eventsListBox.SelectedItem as Event));
-                if (selectedEvent.Type.TypeName.Equals("Одиночка"))
-                {
+                //if (selectedEvent.Type.TypeName.Equals("Одиночка"))
+                //{
                     int n = int.Parse(selectedEvent.DrawType) / 2, i = 0;
                     while (n > 2)
                     {
@@ -147,7 +147,7 @@ namespace BadmintonWPF.Views
                         n /= 2;
                         i++;
                     }
-                }
+                //}
             }
             if (!selectedEvent.IsDrawFormed)
             {

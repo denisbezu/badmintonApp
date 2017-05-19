@@ -55,8 +55,8 @@ namespace BadmintonWPF.Helpers.DrawsHelpers
         }
         public void TabsMaker(Event eEvent)
         {
-            if (eEvent.Type.TypeName.Equals("Одиночка"))
-            {
+            //if (eEvent.Type.TypeName.Equals("Одиночка"))
+            //{
                 foreach (var item in CanvasDictionary)
                 {
                     foreach (var pair in item.Value)
@@ -84,7 +84,7 @@ namespace BadmintonWPF.Helpers.DrawsHelpers
                 {
                     Make_Tab(eEvent, "За 5 место");
                 }
-            }
+            //}
         }
 
         public void TabsCreatorRemover(Event eEvent)

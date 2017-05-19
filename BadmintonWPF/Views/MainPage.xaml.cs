@@ -180,7 +180,6 @@ namespace BadmintonWPF.Views
             vm.Window.Content = about;
             vm.Window.Show();
         }
-
         private void Report_OnClick(object sender, RoutedEventArgs e)
         {
             ReportChooser chooser = new ReportChooser(Context, CurrentTournament, EventsHelper);

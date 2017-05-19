@@ -35,7 +35,7 @@ namespace BadmintonWPF.Views
 
             foreach (var eevent in MainPage.eventsListBox.Items)
             {
-                if ((eevent as Event).Type.TypeName.Equals("Одиночка"))
+                //if ((eevent as Event).Type.TypeName.Equals("Одиночка"))
                     DrawsFormer.TabsWorker.CanvasDictionary.Add(eevent as Event, new Dictionary<string, Canvas>());
             }
 

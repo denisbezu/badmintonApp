@@ -51,18 +51,20 @@ namespace BadmintonWPF.Helpers
             LinesDrawing(int.Parse(eEvent.DrawType), canvas);
             if (eEvent.IsDrawFormed)
             {
-                if (eEvent.Type.TypeName.Equals("Одиночка"))
+                //if (eEvent.Type.TypeName.Equals("Одиночка"))
+                //{
+                int n = int.Parse(eEvent.DrawType) / 2, i = 0;
+                while (n > 2)
                 {
-                    int n = int.Parse(eEvent.DrawType) / 2, i = 0;
-                    while (n > 2)
-                    {
-                        LinesDrawing(n, TabsWorker.CanvasDictionary[eEvent].ElementAt(i).Value);
-                        AllRoundGamesForLoosersLabelsDrawing(eEvent, TabsWorker.CanvasDictionary[eEvent].ElementAt(i).Key, n);
-                        Rectangles_drawing_tabs(eEvent, TabsWorker.CanvasDictionary[eEvent].ElementAt(i).Value, TabsWorker.CanvasDictionary[eEvent].ElementAt(i).Key, n / 2);
-                        n /= 2;
-                        i++;
-                    }
+                    LinesDrawing(n, TabsWorker.CanvasDictionary[eEvent].ElementAt(i).Value);
+                    AllRoundGamesForLoosersLabelsDrawing(eEvent, TabsWorker.CanvasDictionary[eEvent].ElementAt(i).Key,
+                        n);
+                    Rectangles_drawing_tabs(eEvent, TabsWorker.CanvasDictionary[eEvent].ElementAt(i).Value,
+                        TabsWorker.CanvasDictionary[eEvent].ElementAt(i).Key, n / 2);
+                    n /= 2;
+                    i++;
                 }
+                //}
                 AllRoundsLabelsDrawing(eEvent, canvas);
                 FirstStageLabelsDrawing(canvas);
                 RectanglesDrawing(eEvent, canvas);
@@ -404,8 +406,8 @@ namespace BadmintonWPF.Helpers
                     var selectedGame = Context.GamesTournaments.Local// выбранная игра, на которую нужно поместить проигравшего игрока
                         .FirstOrDefault(p => p.StageId == krug && p.PlaceInDraw == placeInDraw &&
                                              p.EventId == eEvent.EventId && p.ForPlace == forPlace);
-                    //if(selectedGame == null)
-                    //    return;
+                    if(selectedGame == null)
+                        return;
                     if (selectedGame.TeamsTournament1Id != null)
                     {
                         OneLabelDrawing(TabsWorker.CanvasDictionary[eEvent][header], top, selectedGame.TeamsTournament1.TeamName, left); // добавдение в сетку 1 команды
@@ -552,7 +554,7 @@ namespace BadmintonWPF.Helpers
                         MessageBox.Show("Невозможно добавить результат", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     }
                     Context.SaveChanges();
-                    if (FirstConcelationXCheker(1) && SelectedEvent.Type.TypeName.Equals("Одиночка"))
+                    if (FirstConcelationXCheker(1) /*&& SelectedEvent.Type.TypeName.Equals("Одиночка")*/)
                     {
                         InvokeXCreator(XFirstConcelationDrawer(
                             ForPlaceCalculate((TabsWorker.TabControl.Items[1] as TabItem).Header.ToString()),
@@ -669,7 +671,6 @@ namespace BadmintonWPF.Helpers
             Context.GamesTournaments.Local.Add(gamesTournamentLast);
             Context.SaveChanges();
         }
-
         private GamesTournament GamesTournamentFormer(int forPlace, int placeInDraw, int stageId)
         {
             GamesTournament gamesTournament = new GamesTournament();
@@ -778,7 +779,7 @@ namespace BadmintonWPF.Helpers
             if (Context.TeamsTournaments.Local.FirstOrDefault(p => p.TeamsTournamentId == selectedTeamId) != null)
                 teamToAdd = Context.TeamsTournaments.Local.FirstOrDefault(p => p.TeamsTournamentId == selectedTeamId);
             LooserWritingToDataBase(CalcsForDraws.WhichHeaderChooseForLoosers((int)gamesTournament.StageId), (int)gameToChange.StageId, placeInDraw, teamToAdd, whichPlayer);//добавляем победителя в БД
-            if (SelectedEvent.Type.TypeName.Equals("Одиночка") && gamesTournament.ForPlace == 1)
+            if (/*SelectedEvent.Type.TypeName.Equals("Одиночка") &&*/ gamesTournament.ForPlace == 1)
                 XValuesConcelationCalc(CalcsForDraws.WhichHeaderChooseForLoosers((int)gamesTournament.StageId), (int)gameToChange.StageId - 1, whichPlayer, placeInDraw);
             Context.SaveChanges();
         }
@@ -822,7 +823,7 @@ namespace BadmintonWPF.Helpers
                 else
                     selectedGame.TeamsTournament2Id = team2.TeamsTournamentId;//если на место второго нужно рисовать по расчетам выше
             }
-            if (SelectedEvent.Type.TypeName.Equals("Одиночка") && selectedGame.ForPlace == 1)//для 
+            if (/*SelectedEvent.Type.TypeName.Equals("Одиночка") && */selectedGame.ForPlace == 1)//для 
                 LooserWritingToDataBase(header, (int)selectedGame.StageId, selectedGame.PlaceInDraw, selectedTeam, whichPlayer);
             else if ((SelectedEvent.Type.TypeName.Equals("Пара") || SelectedEvent.Type.TypeName.Equals("Микст")) && selectedGame.ForPlace == 1)
                 DoublesMixtesDatabaseWriter(header, (int)selectedGame.StageId, selectedGame.PlaceInDraw, selectedTeam, whichPlayer);
@@ -920,14 +921,12 @@ namespace BadmintonWPF.Helpers
                         .TeamsTournament2Id = teamToAdd.TeamsTournamentId;
             }
         }
-
         private void XValuesConcelationCalc(string header, int round, int whichPlayer, int placeInDraw)
         {
             int left = 20, topNach = 30, yMnozh = 1;
             CalcsForDraws.CalculateMarginForNeededLabel(ref left, ref topNach, ref yMnozh, round, whichPlayer, placeInDraw, SelectedEvent);
             OneLabelDrawing(TabsWorker.CanvasDictionary[SelectedEvent][header], topNach, "X", left); // отображаем
         }
-
         private bool FirstConcelationXCheker(int forPlace)
         {
             var secondStage = CalcsForDraws.CalculateFirstStageId(int.Parse(SelectedEvent.DrawType) / 2);
@@ -943,7 +942,6 @@ namespace BadmintonWPF.Helpers
             }
             return true;
         }
-
         private IEnumerable<GamesTournament> XFirstConcelationDrawer(int forPlace, int round)
         {
             var firstConcelationX = Context.GamesTournaments.Local.Where(
@@ -952,7 +950,6 @@ namespace BadmintonWPF.Helpers
             firstConcelationX = firstConcelationX.Where(p => p.TeamsTournament1 == null || p.TeamsTournament2 == null);
             return firstConcelationX;
         }
-
         private void InvokeXCreator(IEnumerable<GamesTournament> firstConcelationX)
         {
             foreach (var gamesTournament in firstConcelationX)
