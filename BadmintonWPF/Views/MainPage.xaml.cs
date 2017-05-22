@@ -155,18 +155,25 @@ namespace BadmintonWPF.Views
         }
         private void DeleteDraw_OnClick(object sender, RoutedEventArgs e)
         {
-            if ((eventsListBox.SelectedItem as Event).IsDrawFormed == true)
+            try
             {
-                var eventId = (eventsListBox.SelectedItem as Event).EventId;
-                Context.GamesTournaments.Where(p => p.EventId == eventId).Load();
-                foreach (var gamesTournament in Context.GamesTournaments.Where(p => p.EventId == eventId).ToList())
+                if ((eventsListBox.SelectedItem as Event).IsDrawFormed == true)
                 {
-                    Context.GamesTournaments.Local.Remove(gamesTournament);
+                    var eventId = (eventsListBox.SelectedItem as Event).EventId;
+                    Context.GamesTournaments.Where(p => p.EventId == eventId).Load();
+                    foreach (var gamesTournament in Context.GamesTournaments.Where(p => p.EventId == eventId).ToList())
+                    {
+                        Context.GamesTournaments.Local.Remove(gamesTournament);
+                    }
+                    (eventsListBox.SelectedItem as Event).IsDrawFormed = false;
+                    DrawsPage.EventChangedDrawing();
                 }
-                (eventsListBox.SelectedItem as Event).IsDrawFormed = false;
-                DrawsPage.EventChangedDrawing();
+                Context.SaveChanges();
             }
-            Context.SaveChanges();
+            catch
+            {
+                MessageBox.Show("Не выбрано событие!", "Выбор события", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         private void aboutProgram_Click(object sender, RoutedEventArgs e)
         {
@@ -184,6 +191,18 @@ namespace BadmintonWPF.Views
         {
             ReportChooser chooser = new ReportChooser(Context, CurrentTournament, EventsHelper);
             chooser.ShowDialog();
+        }
+
+        private void ReportPlayersCities_OnClick(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+        }
+
+        private void ReportTournaments_OnClick(object sender, RoutedEventArgs e)
+        {
+            ReportEvents reportEvents = new ReportEvents();
+            reportEvents.Show();
         }
     }
 }

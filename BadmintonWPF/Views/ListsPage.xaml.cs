@@ -114,11 +114,21 @@ namespace BadmintonWPF.Views
         #endregion
         private void BtnSeed_OnClick(object sender, RoutedEventArgs e)
         {
-            Seed seed = new Seed(MainPage.Context, MainPage.eventsListBox.SelectedItem as Event);
-            seed.ShowDialog();
-            tournamentPlayersListView.ItemsSource = null;
-            MainPage.TornamentPlayersHelper.RefreshTournamentPlayers();
-            tournamentPlayersListView.ItemsSource = MainPage.TornamentPlayersHelper.EventSelectionChangedTournament(MainPage.eventsListBox.SelectedItem as Event);
+            try
+            {
+                Seed seed = new Seed(MainPage.Context, MainPage.eventsListBox.SelectedItem as Event);
+                seed.ShowDialog();
+                tournamentPlayersListView.ItemsSource = null;
+                MainPage.TornamentPlayersHelper.RefreshTournamentPlayers();
+                tournamentPlayersListView.ItemsSource =
+                    MainPage.TornamentPlayersHelper.EventSelectionChangedTournament(
+                        MainPage.eventsListBox.SelectedItem as Event);
+            }
+            catch
+            {
+                MessageBox.Show("Возникла ошибка, возможно не выбрано событие", "Ошибка", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
         }
         private List<int> SelectedNum(Event eEvent)
         {
@@ -133,37 +143,48 @@ namespace BadmintonWPF.Views
         }
         private void DrawsForm_OnClick(object sender, RoutedEventArgs e)
         {
-            var selectedEvent = MainPage.Context.Events.Local
-                .Where(p => p.EventId == (MainPage.eventsListBox.SelectedItem as Event).EventId).FirstOrDefault();
-            if (selectedEvent.IsDrawFormed == false)
+            try
             {
-                MainPage.DrawsPage.DrawsFormer.FirstRoundGamesFormer(SelectedNum(MainPage.eventsListBox.SelectedItem as Event));
-                //if (selectedEvent.Type.TypeName.Equals("Одиночка"))
-                //{
+                var selectedEvent = MainPage.Context.Events.Local
+                    .Where(p => p.EventId == (MainPage.eventsListBox.SelectedItem as Event).EventId).FirstOrDefault();
+                if (selectedEvent.IsDrawFormed == false)
+                {
+                    MainPage.DrawsPage.DrawsFormer.FirstRoundGamesFormer(
+                        SelectedNum(MainPage.eventsListBox.SelectedItem as Event));
+                    //if (selectedEvent.Type.TypeName.Equals("Одиночка"))
+                    //{
                     int n = int.Parse(selectedEvent.DrawType) / 2, i = 0;
                     while (n > 2)
                     {
-                        MainPage.DrawsPage.DrawsFormer.GamesForLoosersFormer(selectedEvent, n, MainPage.DrawsPage.DrawsFormer.ForPlaceCalculate(MainPage.DrawsPage.DrawsFormer.TabsWorker.CanvasDictionary[selectedEvent].ElementAt(i).Key));
+                        MainPage.DrawsPage.DrawsFormer.GamesForLoosersFormer(selectedEvent, n,
+                            MainPage.DrawsPage.DrawsFormer.ForPlaceCalculate(MainPage.DrawsPage.DrawsFormer.TabsWorker
+                                .CanvasDictionary[selectedEvent].ElementAt(i).Key));
                         n /= 2;
                         i++;
                     }
-                //}
+                    //}
+                }
+                if (!selectedEvent.IsDrawFormed)
+                {
+                    MessageBox.Show(
+                        "Сетка для события " + selectedEvent.Sort + " " + selectedEvent.Category.CategoryName + "[" +
+                        selectedEvent.DrawType + "] (" + selectedEvent.Type.TypeName + ") сформирована",
+                        "Создание сетки",
+                        MessageBoxButton.OK, MessageBoxImage.Information);
+                    selectedEvent.IsDrawFormed = true;
+                }
+                else
+                {
+                    MessageBox.Show("Сетка уже была сформирована раньше!", "Создание сетки", MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                }
             }
-            if (!selectedEvent.IsDrawFormed)
+            catch
             {
-                MessageBox.Show(
-                    "Сетка для события " + selectedEvent.Sort + " " + selectedEvent.Category.CategoryName + "[" +
-                    selectedEvent.DrawType + "] (" + selectedEvent.Type.TypeName + ") сформирована", "Создание сетки",
-                    MessageBoxButton.OK, MessageBoxImage.Information);
-                selectedEvent.IsDrawFormed = true;
+                MessageBox.Show("Возникла ошибка, возможно не выбрано событие", "Ошибка", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
             }
-            else
-            {
-                MessageBox.Show("Сетка уже была сформирована раньше!", "Создание сетки", MessageBoxButton.OK,
-                    MessageBoxImage.Warning);
-            }
-            
-            
+
             MainPage.Context.SaveChanges();
         }
 

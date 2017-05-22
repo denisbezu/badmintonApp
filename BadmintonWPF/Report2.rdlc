@@ -7,7 +7,7 @@
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>fb04ca72-e38a-4e4d-acd9-7ed48d871cfe</rd:DataSourceID>
+      <rd:DataSourceID>4f21f7f5-7352-4ffa-ad0e-714ea6fc8334</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
@@ -25,39 +25,63 @@
           <DataField>CityId</DataField>
           <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
-        <Field Name="CityName">
-          <DataField>CityName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
+        <Field Name="Club">
+          <DataField>Club</DataField>
+          <rd:TypeName>badmintonDataBase.Models.Club</rd:TypeName>
         </Field>
-        <Field Name="FinishDate">
-          <DataField>FinishDate</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="Judge">
-          <DataField>Judge</DataField>
-          <rd:TypeName>badmintonDataBase.Models.Judge</rd:TypeName>
-        </Field>
-        <Field Name="JudgeId">
-          <DataField>JudgeId</DataField>
+        <Field Name="ClubId">
+          <DataField>ClubId</DataField>
           <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
         </Field>
-        <Field Name="StartDate">
-          <DataField>StartDate</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
+        <Field Name="Coach">
+          <DataField>Coach</DataField>
+          <rd:TypeName>badmintonDataBase.Models.Coach</rd:TypeName>
         </Field>
-        <Field Name="TournamentId">
-          <DataField>TournamentId</DataField>
+        <Field Name="CoachId">
+          <DataField>CoachId</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="Grade">
+          <DataField>Grade</DataField>
+          <rd:TypeName>badmintonDataBase.Models.Grade</rd:TypeName>
+        </Field>
+        <Field Name="GradeId">
+          <DataField>GradeId</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="PlayerId">
+          <DataField>PlayerId</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="TournamentName">
-          <DataField>TournamentName</DataField>
+        <Field Name="PlayerName">
+          <DataField>PlayerName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PlayerSurName">
+          <DataField>PlayerSurName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Sex">
+          <DataField>Sex</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Union">
+          <DataField>Union</DataField>
+          <rd:TypeName>badmintonDataBase.Models.Union</rd:TypeName>
+        </Field>
+        <Field Name="UnionId">
+          <DataField>UnionId</DataField>
+          <rd:TypeName>System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]</rd:TypeName>
+        </Field>
+        <Field Name="YearOfBirth">
+          <DataField>YearOfBirth</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>badmintonDataBase.Models</rd:DataSetName>
-        <rd:TableName>Tournament</rd:TableName>
-        <rd:ObjectDataSourceType>badmintonDataBase.Models.Tournament, badmintonApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:TableName>Player</rd:TableName>
+        <rd:ObjectDataSourceType>badmintonDataBase.Models.Player, badmintonApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
@@ -69,18 +93,18 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>4.70133cm</Width>
+                  <Width>3.72238cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.02917cm</Width>
+                  <Width>3.72238cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.4525cm</Width>
+                  <Width>3.72238cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.70583cm</Height>
+                  <Height>0.80637cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -91,7 +115,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Название турнира</Value>
+                                  <Value>Фамилия</Value>
                                   <Style>
                                     <FontSize>11pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -113,7 +137,7 @@
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </BottomBorder>
-                            <BackgroundColor>White</BackgroundColor>
+                            <BackgroundColor>LightGreen</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -131,7 +155,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Дата начала</Value>
+                                  <Value>Имя</Value>
                                   <Style>
                                     <FontSize>11pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -153,7 +177,7 @@
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </BottomBorder>
-                            <BackgroundColor>White</BackgroundColor>
+                            <BackgroundColor>LightGreen</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -171,7 +195,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Дата окончания</Value>
+                                  <Value>Город</Value>
                                   <Style>
                                     <FontSize>11pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -181,6 +205,21 @@
                               </TextRuns>
                               <Style>
                                 <TextAlign>Left</TextAlign>
+                              </Style>
+                            </Paragraph>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontSize>11pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>#666666</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -193,7 +232,7 @@
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </BottomBorder>
-                            <BackgroundColor>White</BackgroundColor>
+                            <BackgroundColor>LightGreen</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -205,18 +244,18 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.70583cm</Height>
+                  <Height>0.80637cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="TournamentName">
+                        <Textbox Name="PlayerSurName">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!TournamentName.Value</Value>
+                                  <Value>=Fields!PlayerSurName.Value</Value>
                                   <Style>
                                     <FontWeight>Normal</FontWeight>
                                     <Color>#333333</Color>
@@ -226,12 +265,12 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>TournamentName</rd:DefaultName>
+                          <rd:DefaultName>PlayerSurName</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
                             </Border>
-                            <BackgroundColor>White</BackgroundColor>
+                            <BackgroundColor>LightGreen</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -242,14 +281,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="StartDate">
+                        <Textbox Name="PlayerName">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>= Format ( Fields!StartDate.Value, "dd.MM.yyyy")</Value>
+                                  <Value>=Fields!PlayerName.Value</Value>
                                   <Style>
                                     <FontWeight>Normal</FontWeight>
                                     <Color>#333333</Color>
@@ -259,12 +298,12 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>StartDate</rd:DefaultName>
+                          <rd:DefaultName>PlayerName</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
                             </Border>
-                            <BackgroundColor>White</BackgroundColor>
+                            <BackgroundColor>LightGreen</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -275,14 +314,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="FinishDate">
+                        <Textbox Name="City">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Format( Fields!FinishDate.Value, "dd.MM.yyyy")</Value>
+                                  <Value>=Fields!City.Value</Value>
                                   <Style>
                                     <FontWeight>Normal</FontWeight>
                                     <Color>#333333</Color>
@@ -292,12 +331,12 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>FinishDate</rd:DefaultName>
+                          <rd:DefaultName>City</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
                             </Border>
-                            <BackgroundColor>White</BackgroundColor>
+                            <BackgroundColor>LightGreen</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -309,7 +348,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.70583cm</Height>
+                  <Height>0.80637cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -320,7 +359,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Всего турниров в городе:</Value>
+                                  <Value />
                                   <Style>
                                     <FontWeight>Normal</FontWeight>
                                     <Color>#333333</Color>
@@ -338,29 +377,26 @@
                             <BottomBorder>
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
-                              <Width>1pt</Width>
                             </BottomBorder>
-                            <BackgroundColor>White</BackgroundColor>
+                            <BackgroundColor>LightGreen</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <ColSpan>2</ColSpan>
                       </CellContents>
                     </TablixCell>
-                    <TablixCell />
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="CityName1">
+                        <Textbox Name="Textbox15">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Count(Fields!CityName.Value)</Value>
+                                  <Value />
                                   <Style>
                                     <FontWeight>Normal</FontWeight>
                                     <Color>#333333</Color>
@@ -370,7 +406,7 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>CityName1</rd:DefaultName>
+                          <rd:DefaultName>Textbox15</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -378,9 +414,45 @@
                             <BottomBorder>
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
-                              <Width>1pt</Width>
                             </BottomBorder>
-                            <BackgroundColor>White</BackgroundColor>
+                            <BackgroundColor>LightGreen</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox16">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontWeight>Normal</FontWeight>
+                                    <Color>#333333</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox16</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </BottomBorder>
+                            <BackgroundColor>LightGreen</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -392,35 +464,33 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.70583cm</Height>
+                  <Height>0.80637cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="CityName2">
+                        <Textbox Name="Textbox10">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Count(Fields!CityName.Value)</Value>
+                                  <Value>=Count(Fields!PlayerId.Value)</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                     <Color>#333333</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style>
-                                <TextAlign>Left</TextAlign>
-                              </Style>
+                              <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>CityName2</rd:DefaultName>
+                          <rd:DefaultName>Textbox10</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
                             </Border>
-                            <BackgroundColor>White</BackgroundColor>
+                            <BackgroundColor>LightGreen</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -447,7 +517,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>4.06633cm</Size>
+                    <Size>3.72238cm</Size>
                     <CellContents>
                       <Textbox Name="Textbox7">
                         <CanGrow>true</CanGrow>
@@ -456,7 +526,7 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>Город</Value>
+                                <Value>Год рождения</Value>
                                 <Style>
                                   <FontSize>11pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
@@ -466,21 +536,6 @@
                             </TextRuns>
                             <Style>
                               <TextAlign>Left</TextAlign>
-                            </Style>
-                          </Paragraph>
-                          <Paragraph>
-                            <TextRuns>
-                              <TextRun>
-                                <Value />
-                                <Style>
-                                  <FontSize>11pt</FontSize>
-                                  <FontWeight>Bold</FontWeight>
-                                  <Color>#666666</Color>
-                                </Style>
-                              </TextRun>
-                            </TextRuns>
-                            <Style>
-                              <TextAlign>Right</TextAlign>
                             </Style>
                           </Paragraph>
                         </Paragraphs>
@@ -493,7 +548,7 @@
                             <Color>LightGrey</Color>
                             <Style>Solid</Style>
                           </BottomBorder>
-                          <BackgroundColor>White</BackgroundColor>
+                          <BackgroundColor>LightGreen</BackgroundColor>
                           <PaddingLeft>2pt</PaddingLeft>
                           <PaddingRight>2pt</PaddingRight>
                           <PaddingTop>2pt</PaddingTop>
@@ -508,37 +563,37 @@
                   <KeepWithGroup>After</KeepWithGroup>
                 </TablixMember>
                 <TablixMember>
-                  <Group Name="CityName">
+                  <Group Name="YearOfBirth">
                     <GroupExpressions>
-                      <GroupExpression>=Fields!CityName.Value</GroupExpression>
+                      <GroupExpression>=Fields!YearOfBirth.Value</GroupExpression>
                     </GroupExpressions>
                   </Group>
                   <SortExpressions>
                     <SortExpression>
-                      <Value>=Fields!CityName.Value</Value>
+                      <Value>=Fields!YearOfBirth.Value</Value>
                     </SortExpression>
                   </SortExpressions>
                   <TablixHeader>
-                    <Size>4.06633cm</Size>
+                    <Size>3.72238cm</Size>
                     <CellContents>
-                      <Textbox Name="CityName">
+                      <Textbox Name="YearOfBirth">
                         <CanGrow>true</CanGrow>
                         <KeepTogether>true</KeepTogether>
                         <Paragraphs>
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>=Fields!CityName.Value</Value>
+                                <Value>=Fields!YearOfBirth.Value</Value>
                                 <Style>
                                   <FontWeight>Normal</FontWeight>
-                                  <Color>DarkBlue</Color>
+                                  <Color>#333333</Color>
                                 </Style>
                               </TextRun>
                             </TextRuns>
                             <Style />
                           </Paragraph>
                         </Paragraphs>
-                        <rd:DefaultName>CityName</rd:DefaultName>
+                        <rd:DefaultName>YearOfBirth</rd:DefaultName>
                         <Style>
                           <Border>
                             <Style>None</Style>
@@ -547,7 +602,7 @@
                             <Color>LightGrey</Color>
                             <Style>Solid</Style>
                           </BottomBorder>
-                          <BackgroundColor>White</BackgroundColor>
+                          <BackgroundColor>LightGreen</BackgroundColor>
                           <PaddingLeft>2pt</PaddingLeft>
                           <PaddingRight>2pt</PaddingRight>
                           <PaddingTop>2pt</PaddingTop>
@@ -559,6 +614,10 @@
                   <TablixMembers>
                     <TablixMember>
                       <Group Name="Details" />
+                      <Visibility>
+                        <Hidden>true</Hidden>
+                        <ToggleItem>YearOfBirth</ToggleItem>
+                      </Visibility>
                     </TablixMember>
                     <TablixMember>
                       <KeepWithGroup>Before</KeepWithGroup>
@@ -567,7 +626,7 @@
                 </TablixMember>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>4.06633cm</Size>
+                    <Size>3.72238cm</Size>
                     <CellContents>
                       <Textbox Name="Textbox9">
                         <CanGrow>true</CanGrow>
@@ -576,16 +635,14 @@
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>Всего турниров:</Value>
+                                <Value>Всего</Value>
                                 <Style>
                                   <FontWeight>Bold</FontWeight>
                                   <Color>#333333</Color>
                                 </Style>
                               </TextRun>
                             </TextRuns>
-                            <Style>
-                              <TextAlign>Left</TextAlign>
-                            </Style>
+                            <Style />
                           </Paragraph>
                         </Paragraphs>
                         <rd:DefaultName>Textbox9</rd:DefaultName>
@@ -593,7 +650,7 @@
                           <Border>
                             <Style>None</Style>
                           </Border>
-                          <BackgroundColor>White</BackgroundColor>
+                          <BackgroundColor>LightGreen</BackgroundColor>
                           <PaddingLeft>2pt</PaddingLeft>
                           <PaddingRight>2pt</PaddingRight>
                           <PaddingTop>2pt</PaddingTop>
@@ -607,95 +664,61 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>BadmintonDataSet</DataSetName>
-            <Top>1.37583cm</Top>
-            <Height>2.82333cm</Height>
-            <Width>15.24933cm</Width>
+            <Top>0.26904cm</Top>
+            <Height>3.2255cm</Height>
+            <Width>14.8895cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
               </Border>
             </Style>
           </Tablix>
-          <Textbox Name="Textbox17">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>Статистика по турнирам</Value>
-                    <Style>
-                      <FontSize>14pt</FontSize>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style>
-                  <TextAlign>Center</TextAlign>
-                </Style>
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox17</rd:DefaultName>
-            <Top>0.32428cm</Top>
-            <Left>4.9657cm</Left>
-            <Height>0.87517cm</Height>
-            <Width>6.83113cm</Width>
-            <ZIndex>1</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
           <Chart Name="Chart2">
             <ChartCategoryHierarchy>
               <ChartMembers>
                 <ChartMember>
                   <Group Name="Chart2_CategoryGroup">
                     <GroupExpressions>
-                      <GroupExpression>=Fields!CityName.Value</GroupExpression>
+                      <GroupExpression>=Fields!YearOfBirth.Value</GroupExpression>
                     </GroupExpressions>
                   </Group>
                   <SortExpressions>
                     <SortExpression>
-                      <Value>=Fields!CityName.Value</Value>
+                      <Value>=Fields!YearOfBirth.Value</Value>
                     </SortExpression>
                   </SortExpressions>
-                  <Label>=Fields!CityName.Value</Label>
+                  <Label>=Fields!YearOfBirth.Value</Label>
                 </ChartMember>
               </ChartMembers>
             </ChartCategoryHierarchy>
             <ChartSeriesHierarchy>
               <ChartMembers>
                 <ChartMember>
-                  <Label>City Name</Label>
+                  <Label>Player Sur Name</Label>
                 </ChartMember>
               </ChartMembers>
             </ChartSeriesHierarchy>
             <ChartData>
               <ChartSeriesCollection>
-                <ChartSeries Name="CityName">
+                <ChartSeries Name="PlayerSurName">
                   <ChartDataPoints>
                     <ChartDataPoint>
                       <ChartDataPointValues>
-                        <Y>=Count(Fields!CityName.Value)</Y>
+                        <Y>=Count(Fields!PlayerSurName.Value)</Y>
                       </ChartDataPointValues>
                       <ChartDataLabel>
                         <Style />
+                        <UseValueAsLabel>true</UseValueAsLabel>
+                        <Visible>true</Visible>
                       </ChartDataLabel>
-                      <Style>
-                        <Color>Blue</Color>
-                      </Style>
+                      <Style />
                       <ChartMarker>
+                        <Type>Circle</Type>
                         <Style />
                       </ChartMarker>
                       <DataElementOutput>Output</DataElementOutput>
                     </ChartDataPoint>
                   </ChartDataPoints>
-                  <Type>Bar</Type>
                   <Style />
                   <ChartEmptyPoints>
                     <Style />
@@ -847,8 +870,6 @@
                         <Color>#5c5c5c</Color>
                       </Style>
                     </ChartAxisTitle>
-                    <Interval>1</Interval>
-                    <IntervalType>Number</IntervalType>
                     <ChartMajorGridLines>
                       <Style>
                         <Border>
@@ -951,15 +972,15 @@
             </ChartAreas>
             <ChartTitles>
               <ChartTitle Name="Default">
-                <Caption>Статистика по количеству турниров по городу</Caption>
+                <Caption>Статистика игроков по году</Caption>
                 <Style>
                   <BackgroundGradientType>None</BackgroundGradientType>
-                  <FontSize>9pt</FontSize>
+                  <FontSize>12pt</FontSize>
                   <FontWeight>Normal</FontWeight>
                   <TextAlign>Left</TextAlign>
                   <VerticalAlign>Top</VerticalAlign>
-                  <Color>#a6a6a6</Color>
                 </Style>
+                <Position>TopLeft</Position>
               </ChartTitle>
             </ChartTitles>
             <Palette>Pacific</Palette>
@@ -980,25 +1001,31 @@
               </Style>
             </ChartNoDataMessage>
             <DataSetName>BadmintonDataSet</DataSetName>
-            <Top>1.37583cm</Top>
-            <Left>15.42572cm</Left>
-            <Height>5.61383cm</Height>
-            <Width>9.82833cm</Width>
-            <ZIndex>2</ZIndex>
+            <Top>0.26904cm</Top>
+            <Left>15.33737cm</Left>
+            <Height>6.88383cm</Height>
+            <Width>11.28883cm</Width>
+            <ZIndex>1</ZIndex>
             <Style>
               <Border>
                 <Color>LightGrey</Color>
                 <Style>None</Style>
               </Border>
-              <BackgroundColor>White</BackgroundColor>
-              <BackgroundGradientType>None</BackgroundGradientType>
+              <BackgroundColor>#caffc9</BackgroundColor>
+              <BackgroundGradientType>LeftRight</BackgroundGradientType>
+              <BackgroundGradientEndColor>#90ee64</BackgroundGradientEndColor>
             </Style>
           </Chart>
         </ReportItems>
-        <Height>3.04201in</Height>
-        <Style />
+        <Height>5.70592in</Height>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <BackgroundColor>#caffc9</BackgroundColor>
+        </Style>
       </Body>
-      <Width>10.06609in</Width>
+      <Width>10.59109in</Width>
       <Page>
         <PageHeight>29.7cm</PageHeight>
         <PageWidth>21cm</PageWidth>
@@ -1018,5 +1045,5 @@
     </GridLayoutDefinition>
   </ReportParametersLayout>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
-  <rd:ReportID>44f5b178-984b-4663-9cb5-3e603a33f249</rd:ReportID>
+  <rd:ReportID>d4b6c50a-515e-479d-b483-eb4ad393ea8a</rd:ReportID>
 </Report>

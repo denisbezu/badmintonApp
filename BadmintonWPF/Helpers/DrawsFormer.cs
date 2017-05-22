@@ -501,9 +501,17 @@ namespace BadmintonWPF.Helpers
         #region EventsHandler and EventChanger
         public void EventChanged(Canvas canvas)
         {
-            canvas.Children.Clear();
-            TabsWorker.TabsCreatorRemover(SelectedEvent);
-            CanvasDrawing(SelectedEvent, canvas);
+            try
+            {
+                canvas.Children.Clear();
+                TabsWorker.TabsCreatorRemover(SelectedEvent);
+                CanvasDrawing(SelectedEvent, canvas);
+            }
+            catch
+            {
+                MessageBox.Show("Возникла ошибка", "Невозможно отобразить сетку", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
         }
         private void OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {

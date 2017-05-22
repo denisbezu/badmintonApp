@@ -18,10 +18,10 @@ namespace BadmintonWPF.Views
         public MainWindow()
         {
             InitializeComponent();
-            viewer.ReportPath = @"C:\Users\Денис\Documents\visual studio 2017\Projects\badmintonApp\BadmintonWPF\Report1.rdlc";
+            viewer.ReportPath = @"..\..\Report2.rdlc";
             viewer.ProcessingMode = ProcessingMode.Local;
-            context.Cities.Load();
-            ReportDataSource report = new ReportDataSource("BadmintonDataSet",context.Cities.Local.ToList());
+            context.Players.Load();
+            ReportDataSource report = new ReportDataSource("BadmintonDataSet",context.Players.Local.ToList());
             viewer.DataSources.Add(report);
 
             viewer.RefreshReport();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using badmintonDataBase.Models;
@@ -55,8 +56,8 @@ namespace BadmintonWPF.Helpers.DrawsHelpers
         }
         public void TabsMaker(Event eEvent)
         {
-            //if (eEvent.Type.TypeName.Equals("Одиночка"))
-            //{
+            try
+            {
                 foreach (var item in CanvasDictionary)
                 {
                     foreach (var pair in item.Value)
@@ -84,7 +85,12 @@ namespace BadmintonWPF.Helpers.DrawsHelpers
                 {
                     Make_Tab(eEvent, "За 5 место");
                 }
-            //}
+            }
+            catch
+            {
+                MessageBox.Show("Возникла ошибка, возможно не выбрано никакое событие", "Ошибка", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
         }
 
         public void TabsCreatorRemover(Event eEvent)

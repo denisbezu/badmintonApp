@@ -118,6 +118,9 @@
     <Compile Include="Views\ReportChooser.xaml.cs">
       <DependentUpon>ReportChooser.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ReportEvents.xaml.cs">
+      <DependentUpon>ReportEvents.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Seed.xaml.cs">
       <DependentUpon>Seed.xaml</DependentUpon>
     </Compile>
@@ -191,6 +194,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ReportChooser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ReportEvents.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -279,6 +286,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Report1.rdlc" />
+    <EmbeddedResource Include="Report2.rdlc" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\badmintonDataBase.Models.Category.datasource" />
     <None Include="Properties\DataSources\badmintonDataBase.Models.City.datasource" />

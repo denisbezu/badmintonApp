@@ -30,30 +30,45 @@ namespace BadmintonWPF.Helpers
         }
         public BindingList<Player> EventSelectionChangedPlayers(Event selectedEvent)
         {
-            BindingList<Player> itemSource;
-
-            if (selectedEvent.Type.TypeName.Equals("Микст"))
+            BindingList<Player> itemSource = null;
+            try
             {
-                itemSource = new BindingList<Player>(PlayersList);
+                if (selectedEvent.Type.TypeName.Equals("Микст"))
+                {
+                    itemSource = new BindingList<Player>(PlayersList);
+                }
+                else if (selectedEvent.Sort.Equals("Женщины"))
+                {
+                    itemSource = new BindingList<Player>(PlayersList.Where(p => p.Sex.Equals("Женский")).ToList());
+                }
+                else
+                {
+                    itemSource = new BindingList<Player>(PlayersList.Where(p => p.Sex.Equals("Мужской")).ToList());
+                }
             }
-            else if (selectedEvent.Sort.Equals("Женщины"))
+            catch
             {
-                itemSource = new BindingList<Player>(PlayersList.Where(p => p.Sex.Equals("Женский")).ToList());
+                MessageBox.Show("Нельзя сделать выборку, когда не выбрано событие!");
             }
-            else
-            {
-                itemSource = new BindingList<Player>(PlayersList.Where(p => p.Sex.Equals("Мужской")).ToList());
-            }
-
 
             return itemSource;
         }
         public BindingList<Player> Search(Event selectedEvent, string text)
         {
-            BindingList<Player> source = EventSelectionChangedPlayers(selectedEvent);
-            BindingList<Player> newSource;
-            newSource = new BindingList<Player>(source.Where(p => p.PlayerSurName.ToLower().Contains(text.ToLower())).ToList());
-            return newSource;
+            BindingList<Player> source = null;
+            BindingList<Player> newSource = null;
+            try
+            {
+                source = EventSelectionChangedPlayers(selectedEvent);
+                
+                newSource = new BindingList<Player>(source
+                    .Where(p => p.PlayerSurName.ToLower().Contains(text.ToLower())).ToList());
+            }
+            catch
+            {
+                
+            }
+                return newSource;
         }
         public void AddNewPlayer(Player player)
         {
@@ -113,34 +128,48 @@ namespace BadmintonWPF.Helpers
 
         public BindingList<Player> ComboBoxChangedValue(Event eEvent, Category category)
         {
+
             BindingList<Player> itemSource = null;
-
-            if (category.CategoryName.Equals("Взрослые") && eEvent.Type.TypeName.Equals("Микст"))
+            try
             {
-                itemSource = new BindingList<Player>(PlayersList);
+                if (category.CategoryName.Equals("Взрослые") && eEvent.Type.TypeName.Equals("Микст"))
+                {
+                    itemSource = new BindingList<Player>(PlayersList);
+                }
+                else if (eEvent.Type.TypeName.Equals("Микст") && !category.CategoryName.Equals("Взрослые"))
+                {
+                    itemSource = new BindingList<Player>(PlayersList
+                        .Where(p => p.YearOfBirth == int.Parse(category.CategoryName)).ToList());
+                }
+                else if (!eEvent.Type.TypeName.Equals("Микст") && !category.CategoryName.Equals("Взрослые") &&
+                         eEvent.Sort.Equals("Юноши"))
+                {
+                    itemSource = new BindingList<Player>(PlayersList
+                        .Where(p => p.YearOfBirth == int.Parse(category.CategoryName) && p.Sex.Equals("Мужской"))
+                        .ToList());
+                }
+                else if (!eEvent.Type.TypeName.Equals("Микст") && category.CategoryName.Equals("Взрослые") &&
+                         eEvent.Sort.Equals("Юноши"))
+                {
+                    itemSource = new BindingList<Player>(PlayersList.Where(p => p.Sex.Equals("Мужской")).ToList());
+                }
+                else if (!eEvent.Type.TypeName.Equals("Микст") && !category.CategoryName.Equals("Взрослые") &&
+                         eEvent.Sort.Equals("Женщины"))
+                {
+                    itemSource = new BindingList<Player>(PlayersList
+                        .Where(p => p.YearOfBirth == int.Parse(category.CategoryName) && p.Sex.Equals("Женский"))
+                        .ToList());
+                }
+                else if (!eEvent.Type.TypeName.Equals("Микст") && category.CategoryName.Equals("Взрослые") &&
+                         eEvent.Sort.Equals("Женщины"))
+                {
+                    itemSource = new BindingList<Player>(PlayersList.Where(p => p.Sex.Equals("Женский")).ToList());
+                }
             }
-            else if(eEvent.Type.TypeName.Equals("Микст") && !category.CategoryName.Equals("Взрослые"))
+            catch
             {
-                itemSource = new BindingList<Player>(PlayersList.Where(p => p.YearOfBirth == int.Parse(category.CategoryName)).ToList());
+                MessageBox.Show("Возникла ошибка, невозможно отобразить выбранную категорию", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else if (!eEvent.Type.TypeName.Equals("Микст") && !category.CategoryName.Equals("Взрослые") && eEvent.Sort.Equals("Юноши"))
-            {
-                itemSource = new BindingList<Player>(PlayersList.Where(p => p.YearOfBirth == int.Parse(category.CategoryName) && p.Sex.Equals("Мужской")).ToList());
-            }
-            else if (!eEvent.Type.TypeName.Equals("Микст") && category.CategoryName.Equals("Взрослые") && eEvent.Sort.Equals("Юноши"))
-            {
-                itemSource = new BindingList<Player>(PlayersList.Where(p => p.Sex.Equals("Мужской")).ToList());
-            }
-            else if (!eEvent.Type.TypeName.Equals("Микст") && !category.CategoryName.Equals("Взрослые") && eEvent.Sort.Equals("Женщины"))
-            {
-                itemSource = new BindingList<Player>(PlayersList.Where(p => p.YearOfBirth == int.Parse(category.CategoryName) && p.Sex.Equals("Женский")).ToList());
-            }
-            else if (!eEvent.Type.TypeName.Equals("Микст") && category.CategoryName.Equals("Взрослые") && eEvent.Sort.Equals("Женщины"))
-            {
-                itemSource = new BindingList<Player>(PlayersList.Where(p => p.Sex.Equals("Женский")).ToList());
-            }
-
-
 
             return itemSource;
         }

@@ -107,6 +107,10 @@ namespace BadmintonWPF.Views
             if(tournamentAdd.NewTournament!=null)
                 context.Tournaments.Local.Add(tournamentAdd.NewTournament);
             context.SaveChanges();
+            context.Judges.Load();
+            context.Cities.Load();
+            cmbBoxJudges.ItemsSource = context.Judges.Local.OrderBy(p => p.JudgeLastName).ToList();
+            cmbBoxCities.ItemsSource = context.Cities.Local.OrderBy(p => p.CityName).ToList();
         }
         private void btnOk_Click(object sender, RoutedEventArgs e)
         {

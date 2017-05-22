@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace badmintonDataBase.Models
 {
@@ -18,5 +19,16 @@ namespace badmintonDataBase.Models
         public int? CityId { get; set; }
         public virtual City City { get; set; }
         public virtual ICollection<Event> Events { get; set; }
+
+        [NotMapped]
+        public string CityName
+        {
+            get { return City.CityName; }
+        }
+
+        public override string ToString()
+        {
+            return TournamentName;
+        }
     }
 }
