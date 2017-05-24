@@ -92,7 +92,7 @@ namespace BadmintonWPF.Views
                 {
                     PlayerName = txtName.Text,
                     PlayerSurName = txtLastName.Text,
-                    YearOfBirth = int.Parse(txtYearOfBirth.Text),
+                    YearOfBirth = int.Parse(txtYearOfBirth.Value.ToString()),
                     CityId = (cmbBoxCity.SelectionBoxItem as City).CityId,
                     GradeId = (cmbBoxGrade.SelectedItem as Grade).GradeId,
                     CoachId = (cmbBoxCoach.SelectedItem as Coach).CoachId,

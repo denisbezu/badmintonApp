@@ -29,6 +29,12 @@
             <Button x:Name="setki" Content="СЕТКИ" Margin="30,10" VerticalAlignment="Top" Padding="10" Style="{DynamicResource ButtonStyle}" Click="Setki_OnClick"/>
         </StackPanel>
         <Menu FontFamily="Roboto Light" FontSize="14" Grid.ColumnSpan="3" Margin="0,0,-0.4,0" >
+            <Menu.Background>
+                <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,1">
+                    <GradientStop Color="#FFCAFFC9" Offset="0.016"/>
+                    <GradientStop Color="White" Offset="0.997"/>
+                </LinearGradientBrush>
+            </Menu.Background>
             <MenuItem Header="Турнир">
                 <MenuItem x:Name="NewTournament" Header="Новый турнир" Click="NewTournament_OnClick"></MenuItem>
                 <MenuItem x:Name="Open" Header="Открыть турнир" Click="Open_OnClick"></MenuItem>
@@ -48,12 +54,8 @@
                 <MenuItem x:Name="report" Header="Сформировать отчет по результатам" Click="Report_OnClick"></MenuItem>
                 <MenuItem x:Name="reportPlayersCities" Header="Отчет по игрокам" Click="ReportPlayersCities_OnClick"></MenuItem>
                 <MenuItem x:Name="reportEvents" Header="Отчет по турнирам" Click="ReportTournaments_OnClick"></MenuItem>
-
-            </MenuItem>
-            <MenuItem Header="Печать">
             </MenuItem>
             <MenuItem Header="Справка">
-                <MenuItem x:Name="aboutAuthor" Header="Об авторе"></MenuItem>
                 <MenuItem x:Name="aboutProgram" Header="О программе" Click="aboutProgram_Click"></MenuItem>
             </MenuItem>
         </Menu>
