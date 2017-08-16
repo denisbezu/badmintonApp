@@ -50,9 +50,6 @@
     </Reference>
     <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="ReachFramework" />
-    <Reference Include="Syncfusion.ReportControls.WPF, Version=15.2451.0.40, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.ReportViewer.WPF, Version=15.2451.0.40, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
-    <Reference Include="Syncfusion.Shared.WPF, Version=15.2451.0.40, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -123,9 +120,6 @@
     </Compile>
     <Compile Include="Views\ReportChooser.xaml.cs">
       <DependentUpon>ReportChooser.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ReportEvents.xaml.cs">
-      <DependentUpon>ReportEvents.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Seed.xaml.cs">
       <DependentUpon>Seed.xaml</DependentUpon>
@@ -203,10 +197,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ReportEvents.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Seed.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -243,10 +233,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -259,10 +245,6 @@
     </Compile>
     <Compile Include="Views\Grades.xaml.cs">
       <DependentUpon>Grades.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\Unions.xaml">
       <SubType>Designer</SubType>

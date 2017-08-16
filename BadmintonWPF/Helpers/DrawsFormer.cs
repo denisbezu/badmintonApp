@@ -13,7 +13,6 @@ using badmintonDataBase.Migrations;
 using badmintonDataBase.Models;
 using BadmintonWPF.Helpers.DrawsHelpers;
 using BadmintonWPF.Views;
-using Syncfusion.RDL.DOM;
 using Line = System.Windows.Shapes.Line;
 using Rectangle = System.Windows.Shapes.Rectangle;
 

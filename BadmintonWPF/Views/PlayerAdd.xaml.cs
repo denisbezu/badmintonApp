@@ -92,7 +92,7 @@ namespace BadmintonWPF.Views
                 {
                     PlayerName = txtName.Text,
                     PlayerSurName = txtLastName.Text,
-                    YearOfBirth = int.Parse(txtYearOfBirth.Value.ToString()),
+                    YearOfBirth = int.Parse(txtYearOfBirth.Text),
                     CityId = (cmbBoxCity.SelectionBoxItem as City).CityId,
                     GradeId = (cmbBoxGrade.SelectedItem as Grade).GradeId,
                     CoachId = (cmbBoxCoach.SelectedItem as Coach).CoachId,
@@ -102,7 +102,7 @@ namespace BadmintonWPF.Views
                 };
                 Close();
             }
-            catch (Exception exception)
+            catch (Exception)
             {
                 MessageBox.Show("Неверные данные", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }

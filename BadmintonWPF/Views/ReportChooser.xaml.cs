@@ -16,8 +16,6 @@ using System.Windows.Shapes;
 using badmintonDataBase.DataAccess;
 using badmintonDataBase.Models;
 using BadmintonWPF.Helpers;
-using Syncfusion.RDL.DOM;
-using Syncfusion.Windows.Reports.Viewer;
 
 namespace BadmintonWPF.Views
 {

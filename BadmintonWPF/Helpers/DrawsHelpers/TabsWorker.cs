@@ -40,7 +40,7 @@ namespace BadmintonWPF.Helpers.DrawsHelpers
             if (f)
             {
                 Canvas canvas = new Canvas();
-                canvas.Background = Brushes.AliceBlue;
+                canvas.Background = Brushes.White;
                 canvas.Height = 2000;
                 canvas.Width = 2000;
                 sw.Content = canvas;

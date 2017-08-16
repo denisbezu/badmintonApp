@@ -30,7 +30,7 @@ namespace BadmintonWPF.Views
                 NewCoach = new Coach()
                 {
                     CoachName = txtCoachName.Text,
-                    YearOfBirth = int.Parse(txtYearOfBirth.Value.ToString()),
+                    YearOfBirth = int.Parse(txtYearOfBirth.Text),
                     CityId = (cmbBoxCity.SelectedItem as City).CityId,
                     ClubId = (cmbBoxClub.SelectedItem as Club).ClubId
                 };

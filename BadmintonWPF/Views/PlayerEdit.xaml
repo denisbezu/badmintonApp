@@ -61,6 +61,6 @@
         <Button x:Name="btnAddClub" Content="+" HorizontalAlignment="Left" Margin="289,11.4,0,0" Grid.Row="7" VerticalAlignment="Top" Width="24" Height="24" Style="{DynamicResource ButtonStyle}" Click="BtnAddClub_OnClick"/>
         <Button x:Name="btnAddUnion" Content="+" HorizontalAlignment="Left" Margin="289,12.6,0,0" Grid.Row="8" VerticalAlignment="Top" Width="24" Height="24" Style="{DynamicResource ButtonStyle}" Click="BtnAddUnion_OnClick"/>
         <Button x:Name="btnAddCoach" Content="+" HorizontalAlignment="Left" Margin="289,13,0,0" Grid.Row="9" VerticalAlignment="Top" Width="24" Height="24" Style="{DynamicResource ButtonStyle}" Click="BtnAddCoach_OnClick"/>
-        <syncfusion:UpDown TextAlignment="Left" x:Name="txtYearOfBirth" NumberDecimalDigits="0" HorizontalAlignment="Left" Value="{Binding YearOfBirth}"  Height="25" Margin="125,13.6,0,0" Grid.Row="3" VerticalAlignment="Top" Width="154"/>
+        <TextBox TextAlignment="Left" x:Name="txtYearOfBirth" HorizontalAlignment="Left" Text="{Binding YearOfBirth}"  Height="25" Margin="125,13.6,0,0" Grid.Row="3" VerticalAlignment="Top" Width="154"></TextBox>
     </Grid>
 </Window>

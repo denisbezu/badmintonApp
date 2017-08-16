@@ -52,8 +52,7 @@
             </MenuItem>
             <MenuItem Header="Отчет">
                 <MenuItem x:Name="report" Header="Сформировать отчет по результатам" Click="Report_OnClick"></MenuItem>
-                <MenuItem x:Name="reportPlayersCities" Header="Отчет по игрокам" Click="ReportPlayersCities_OnClick"></MenuItem>
-                <MenuItem x:Name="reportEvents" Header="Отчет по турнирам" Click="ReportTournaments_OnClick"></MenuItem>
+                <MenuItem x:Name="saveCanvas" Header="Сохранить картинку" Click="SaveCanvas_OnClick"></MenuItem>
             </MenuItem>
             <MenuItem Header="Справка">
                 <MenuItem x:Name="aboutProgram" Header="О программе" Click="aboutProgram_Click"></MenuItem>

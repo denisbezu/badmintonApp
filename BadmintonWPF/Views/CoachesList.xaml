@@ -71,7 +71,7 @@
         <ComboBox x:Name="cmbBoxClub" Grid.Column="1" Text="{Binding SelectedItem.Club.ClubName, ElementName=coachesListView, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem.Club, ElementName=coachesListView, UpdateSourceTrigger=PropertyChanged}" Margin="149.4,146,31.2,0" VerticalAlignment="Top" Style="{DynamicResource ComboBoxStyle}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle}"/>
         <ComboBox x:Name="cmbBoxCity" Grid.Column="1" Text="{Binding SelectedItem.City.CityName, ElementName=coachesListView, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem.City, ElementName=coachesListView, UpdateSourceTrigger=PropertyChanged}" Margin="149.4,104,31.2,0" VerticalAlignment="Top" Style="{DynamicResource ComboBoxStyle}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle}"/>
         <TextBox Grid.Column="1" Text="{Binding SelectedItem.CoachName, ElementName=coachesListView, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="149.4,24,0,0" VerticalAlignment="Top" Width="197"/>
-        <syncfusion:UpDown TextAlignment="Left" NumberDecimalDigits="0" HorizontalAlignment="Left" Value="{Binding SelectedItem.YearOfBirth, ElementName=coachesListView, UpdateSourceTrigger=PropertyChanged}" Height="25" Margin="149.4,63,0,0" VerticalAlignment="Top" Width="197" Grid.Column="1"/>
+        <TextBox TextAlignment="Left" HorizontalAlignment="Left" Text="{Binding SelectedItem.YearOfBirth, ElementName=coachesListView, UpdateSourceTrigger=PropertyChanged}" Height="25" Margin="149.4,63,0,0" VerticalAlignment="Top" Width="197" Grid.Column="1"/>
 
     </Grid>
 </Window>

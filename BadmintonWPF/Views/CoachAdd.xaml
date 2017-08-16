@@ -34,7 +34,7 @@
         <Button x:Name="btnAddClub" Content="+" HorizontalAlignment="Left" Margin="287,10.4,0,0" Grid.Row="4" VerticalAlignment="Top" Width="24" Height="24" Style="{DynamicResource ButtonStyle}" Click="BtnAddClub_OnClick"/>
         <!--#region Labels -->
         <!--#endregion -->
-        <syncfusion:UpDown TextAlignment="Left" x:Name="txtYearOfBirth" NumberDecimalDigits="0" HorizontalAlignment="Left" Value="{Binding YearOfBirth}" Height="25" Margin="125,13.6,0,0" Grid.Row="2" VerticalAlignment="Top" Width="153"/>
+        <TextBox TextAlignment="Left" x:Name="txtYearOfBirth" HorizontalAlignment="Left" Text="{Binding YearOfBirth}" Height="25" Margin="125,13.6,0,0" Grid.Row="2" VerticalAlignment="Top" Width="153"/>
 
     </Grid>
 </Window>

@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using badmintonDataBase.DataAccess;
 using badmintonDataBase.Models;
@@ -193,16 +194,38 @@ namespace BadmintonWPF.Views
             chooser.ShowDialog();
         }
 
-        private void ReportPlayersCities_OnClick(object sender, RoutedEventArgs e)
+        private void SaveCanvas_OnClick(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-        }
+            if (DrawsPage.TabsWorker.TabControl.SelectedIndex == 0)
+                ToImageSource(DrawsPage.osn_canvas, "Основная сетка");
+            else
+            {
+                var item = (TabItem) DrawsPage.TabsWorker.TabControl.SelectedItem;
+                string tabName = item.Header.ToString();
+                var canvas = DrawsPage.TabsWorker.CanvasDictionary[eventsListBox.SelectedItem as Event][tabName];
+                var fileName = (eventsListBox.SelectedItem as Event).Tournament.TournamentName + " " +
+                               (eventsListBox.SelectedItem as Event).Category.CategoryName + " " + (eventsListBox.SelectedItem as Event).Sort + " " + tabName;
+                ToImageSource(canvas, fileName);
+            }
 
-        private void ReportTournaments_OnClick(object sender, RoutedEventArgs e)
+            
+
+        }
+        private void ToImageSource(Canvas canvas, string name)
         {
-            ReportEvents reportEvents = new ReportEvents();
-            reportEvents.Show();
+            RenderTargetBitmap rtb = new RenderTargetBitmap((int)canvas.RenderSize.Width,
+                (int)canvas.RenderSize.Height, 96d, 96d, System.Windows.Media.PixelFormats.Pbgra32);
+            rtb.Render(canvas);
+
+            var crop = new CroppedBitmap(rtb, new Int32Rect(0, 0, 1000, 2000));
+
+            BitmapEncoder pngEncoder = new PngBitmapEncoder();
+            pngEncoder.Frames.Add(BitmapFrame.Create(crop));
+
+            using (var fs = System.IO.File.OpenWrite(name + ".png"))
+            {
+                pngEncoder.Save(fs);
+            }
         }
     }
 }

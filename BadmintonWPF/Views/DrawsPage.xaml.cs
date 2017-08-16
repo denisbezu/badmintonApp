@@ -25,12 +25,13 @@ namespace BadmintonWPF.Views
     {
         public DrawsFormer DrawsFormer { get; set; }
         public MainPage MainPage { get; set; }
+        public TabsWorker TabsWorker { get; set; }
         public DrawsPage(MainPage mainPage)
         {
             InitializeComponent();
             MainPage = mainPage;
-            TabsWorker tabsWorker = new TabsWorker(tab_setki);
-            DrawsFormer = new DrawsFormer(mainPage.Context, tabsWorker);
+            TabsWorker = new TabsWorker(tab_setki);
+            DrawsFormer = new DrawsFormer(mainPage.Context, TabsWorker);
             // при добавление в событие нужно еще добавлять сюда
 
             foreach (var eevent in MainPage.eventsListBox.Items)
