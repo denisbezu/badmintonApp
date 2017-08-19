@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Windows;
@@ -39,7 +40,7 @@ namespace BadmintonWPF.Views
             Nums = new Nums();
             Context = new BadmintonContext();
             ListPage = new ListPage(this);
-            
+
             changerFrame.Navigate(ListPage);
             #region LoadContext
             Context.Cities.Load();
@@ -61,7 +62,7 @@ namespace BadmintonWPF.Views
             DrawsPage = new DrawsPage(this);
             if (eventsListBox.Items.Count > 0)
                 eventsListBox.SelectedIndex = 0;
-            
+
             waitWindow.Close();
         }
         #region MenuEdit
@@ -122,7 +123,7 @@ namespace BadmintonWPF.Views
         #endregion
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            
+
         }
         private void newEvent_Copy_Click(object sender, RoutedEventArgs e)
         {
@@ -182,7 +183,7 @@ namespace BadmintonWPF.Views
             vm = (AboutControlViewModel)about.FindResource("ViewModel");
             vm.ApplicationLogo = new BitmapImage(new System.Uri("pack://application:,,,/images/volan.png"));
             vm.Description = "Эта программа позволяет поностью спланировать турнир по бадминтону";
-                             
+
             vm.AdditionalNotes = "Чтобы закрыть это окно - просто переключитесь на другое окно\nАвтор: Безуглый Денис, denys.bezu@gmail.com";
             vm.Title = "Планирование турниров по бадминтону";
             vm.Window.Content = about;
@@ -196,19 +197,33 @@ namespace BadmintonWPF.Views
 
         private void SaveCanvas_OnClick(object sender, RoutedEventArgs e)
         {
-            if (DrawsPage.TabsWorker.TabControl.SelectedIndex == 0)
-                ToImageSource(DrawsPage.osn_canvas, "Основная сетка");
-            else
+            try
             {
-                var item = (TabItem) DrawsPage.TabsWorker.TabControl.SelectedItem;
-                string tabName = item.Header.ToString();
-                var canvas = DrawsPage.TabsWorker.CanvasDictionary[eventsListBox.SelectedItem as Event][tabName];
-                var fileName = (eventsListBox.SelectedItem as Event).Tournament.TournamentName + " " +
-                               (eventsListBox.SelectedItem as Event).Category.CategoryName + " " + (eventsListBox.SelectedItem as Event).Sort + " " + tabName;
-                ToImageSource(canvas, fileName);
+                string fileName = "";
+                if (DrawsPage.TabsWorker.TabControl.SelectedIndex == 0)
+                {
+                    fileName = (eventsListBox.SelectedItem as Event).Tournament.TournamentName + " " +
+                               (eventsListBox.SelectedItem as Event).Category.CategoryName + " " +
+                               (eventsListBox.SelectedItem as Event).Sort + "_Основная сетка";
+                    ToImageSource(DrawsPage.osn_canvas, fileName);
+
+                }
+                else
+                {
+                    var item = (TabItem)DrawsPage.TabsWorker.TabControl.SelectedItem;
+                    string tabName = item.Header.ToString();
+                    var canvas = DrawsPage.TabsWorker.CanvasDictionary[eventsListBox.SelectedItem as Event][tabName];
+                    fileName = (eventsListBox.SelectedItem as Event).Tournament.TournamentName + " " +
+                               (eventsListBox.SelectedItem as Event).Category.CategoryName + " " + (eventsListBox.SelectedItem as Event).Sort + "_" + tabName;
+                    ToImageSource(canvas, fileName);
+                }
+                MessageBox.Show("Сохранено в файле \"" + fileName + ".png" + "\" в папке с программой!");
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
             }
 
-            
 
         }
         private void ToImageSource(Canvas canvas, string name)
@@ -217,7 +232,7 @@ namespace BadmintonWPF.Views
                 (int)canvas.RenderSize.Height, 96d, 96d, System.Windows.Media.PixelFormats.Pbgra32);
             rtb.Render(canvas);
 
-            var crop = new CroppedBitmap(rtb, new Int32Rect(0, 0, 1000, 2000));
+            var crop = new CroppedBitmap(rtb, new Int32Rect(0, 0, 1500, 2000));
 
             BitmapEncoder pngEncoder = new PngBitmapEncoder();
             pngEncoder.Frames.Add(BitmapFrame.Create(crop));

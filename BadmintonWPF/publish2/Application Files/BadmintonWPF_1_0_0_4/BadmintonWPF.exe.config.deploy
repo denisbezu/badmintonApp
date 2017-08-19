@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <startup> 
+        <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5.2" />
+    </startup>
+  <connectionStrings>
+    <add name="BadmintonContext" connectionString="workstation id=Badminton.mssql.somee.com;packet size=4096;user id=denisbezu_SQLLogin_1;pwd=johr7ksuyo;data source=Badminton.mssql.somee.com;persist security info=False;initial catalog=Badminton"
+         providerName="System.Data.SqlClient" />
+    
+         
+  </connectionStrings>
+</configuration>
+<!-- workstation="" id="Badminton.mssql.somee.com;packet" size="4096;user" id=""denisbezu_SQLLogin_1;pwd="johr7ksuyo;data" source="Badminton.mssql.somee.com;persist" security="" info="False;initial" catalog="Badminton"-->

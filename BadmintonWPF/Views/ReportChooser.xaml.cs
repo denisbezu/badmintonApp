@@ -16,6 +16,8 @@ using System.Windows.Shapes;
 using badmintonDataBase.DataAccess;
 using badmintonDataBase.Models;
 using BadmintonWPF.Helpers;
+using Microsoft.Office.Interop.Excel;
+using Window = System.Windows.Window;
 
 namespace BadmintonWPF.Views
 {
@@ -43,13 +45,16 @@ namespace BadmintonWPF.Views
         }
         private void LstBoxReports_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (lstBoxReports.SelectedItem == null)
+            try
+            {
+                if (lstBoxReports.SelectedItem == null)
                 return;
             ReportFormer reportFormer = new ReportFormer(Tournament);
             Category = lstBoxReports.SelectedItem as Category;
             reportFormer.Category = Category;
             if (reportFormer.OpenWorkbook())
             {
+                MessageBox.Show("Дождитесь сообщения об окончании формирования отчета, не трогайте Excel!");
                 reportFormer.WriteHeaderPlayersList();
                 reportFormer.WriteHeaderWS1(reportFormer.Worksheet, "A4", "H4");
                 int lastMan = reportFormer.PlayerListFormer("A6", "H6", "Юноши");
@@ -63,8 +68,19 @@ namespace BadmintonWPF.Views
                     lastMan = reportFormer.ResultsPlayersWithPlaces(reportFormer.Sheets[i], i);
                     reportFormer.JudgeWriter(reportFormer.Sheets[i], "E" + (lastMan + 8), "G" + (lastMan + 8));
                 }
-                
+                for (int i = 7; i < 12; i++)
+                {
+                    reportFormer.WriteDrawHeader(reportFormer.Sheets[i], sheetsList[i - 7]);
+                    reportFormer.DrawFullSheet(reportFormer.Sheets[i]);
+                    
+                }
+                MessageBox.Show("Завершено!");
             }
         }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+}
     }
 }

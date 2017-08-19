@@ -50,8 +50,6 @@ namespace BadmintonWPF.Helpers
             LinesDrawing(int.Parse(eEvent.DrawType), canvas);
             if (eEvent.IsDrawFormed)
             {
-                //if (eEvent.Type.TypeName.Equals("Одиночка"))
-                //{
                 int n = int.Parse(eEvent.DrawType) / 2, i = 0;
                 while (n > 2)
                 {

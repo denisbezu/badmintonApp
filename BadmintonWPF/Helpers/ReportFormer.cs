@@ -1,12 +1,19 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Media;
+using System.Windows.Shapes;
 using badmintonDataBase.DataAccess;
 using badmintonDataBase.Models;
+using BadmintonWPF.Helpers.DrawsHelpers;
 using Microsoft.Win32;
 using Excel = Microsoft.Office.Interop.Excel;
 using Type = System.Type;
@@ -43,7 +50,7 @@ namespace BadmintonWPF.Helpers
             ExcelApplication = new Excel.Application();
             //Получаем набор объектов Workbook (массив ссылок на созданные книги)
             Workbooks = ExcelApplication.Workbooks;
-            ExcelApplication.SheetsInNewWorkbook = 10;
+            ExcelApplication.SheetsInNewWorkbook = 11;
             ExcelApplication.Workbooks.Add(Type.Missing);
             Sheets = ExcelApplication.Sheets;
             //Открываем книгу и получаем на нее ссылку
@@ -321,9 +328,9 @@ namespace BadmintonWPF.Helpers
             foreach (var playerFifthPlace in fifthPlaces)
             {
                 if (playerFifthPlace.TeamsTournament1Id != null)
-                    DictionaryAdd(ref placesPlayers, 5, GetPlayersFromGamesTournament((int) playerFifthPlace.TeamsTournament1Id));
+                    DictionaryAdd(ref placesPlayers, 5, GetPlayersFromGamesTournament((int)playerFifthPlace.TeamsTournament1Id));
                 if (playerFifthPlace.TeamsTournament2Id != null)
-                    DictionaryAdd(ref placesPlayers, 5, GetPlayersFromGamesTournament((int) playerFifthPlace.TeamsTournament2Id));
+                    DictionaryAdd(ref placesPlayers, 5, GetPlayersFromGamesTournament((int)playerFifthPlace.TeamsTournament2Id));
             }
             if (int.Parse(eEvent.DrawType) >= 16)
             {
@@ -375,19 +382,233 @@ namespace BadmintonWPF.Helpers
         {
             foreach (var player in players)
             {
-                if(!placesPlayers.ContainsKey(player))
+                if (!placesPlayers.ContainsKey(player))
                     placesPlayers.Add(player, place);
             }
         }
+
+        public void DrawFullSheet(Excel.Worksheet worksheet)
+        {
+            var eEvent = EventBySheetId(worksheet.Index);
+            if(eEvent.EventId != 0 && eEvent.IsDrawFormed)
+            {
+                var looserDraw = ExcelHelper.GetLooserDraw(eEvent);
+                LinesHorizontalDrawing(worksheet, "A5", EventBySheetId(worksheet.Index)?.DrawType, 1);
+                LinesVerticalDrawing(worksheet, "A6", EventBySheetId(worksheet.Index)?.DrawType, 1);
+                if (EventBySheetId(worksheet.Index) != null)
+                {
+                    int currenRow = 5 + (int.Parse(EventBySheetId(worksheet.Index).DrawType) * 2) + 4;
+                    foreach (var looserD in looserDraw)
+                    {
+                        LinesHorizontalDrawing(worksheet, "A" + currenRow, (looserD -1).ToString(), looserD);
+                        LinesVerticalDrawing(worksheet, "A" + (currenRow + 1), (looserD - 1).ToString(), looserD);
+                        currenRow += looserD * 2 + 2;
+                    }
+                }
+            }
+        }
+
+        public void WriteDrawHeader(Excel.Worksheet worksheet, string name)
+        {
+            (worksheet.get_Range("A1", "Z1")).EntireColumn.ColumnWidth = 18;
+            Excel.Range excelRange;
+            worksheet.Cells.Font.Name = "Times New Roman";
+            worksheet.Name = "Draw " + name;
+            worksheet.Select(Type.Missing);
+            ExcelApplication.ActiveWindow.DisplayGridlines = false;
+            excelRange = worksheet.get_Range("A1", "C1");
+            excelRange.Merge(Type.Missing);
+            excelRange.Font.Bold = 1;
+            excelRange.Font.Size = 12;
+            excelRange.Value2 = Tournament.TournamentName.ToUpper();
+            excelRange = worksheet.get_Range("A2", "B2");
+            excelRange.Merge(Type.Missing);
+            excelRange.Font.Bold = 1;
+            excelRange.Font.Size = 12;
+            if (Category.CategoryName != "Взрослые")
+                excelRange.Value2 = name + " " + Category.CategoryName + " р.н.";
+            else
+                excelRange.Value2 = name + " " + Category.CategoryName;
+            excelRange = worksheet.get_Range("A3", "H3");
+
+
+            ExcelHelper excelHelper = new ExcelHelper();
+            var drawType = EventBySheetId(worksheet.Index)?.DrawType;
+            if (drawType != null)
+            {
+                var a = int.Parse(drawType);
+                var listRounds = excelHelper.RoundsDrawing(a);
+                int row = 1;
+                int column = 1;
+                foreach (var round in listRounds)
+                {
+                    excelRange.Cells[row, column].Value2 = round;
+                    excelRange.Cells[row, column].Borders[Excel.XlBordersIndex.xlEdgeBottom].ColorIndex = 1;
+                    excelRange.Cells[row, column].Borders[Excel.XlBordersIndex.xlEdgeBottom].LineStyle = Excel.XlLineStyle.xlContinuous;
+                    column++;
+                }
+            }
+        }
+
+        public void LinesHorizontalDrawing(Excel.Worksheet worksheet, string startRange, string drawType, int forPlace)
+        {
+            Excel.Range excelRange;
+            worksheet.Select(Type.Missing);
+            excelRange = worksheet.get_Range(startRange, startRange);
+            //var drawType = EventBySheetId(worksheet.Index)?.DrawType;
+            if (drawType != null)
+            {
+                int playersCount = 0, scoreCount = 0, scoreRound = 0;
+                int numberPers = int.Parse(drawType);
+                var players = GamesTournament(worksheet, forPlace);
+                if(players.Count == 0)
+                    return;
+                var score = GetScore(worksheet, forPlace);
+                int x, y, yMnozh = 1;
+                int startNumberPers = numberPers;
+                int xNach = 1, yNach = 1;
+                while (numberPers > 0)
+                {
+                    x = xNach;
+                    y = yNach;
+                    for (int i = 0; i < numberPers; i++)
+                    {
+                        excelRange.Cells[x, y].Value2 = players[playersCount];
+                        if (playersCount == players.Count - 2)
+                            excelRange.Cells[x, y + 1].Value2 = "За " + forPlace + " место";
+                        if (scoreRound > 0)
+                            excelRange.Cells[x + 1, y].Value2 = score[scoreCount];
+                        excelRange.Cells[x, y].Borders[Excel.XlBordersIndex.xlEdgeBottom].ColorIndex = 1;
+                        excelRange.Cells[x, y].Borders[Excel.XlBordersIndex.xlEdgeBottom].LineStyle =
+                            Excel.XlLineStyle.xlContinuous;
+                        //excelRange.Cells[x, y].Borders[Excel.XlBordersIndex.xlEdgeRight].LineStyle = Excel.XlLineStyle.xlContinuous;
+                        x += 2 * yMnozh;
+                        playersCount++;
+                        
+                        if (scoreRound > 0)
+                            scoreCount++;
+                    }
+                    scoreRound++;
+                    xNach *= 2;
+                    yNach += 1;
+                    yMnozh *= 2;
+                    numberPers /= 2;
+                }
+            }
+        }
+
+        public void LinesVerticalDrawing(Excel.Worksheet worksheet, string startRange, string drawType, int forPlace)
+        {
+            Excel.Range excelRange;
+            worksheet.Select(Type.Missing);
+            excelRange = worksheet.get_Range(startRange, startRange);
+            //var drawType = EventBySheetId(worksheet.Index)?.DrawType;
+            if (drawType != null)
+            {
+                int numberPers = int.Parse(drawType);
+
+                int x, y, yMnozh = 1, count = 2;
+
+                int startNumberPers = numberPers;
+                int xNach = 1, yNach = 1;
+                while (numberPers > 0)
+                {
+                    x = xNach;
+                    y = yNach;
+                    for (int i = 0; i < numberPers / 2; i++)
+                    {
+                        //excelRange.Cells[x, y].Value2 = round;
+                        int currentX = x;
+                        for (int j = x; j < count + currentX; j++)
+                        {
+                            excelRange.Cells[j, y].Borders[Excel.XlBordersIndex.xlEdgeRight].ColorIndex = 1;
+                            excelRange.Cells[j, y].Borders[Excel.XlBordersIndex.xlEdgeRight].LineStyle = Excel.XlLineStyle.xlContinuous;
+                            x = j;
+                        }
+                        x += (2 * yMnozh) + 1;
+                    }
+                    count *= 2;
+                    xNach *= 2;
+                    yNach += 1;
+                    yMnozh *= 2;
+                    numberPers /= 2;
+                }
+                var type = EventBySheetId(worksheet.Index)?.DrawType;
+                if (type != null && startNumberPers == int.Parse(type) && forPlace == 1)
+                    ThirdPlaceDrawingLines(xNach, yNach, excelRange, worksheet);
+            }
+
+        }
+
+        private void ThirdPlaceDrawingLines(int x, int y, Excel.Range excelRange, Excel.Worksheet worksheet)
+        {
+            var players = GamesTournament(worksheet, 3);
+            var score = GetScore(worksheet, 3);
+            y -= 1;
+            x += 1;
+            excelRange.Cells[x, y].Borders[Excel.XlBordersIndex.xlEdgeRight].ColorIndex = 1;
+            excelRange.Cells[x, y].Borders[Excel.XlBordersIndex.xlEdgeRight].LineStyle = Excel.XlLineStyle.xlContinuous;
+            excelRange.Cells[x, y].Borders[Excel.XlBordersIndex.xlEdgeTop].ColorIndex = 1;
+            excelRange.Cells[x, y].Borders[Excel.XlBordersIndex.xlEdgeTop].LineStyle = Excel.XlLineStyle.xlContinuous;
+            excelRange.Cells[x - 1, y].Value2 = players[0];
+            excelRange.Cells[x + 1, y + 1].Value2 = score[0];
+            excelRange.Cells[x + 1, y].Value2 = players[1];
+            excelRange.Cells[x, y + 1].Value2 = players[2];
+            excelRange.Cells[x, y + 2].Value2 = "За 3 место";
+            excelRange.Cells[x + 1, y].Borders[Excel.XlBordersIndex.xlEdgeRight].ColorIndex = 1;
+            excelRange.Cells[x + 1, y].Borders[Excel.XlBordersIndex.xlEdgeRight].LineStyle = Excel.XlLineStyle.xlContinuous;
+            excelRange.Cells[x + 1, y].Borders[Excel.XlBordersIndex.xlEdgeBottom].ColorIndex = 1;
+            excelRange.Cells[x + 1, y].Borders[Excel.XlBordersIndex.xlEdgeBottom].LineStyle = Excel.XlLineStyle.xlContinuous;
+
+            excelRange.Cells[x, y + 1].Borders[Excel.XlBordersIndex.xlEdgeBottom].ColorIndex = 1;
+            excelRange.Cells[x, y + 1].Borders[Excel.XlBordersIndex.xlEdgeBottom].LineStyle = Excel.XlLineStyle.xlContinuous;
+        }
+
+        private List<string> GamesTournament(Excel.Worksheet worksheet, int forPlace)
+        {
+            List<string> list = new List<string>();
+            Event eEvent = EventBySheetId(worksheet.Index);
+            var for1PlacePlayers = Context.GamesTournaments.Where(g => g.EventId == eEvent.EventId && g.ForPlace == forPlace);
+            foreach (var gamesTournament in for1PlacePlayers)
+            {
+                if (gamesTournament.TeamsTournament1 != null)
+                    list.Add(gamesTournament.TeamsTournament1.TeamName);
+                else
+                    list.Add("");
+                if (gamesTournament.TeamsTournament2 != null)
+                    list.Add(gamesTournament.TeamsTournament2.TeamName);
+                else
+                    list.Add("");
+            }
+            return list;
+        }
+
+        private List<string> GetScore(Excel.Worksheet worksheet, int forPlace)
+        {
+            CalcsForDraws calcsForDraws = new CalcsForDraws();
+            List<string> list = new List<string>();
+            Event eEvent = EventBySheetId(worksheet.Index);
+            var for1PlacePlayers = Context.GamesTournaments.Where(g => g.EventId == eEvent.EventId && g.ForPlace == forPlace);
+            foreach (var gamesTournament in for1PlacePlayers)
+            {
+                if (gamesTournament.Score != null)
+                    list.Add(calcsForDraws.ScoreConverter(gamesTournament.Score));
+                else
+                    list.Add("");
+            }
+            return list;
+        }
+
+
 
         public Event EventBySheetId(int sheetId)
         {
             Context.Events.Load();
             int eEventId;
             Event eEvent = new Event();
-
             switch (sheetId)
             {
+                case 7:
                 case 2:
                     var singleManEvent = Context.Events.Local.FirstOrDefault(p => p.TournamentId == Tournament.TournamentId
                                                                                   && p.CategoryId == Category.CategoryId &&
@@ -399,6 +620,7 @@ namespace BadmintonWPF.Helpers
                         eEvent = Context.Events.Local.FirstOrDefault(p => p.EventId == eEventId);
                     }
                     break;
+                case 8:
                 case 3:
                     var singleGirlsEvent = Context.Events.Local.FirstOrDefault(p => p.TournamentId == Tournament.TournamentId
                                                                                   && p.CategoryId == Category.CategoryId &&
@@ -410,6 +632,7 @@ namespace BadmintonWPF.Helpers
                         eEvent = Context.Events.Local.FirstOrDefault(p => p.EventId == eEventId);
                     }
                     break;
+                case 9:
                 case 4:
                     var mansDoublesEvent = Context.Events.Local.FirstOrDefault(p => p.TournamentId == Tournament.TournamentId
                                                                                     && p.CategoryId == Category.CategoryId &&
@@ -421,6 +644,7 @@ namespace BadmintonWPF.Helpers
                         eEvent = Context.Events.Local.FirstOrDefault(p => p.EventId == eEventId);
                     }
                     break;
+                case 10:
                 case 5:
                     var girlsDoublesEvent = Context.Events.Local.FirstOrDefault(p => p.TournamentId == Tournament.TournamentId
                                                                                           && p.CategoryId == Category.CategoryId &&
@@ -432,6 +656,7 @@ namespace BadmintonWPF.Helpers
                         eEvent = Context.Events.Local.FirstOrDefault(p => p.EventId == eEventId);
                     }
                     break;
+                case 11:
                 case 6:
                     var mixtesEvent = Context.Events.Local.FirstOrDefault(p => p.TournamentId == Tournament.TournamentId
                                                                                            && p.CategoryId == Category.CategoryId &&
