@@ -25,6 +25,9 @@ namespace badmintonDataBase.DataAccess
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            Database.SetInitializer<BadmintonContext>(null);
+            base.OnModelCreating(modelBuilder);
+
             #region GamesTournament
             modelBuilder.Entity<GamesTournament>()
                 .HasOptional(m => m.TeamsTournament1)

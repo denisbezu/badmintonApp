@@ -59,7 +59,7 @@ namespace BadmintonWPF.Views
                 cmbBoxJudges.ItemsSource = context.Judges.Local.OrderBy(p => p.JudgeLastName).ToList();
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 waitWindow.Close();
                 waitWindow = null;

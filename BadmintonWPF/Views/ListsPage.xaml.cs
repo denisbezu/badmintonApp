@@ -179,7 +179,7 @@ namespace BadmintonWPF.Views
                         MessageBoxImage.Warning);
                 }
             }
-            catch
+            catch(Exception ex)
             {
                 MessageBox.Show("Возникла ошибка, возможно не выбрано событие", "Ошибка", MessageBoxButton.OK,
                     MessageBoxImage.Error);

@@ -166,7 +166,7 @@ namespace BadmintonWPF.Helpers
                     itemSource = new BindingList<Player>(PlayersList.Where(p => p.Sex.Equals("Женский")).ToList());
                 }
             }
-            catch
+            catch(Exception e)
             {
                 MessageBox.Show("Возникла ошибка, невозможно отобразить выбранную категорию", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }

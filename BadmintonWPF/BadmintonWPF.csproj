@@ -62,7 +62,7 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>DC6B6FB73D92EEF7FB5A857347F9326331C1F4EF</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>60E5AF261653E2042AFE263AA3796B0A43B1E942</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>BadmintonWPF_TemporaryKey.pfx</ManifestKeyFile>
@@ -362,6 +362,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="BadmintonWPF_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\badmintonDataBase.Models.Category.datasource" />
     <None Include="Properties\DataSources\badmintonDataBase.Models.City.datasource" />
